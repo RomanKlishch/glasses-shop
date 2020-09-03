@@ -1,0 +1,167 @@
+a:hover {
+    color: #3b4a9a;
+}
+
+/*small-navbar*/
+.small-navbar {
+     color: #0c0c0d;
+     background: #f2f2f2;
+    font-size: 14px;
+}
+.link-to-brand{
+    font-size: 11px;
+}
+.small-navbar {
+    height: 30px !important;
+}
+
+.small-navbar a:hover {
+    color: #0c0c0d;
+}
+
+.small-navbar a {
+    color: #0c0c0d;
+}
+
+/*big-navbar*/
+.big-navbar {
+    font-size: 15px;
+    text-align: center;
+    background-color: white;
+}
+.big-navbar {
+    height: 50px !important;
+}
+
+.login {
+    font-size: 14px;
+}
+
+.big-navbar a {
+    color: #070707;
+}
+
+.big-navbar {
+    margin-bottom: 25px;
+}
+
+.salt-brand{
+    background-color: white;
+}
+.salt-brand{
+    font-size: 10px !important;
+    font-weight:1000
+}
+
+/*img under navbar*/
+.img-under-header img{
+    margin-bottom: 50px;
+}
+.img-under-header img{
+    z-index: -1;
+    left:0;
+    right: 0;
+    min-width:100%;
+    max-height: 550px;
+}
+.img-under-header {
+    position	: relative;
+    width		: 100%;
+}
+
+.img-under-header h1 {
+    position	: absolute;
+    top		: 200px;
+    left		: 0;
+    width		: 100%;
+    text-align: center;
+    color: white;
+    font-size: 75px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+}
+
+.img-under-header img{
+    z-index: -1;
+    left:0;
+    right: 0;
+    min-width:100%;
+    max-height: 550px;
+}
+.img-under-header {
+    position	: relative;
+    width		: 100%;
+}
+/*img under navbar in index.html*/
+.img-under-header-index img{
+    margin-bottom: 50px;
+}
+.img-under-header-index img{
+    z-index: -1;
+    left:0;
+    right: 0;
+    min-width:100%;
+    min-height:100%;
+
+}
+.img-under-header-index {
+    position	: relative;
+    width		: 100%;
+}
+
+.img-under-header-index h1 {
+    position	: absolute;
+    top		: 200px;
+    left		: 0;
+    width		: 100%;
+    text-align: center;
+    color: white;
+    font-size: 75px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+}
+
+.img-under-header-index img{
+    z-index: -1;
+    left:0;
+    right: 0;
+    min-width:100%;
+    max-height: 550px;
+}
+.img-under-header-index {
+    position	: relative;
+    width		: 100%;
+}
+
+/*contact*/
+.map-contacts {
+    margin-top: 30px;
+}
+
+
+@media only screen and (max-width: 1200px) {
+
+}
+
+@media only screen and (max-width: 1199px) {
+
+}
+
+@media only screen and (max-width: 992px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 768px) {
+
+}
+
+@media only screen and (max-width: 766px) {
+
+
+}
+
+@media only screen and (max-width: 480px) {
+
+}
