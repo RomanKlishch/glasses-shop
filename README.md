@@ -1,2 +1,2 @@
 https://travis-ci.com/github/RomanKlishch/online-shop 
-https://tlas-shop.herokuapp.com/
+https://forged-gates.herokuapp.com/index
