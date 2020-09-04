@@ -1,4 +1,4 @@
-package com.rk.dao.mapper;
+package com.rk.dao.jdbc.mapper;
 
 import com.rk.domain.Glasses;
 import lombok.SneakyThrows;
@@ -14,6 +14,7 @@ public class GlassesRowMapper {
         glasses.setCollection(resultSet.getString("collection"));
         glasses.setCategory(resultSet.getString("category"));
         glasses.setDetails(resultSet.getString("details"));
+        glasses.setPrice(resultSet.getDouble("price"));
         return glasses;
     }
 }

@@ -1,4 +1,4 @@
-package com.rk.dao.mapper;
+package com.rk.dao.jdbc.mapper;
 
 import com.rk.domain.Photo;
 import lombok.SneakyThrows;

@@ -1,4 +1,4 @@
-package com.rk.dao.mapper;
+package com.rk.dao.jdbc.mapper;
 
 import com.rk.domain.Glasses;
 import lombok.SneakyThrows;
@@ -25,6 +25,7 @@ class GlassesRowMapperTest {
         when(resultSet.getString("collection")).thenReturn("good");
         when(resultSet.getString("category")).thenReturn("sun");
         when(resultSet.getString("details")).thenReturn("ups");
+        when(resultSet.getDouble("price")).thenReturn(20.00);
 
         Glasses actualGlasses = mapper.glassesMapRow(resultSet);
 
@@ -33,5 +34,6 @@ class GlassesRowMapperTest {
         assertEquals("good",actualGlasses.getCollection());
         assertEquals("sun",actualGlasses.getCategory());
         assertEquals("ups",actualGlasses.getDetails());
+        assertEquals(20.00,actualGlasses.getPrice(),2);
     }
 }

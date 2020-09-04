@@ -17,6 +17,7 @@
         <jetty.version>9.4.30.v20200611</jetty.version>
         <postgres.version>42.2.14</postgres.version>
         <logback.version>1.2.3</logback.version>
+        <flyway.version>6.5.5</flyway.version>
         <junit.version>5.6.2</junit.version>
         <mockito.version>3.5.7</mockito.version>
         <h2.version>1.4.200</h2.version>
@@ -54,6 +55,17 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
 
         <dependency>
