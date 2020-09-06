@@ -5,12 +5,16 @@ import com.rk.domain.Photo;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.h2.jdbcx.JdbcDataSource;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class JdbcGlassesDaoITest {
     Flyway flyway;
@@ -77,6 +81,7 @@ class JdbcGlassesDaoITest {
     }
 
     @Test
+    @DisplayName("Save glasses")
     void testSaveGlasses() {
         Glasses expected = getGlasses();
 
@@ -86,7 +91,19 @@ class JdbcGlassesDaoITest {
         assertEquals(4, jdbcGlassesDao.findAll().size());
     }
 
+    //TODO: write implementation test. Do not save glasses if photo save fails
+    @DisplayName("Do not save glasses")
+    void testNotSaveGlasses() {
+        Glasses expected = getGlasses();
+
+        jdbcGlassesDao.saveGlasses(expected);
+
+        assertNull(jdbcGlassesDao.findById(4));
+        assertEquals(3, jdbcGlassesDao.findAll().size());
+    }
+
     @Test
+    @DisplayName("Update glasses by id")
     void testUpdateById() {
         Glasses expected = getGlasses();
 
@@ -98,13 +115,14 @@ class JdbcGlassesDaoITest {
     }
 
     @Test
+    @DisplayName("Delete glasses by id")
     void testDeleteById() {
         jdbcGlassesDao.deleteById(3);
         List<Glasses> glassesList = jdbcGlassesDao.findAll();
 
         assertEquals(2, glassesList.size());
-        assertEquals("bas",glassesList.get(0).getName());
-        assertEquals("pol",glassesList.get(1).getName());
+        assertEquals("bas", glassesList.get(0).getName());
+        assertEquals("pol", glassesList.get(1).getName());
     }
 
     private Glasses getGlasses() {

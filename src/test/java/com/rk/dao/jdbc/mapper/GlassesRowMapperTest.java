@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.ResultSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,9 +31,9 @@ class GlassesRowMapperTest {
 
         assertEquals(1, actualGlasses.getGlassesId());
         assertEquals("o-o", actualGlasses.getName());
-        assertEquals("good",actualGlasses.getCollection());
-        assertEquals("sun",actualGlasses.getCategory());
-        assertEquals("ups",actualGlasses.getDetails());
-        assertEquals(20.00,actualGlasses.getPrice(),2);
+        assertEquals("good", actualGlasses.getCollection());
+        assertEquals("sun", actualGlasses.getCategory());
+        assertEquals("ups", actualGlasses.getDetails());
+        assertEquals(20.00, actualGlasses.getPrice(), 2);
     }
 }

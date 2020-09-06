@@ -7,6 +7,8 @@ import java.util.List;
 public interface GlassesDao {
     List<Glasses> findAll();
 
+    List<Glasses> findAll(int limit);
+
     List<Glasses> findAllByName(String name);
 
     Glasses findById(long id);

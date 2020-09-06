@@ -108,6 +108,9 @@
                 <version>3.8.1</version>
                 <configuration>
                     <release>13</release>
+                    <excludes>
+                        <exclude>src/main/java/com/rk/util/File.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>

@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class JdbcGlassesDao implements GlassesDao {
     private static final String UPDATE_PHOTO = "UPDATE photos SET address=? WHERE photo_id=?";
     private static final String DELETE_GLASSES = "DELETE FROM glasses WHERE glasses_id=?";
     private static final String DELETE_PHOTO = "DELETE FROM photos WHERE glasses_id=?";
+    private static final String FIND_RANDOM_GLASSES = "SELECT glasses_id, name, collection, category, details, price FROM glasses ORDER BY RANDOM() LIMIT=?";
+
 
     public JdbcGlassesDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -40,33 +43,30 @@ public class JdbcGlassesDao implements GlassesDao {
     @Override
     @SneakyThrows
     public List<Glasses> findAll() {
-        List<Glasses> glassesList = new ArrayList<>();
-        List<Photo> photosList;
         @Cleanup Connection connection = dataSource.getConnection();
         @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(FIND_ALL);
-        @Cleanup PreparedStatement statementPhoto = connection.prepareStatement(FIND_ALL_PHOTO_BY_GLASSES_ID);
         @Cleanup ResultSet resultSetGlasses = statementGlasses.executeQuery();
 
-        while (resultSetGlasses.next()) {
-            Glasses glasses = glassesRowMapper.glassesMapRow(resultSetGlasses);
-            statementPhoto.setLong(1, glasses.getGlassesId());
-            @Cleanup ResultSet resultSetPhoto = statementPhoto.executeQuery();
-            photosList = new ArrayList<>();
-            while (resultSetPhoto.next()) {
-                Photo photo = photoRowMapper.photoMapRow(resultSetPhoto);
-                photosList.add(photo);
-            }
-            glasses.setPhotos(photosList);
-            glassesList.add(glasses);
-        }
-        return glassesList;
+        return getGlasses(connection, resultSetGlasses);
+    }
+
+
+
+    @SneakyThrows
+    @Override
+    public List<Glasses> findAll(int limit) {
+        @Cleanup Connection connection = dataSource.getConnection();
+        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(FIND_RANDOM_GLASSES);
+        @Cleanup ResultSet resultSetGlasses = statementGlasses.executeQuery();
+
+        statementGlasses.setInt(1, limit);
+
+        return getGlasses(connection, resultSetGlasses);
     }
 
     @Override
     @SneakyThrows
     public List<Glasses> findAllByName(String name) {
-        List<Glasses> glassesList = new ArrayList<>();
-        List<Photo> photosList;
         String parameter = "%".concat(name).concat("%");
         @Cleanup Connection connection = dataSource.getConnection();
         @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(FIND_ALL_BY_NAME);
@@ -74,31 +74,18 @@ public class JdbcGlassesDao implements GlassesDao {
         statementGlasses.setString(2, parameter);
         @Cleanup ResultSet resultSetGlasses = statementGlasses.executeQuery();
 
-        while (resultSetGlasses.next()) {
-            Glasses glasses = glassesRowMapper.glassesMapRow(resultSetGlasses);
-            @Cleanup PreparedStatement statementPhoto = connection.prepareStatement(FIND_ALL_PHOTO_BY_GLASSES_ID);
-            statementPhoto.setLong(1, glasses.getGlassesId());
-            @Cleanup ResultSet resultSetPhoto = statementPhoto.executeQuery();
-            photosList = new ArrayList<>();
-            while (resultSetPhoto.next()) {
-                Photo photo = photoRowMapper.photoMapRow(resultSetPhoto);
-                photosList.add(photo);
-            }
-            glasses.setPhotos(photosList);
-            glassesList.add(glasses);
-        }
-        return glassesList;
+        return getGlasses(connection, resultSetGlasses);
     }
 
     @Override
     @SneakyThrows
     public Glasses findById(long id) {
-        List<Photo> photoList = new ArrayList<>();
-        Glasses glasses = new Glasses();
         @Cleanup Connection connection = dataSource.getConnection();
         @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(FIND_BY_ID);
         statementGlasses.setLong(1, id);
         @Cleanup ResultSet resultSetGlasses = statementGlasses.executeQuery();
+        List<Photo> photoList = new ArrayList<>();
+        Glasses glasses = new Glasses();
 
         while (resultSetGlasses.next()) {
             glasses = glassesRowMapper.glassesMapRow(resultSetGlasses);
@@ -115,7 +102,7 @@ public class JdbcGlassesDao implements GlassesDao {
     }
 
     @SneakyThrows
-    private void savePhoto(Connection connection, List<Photo> photos, long id) {
+    protected void savePhoto(Connection connection, List<Photo> photos, long id) {
         @Cleanup PreparedStatement statement = connection.prepareStatement(SAVE_PHOTO);
         for (Photo photo : photos) {
             statement.setLong(1, id);
@@ -189,10 +176,30 @@ public class JdbcGlassesDao implements GlassesDao {
     }
 
     @SneakyThrows
-    private void deletePhotoById(Connection connection, long id) {
+    protected void deletePhotoById(Connection connection, long id) {
         @Cleanup PreparedStatement statement = connection.prepareStatement(DELETE_PHOTO);
         statement.setLong(1, id);
         statement.execute();
+    }
+
+    private List<Glasses> getGlasses(Connection connection, ResultSet resultSetGlasses) throws SQLException {
+        List<Glasses> glassesList = new ArrayList<>();
+        List<Photo> photosList;
+
+        while (resultSetGlasses.next()) {
+            Glasses glasses = glassesRowMapper.glassesMapRow(resultSetGlasses);
+            @Cleanup PreparedStatement statementPhoto = connection.prepareStatement(FIND_ALL_PHOTO_BY_GLASSES_ID);
+            statementPhoto.setLong(1, glasses.getGlassesId());
+            @Cleanup ResultSet resultSetPhoto = statementPhoto.executeQuery();
+            photosList = new ArrayList<>();
+            while (resultSetPhoto.next()) {
+                Photo photo = photoRowMapper.photoMapRow(resultSetPhoto);
+                photosList.add(photo);
+            }
+            glasses.setPhotos(photosList);
+            glassesList.add(glasses);
+        }
+        return glassesList;
     }
 }
 //TODO: проблема с Statement.RETURN_GENERATED_KEYS(), как ее решают на реальных проектах или как бы ее решал ты?
