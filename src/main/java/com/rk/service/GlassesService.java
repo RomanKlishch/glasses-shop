@@ -8,4 +8,6 @@ public interface GlassesService {
     List<Glasses> findRandomGlasses(int limit);
 
     Glasses findById(long id);
+
+    List<Glasses> findAll();
 }

@@ -22,5 +22,10 @@ public class DefaultGlassesService implements GlassesService {
     public Glasses findById(long id) {
         return glassesDao.findById(id);
     }
+
+    @Override
+    public List<Glasses> findAll() {
+        return glassesDao.findAll();
+    }
 }
 

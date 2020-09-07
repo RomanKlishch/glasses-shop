@@ -3,10 +3,7 @@ package com.rk;
 import com.rk.dao.jdbc.JdbcGlassesDao;
 import com.rk.service.impl.DefaultGlassesService;
 import com.rk.util.PropertiesReader;
-import com.rk.web.servlet.ArticleServlet;
-import com.rk.web.servlet.ContactServlet;
-import com.rk.web.servlet.GlassesServlet;
-import com.rk.web.servlet.HomeServlet;
+import com.rk.web.servlet.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
@@ -37,6 +34,7 @@ public class Starter {
 
         HomeServlet homeServlet = new HomeServlet(glassesService);
         GlassesServlet glassesServlet = new GlassesServlet(glassesService);
+        CatalogGlassesServlet catalogGlassesServlet = new CatalogGlassesServlet(glassesService);
         ArticleServlet articleServlet = new ArticleServlet();
         ContactServlet contactServlet = new ContactServlet();
 
@@ -44,6 +42,7 @@ public class Starter {
         context.addServlet(new ServletHolder(glassesServlet), "/glasses/*");
         context.addServlet(new ServletHolder(articleServlet), "/articles");
         context.addServlet(new ServletHolder(contactServlet), "/contacts");
+        context.addServlet(new ServletHolder(catalogGlassesServlet), "/catalog");
 
         Resource resource = JarFileResource.newClassPathResource(PROPERTIES_READER.getProperties("RESOURCE_PATH"));
         context.setBaseResource(resource);

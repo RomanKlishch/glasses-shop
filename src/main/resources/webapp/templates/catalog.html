@@ -1,0 +1,15 @@
+<!doctype html >
+<html lang="ru-UA" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{/fragments/header.html :: head(title='Home')}"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="img-under-header">
+            <img src="/img/imgForSite/catalog.jpg" class="img-fluid">
+            <div class="centered"><h1>CATALOG.</h1></div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{/fragments/listGlasses.html :: list(glassesList = ${catalogList} , title= 'ALL GLASSES')}"></div>
+
+<div th:replace="~{/fragments/footer.html :: foot}"></div>
