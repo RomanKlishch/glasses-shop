@@ -6,6 +6,8 @@ Test.java
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+setUpSun.sql
+setUpOptical.sql
 .idea
 # Maven
 target/

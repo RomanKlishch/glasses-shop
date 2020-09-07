@@ -33,7 +33,7 @@ public class JdbcGlassesDao implements GlassesDao {
     private static final String UPDATE_PHOTO = "UPDATE photos SET address=? WHERE photo_id=?";
     private static final String DELETE_GLASSES = "DELETE FROM glasses WHERE glasses_id=?";
     private static final String DELETE_PHOTO = "DELETE FROM photos WHERE glasses_id=?";
-    private static final String FIND_RANDOM_GLASSES = "SELECT glasses_id, name, collection, category, details, price FROM glasses ORDER BY RANDOM() LIMIT=?";
+    private static final String FIND_RANDOM_GLASSES = "SELECT glasses_id, name, collection, category, details, price FROM glasses ORDER BY RANDOM() LIMIT ?";
 
 
     public JdbcGlassesDao(DataSource dataSource) {
@@ -51,15 +51,13 @@ public class JdbcGlassesDao implements GlassesDao {
     }
 
 
-
     @SneakyThrows
     @Override
     public List<Glasses> findAll(int limit) {
         @Cleanup Connection connection = dataSource.getConnection();
         @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(FIND_RANDOM_GLASSES);
-        @Cleanup ResultSet resultSetGlasses = statementGlasses.executeQuery();
-
         statementGlasses.setInt(1, limit);
+        @Cleanup ResultSet resultSetGlasses = statementGlasses.executeQuery();
 
         return getGlasses(connection, resultSetGlasses);
     }
@@ -130,7 +128,7 @@ public class JdbcGlassesDao implements GlassesDao {
             glasses.setGlassesId(resultSet.getLong(1));
         }
         savePhoto(connection, glasses.getPhotos(), glasses.getGlassesId());
-       connection.commit();
+        connection.commit();
     }
 
 
@@ -169,8 +167,8 @@ public class JdbcGlassesDao implements GlassesDao {
         @Cleanup Connection connection = dataSource.getConnection();
         @Cleanup PreparedStatement statement = connection.prepareStatement(DELETE_GLASSES);
         connection.setAutoCommit(false);
-        statement.setLong(1,id);
-        deletePhotoById(connection,id);
+        statement.setLong(1, id);
+        deletePhotoById(connection, id);
         statement.execute();
         connection.commit();
     }

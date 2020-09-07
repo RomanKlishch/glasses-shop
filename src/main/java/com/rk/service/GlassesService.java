@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface GlassesService {
     List<Glasses> findRandomGlasses(int limit);
+
+    Glasses findById(long id);
 }

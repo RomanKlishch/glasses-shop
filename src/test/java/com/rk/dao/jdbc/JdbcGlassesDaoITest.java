@@ -51,6 +51,13 @@ class JdbcGlassesDaoITest {
     }
 
     @Test
+    @DisplayName("Find random glasses")
+    void findAllLimit() {
+        List<Glasses> glassesList = jdbcGlassesDao.findAll(1);
+        assertEquals(1, glassesList.size());
+    }
+
+    @Test
     @DisplayName("Find all glasses by part of name")
     void testFindAllByPartName() {
         List<Glasses> glassesList = jdbcGlassesDao.findAllByName("ups");

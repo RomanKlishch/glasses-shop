@@ -17,5 +17,10 @@ public class DefaultGlassesService implements GlassesService {
     public List<Glasses> findRandomGlasses(int limit) {
         return glassesDao.findAll(limit);
     }
+
+    @Override
+    public Glasses findById(long id) {
+        return glassesDao.findById(id);
+    }
 }
 
