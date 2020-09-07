@@ -35,6 +35,7 @@ public class Starter {
         HomeServlet homeServlet = new HomeServlet(glassesService);
         GlassesServlet glassesServlet = new GlassesServlet(glassesService);
         CatalogGlassesServlet catalogGlassesServlet = new CatalogGlassesServlet(glassesService);
+        CategoryServlet categoryServlet = new CategoryServlet(glassesService);
         ArticleServlet articleServlet = new ArticleServlet();
         ContactServlet contactServlet = new ContactServlet();
 
@@ -44,6 +45,8 @@ public class Starter {
         context.addServlet(new ServletHolder(contactServlet), "/contacts");
         context.addServlet(new ServletHolder(catalogGlassesServlet), "/catalog");
         context.addServlet(new ServletHolder(catalogGlassesServlet), "/search");
+        context.addServlet(new ServletHolder(categoryServlet), "/sun");
+        context.addServlet(new ServletHolder(categoryServlet), "/optical");
 
         Resource resource = JarFileResource.newClassPathResource(PROPERTIES_READER.getProperties("RESOURCE_PATH"));
         context.setBaseResource(resource);

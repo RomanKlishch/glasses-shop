@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CatalogGlassesServlet extends HttpServlet {
+public class CategoryServlet extends HttpServlet {
     GlassesService glassesService;
 
-    public CatalogGlassesServlet(GlassesService glassesService) {
+    public CategoryServlet(GlassesService glassesService) {
         this.glassesService = glassesService;
     }
 
@@ -24,18 +24,18 @@ public class CatalogGlassesServlet extends HttpServlet {
         Map<String, Object> pageVariables = new HashMap<>();
 
         List<Glasses> catalogList;
+        String category = "SUN";
         String information;
-
-        String name = request.getParameter("searchName");
-        if (name!=null){
-            catalogList = glassesService.findByName(name);
-            information = "Found by your request";
-        }else {
+        if ("sun".equals(category)){
             catalogList = glassesService.findAll();
-            information = "Catalog of glasses";
+            information = "SUN";
+        }else{
+            catalogList = glassesService.findAll();
+            information = "OPTICAL";
         }
         pageVariables.put("catalogList", catalogList);
         pageVariables.put("information", information);
+        pageVariables.put("category", category);
         response.setContentType("text/html;charset=utf-8");
 
         PageGenerator.instance().process("catalog", pageVariables, response.getWriter());
