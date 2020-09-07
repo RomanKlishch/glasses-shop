@@ -1,5 +1,6 @@
 package com.rk.web.servlet;
 
+import com.rk.domain.Glasses;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -43,6 +44,7 @@ class GlassesServletTest {
     void doGet() throws IOException, ServletException {
         when(request.getPathInfo()).thenReturn("sun/1");
         when(response.getWriter()).thenReturn(printWriter);
+        when(glassesService.findById(anyLong())).thenReturn(new Glasses());
         doNothing().when(pageGenerator).process(any(), any(), any());
         servlet.doGet(request, response);
         pageGenerator.process(anyString(), any(), any());
