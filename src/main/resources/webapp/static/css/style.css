@@ -160,7 +160,30 @@ a:hover {
 .map-contacts {
     margin-top: 30px;
 }
+/*glasses card*/
+.glasses-card{
+    margin-top: 50px;
+}
+.head-details{
+    margin-top: 100px;
+}
+.head-details {
+    margin-top: 100px;
+}
+.button-add-cart{
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
 
+.button-add-cart {
+    border-radius: 0;
+    background: #000;
+    color: #fff;
+}
+.button-add-cart:hover {
+    background: #000;
+    color: #fff;
+}
 
 @media only screen and (max-width: 1200px) {
 

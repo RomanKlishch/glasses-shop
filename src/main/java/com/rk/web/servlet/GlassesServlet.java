@@ -22,8 +22,8 @@ public class GlassesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> pageVariables = new HashMap<>();
 
-        String path = request.getPathInfo();
-        long id = Long.parseLong(path.substring(path.length() - 1));
+        String[] path = request.getPathInfo().split("/");
+        long id = Long.parseLong(path[path.length-1]);
         Glasses glasses = glassesService.findById(id);
         pageVariables.put("glasses", glasses);
         response.setContentType("text/html;charset=utf-8");

@@ -1,14 +1,32 @@
 <!doctype html >
 <html lang="ru-UA" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{/fragments/header.html :: head(title='List gates')}"></div>
-<div class="container-fluid">
+<div th:replace="~{/fragments/header.html :: head(title='Glasses')}"></div>
+<div class="container glasses-card">
     <div class="row">
-        <div class="img-under-header">
-            <img src="#" class="img-responsive">
+        <div class="col-7 card-image-glasses  text-center">
+            <div class="" th:each="photo : ${glasses.getPhotos()}">
+                <p><img th:src="${photo.getAddress}" class="card-img-top" alt="..."></p>
+            </div>
+        </div>
+
+        <div class="col-5 details-glasses text-left">
+            <div class="head-name">
+                <h1 th:text="${glasses.name}">$</h1>
+                <h4 th:text="${glasses.collection}">$</h4>
+                <h3>$<span th:text="${glasses.price}"></span></h3>
+            </div>
+            <div>
+                <form method="GET" action="#">
+                    <button type="button" class="btn btn-secondary btn-lg btn-block button-add-cart">
+                        <input type="hidden" name="id" th:value="${glasses.glassesId}">
+                    ADD TO CART</button>
+                </form>
+            </div>
+            <div class="head-details">
+                <h5>DETAILS</h5>
+                <p th:text="${glasses.details}">$</p>
+            </div>
         </div>
     </div>
-</div>
-<div class="container">
-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCcccccc
 </div>
 <div th:replace="~{/fragments/footer.html :: foot}"></div>

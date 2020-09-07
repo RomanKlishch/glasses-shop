@@ -12,21 +12,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.atLeast;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class CatalogGlassesTest{
+public class CatalogGlassesTest {
     @Mock
     GlassesService glassesService;
     @InjectMocks
@@ -61,5 +58,16 @@ public class CatalogGlassesTest{
         servlet.doGet(request, response);
 
         verify(glassesService, atLeast(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("check method findByName()")
+    void doGetWithParameter() throws IOException {
+        when(response.getWriter()).thenReturn(printWriter);
+        when(request.getParameter(anyString())).thenReturn(anyString());
+
+        servlet.doGet(request, response);
+
+        verify(glassesService).findByName(anyString());
     }
 }

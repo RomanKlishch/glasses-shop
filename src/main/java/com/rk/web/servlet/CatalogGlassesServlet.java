@@ -4,7 +4,6 @@ import com.rk.domain.Glasses;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +23,13 @@ public class CatalogGlassesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> pageVariables = new HashMap<>();
 
-        List<Glasses> catalogList = glassesService.findAll();
+        List<Glasses> catalogList;
+        String name = request.getParameter("searchName");
+        if (name!=null){
+            catalogList = glassesService.findByName(name);
+        }else {
+            catalogList = glassesService.findAll();
+        }
         pageVariables.put("catalogList", catalogList);
         response.setContentType("text/html;charset=utf-8");
 

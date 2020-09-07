@@ -27,5 +27,10 @@ public class DefaultGlassesService implements GlassesService {
     public List<Glasses> findAll() {
         return glassesDao.findAll();
     }
+
+    @Override
+    public List<Glasses> findByName(String name) {
+        return glassesDao.findAllByName(name);
+    }
 }
 

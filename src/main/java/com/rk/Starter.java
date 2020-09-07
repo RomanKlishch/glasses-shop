@@ -43,6 +43,7 @@ public class Starter {
         context.addServlet(new ServletHolder(articleServlet), "/articles");
         context.addServlet(new ServletHolder(contactServlet), "/contacts");
         context.addServlet(new ServletHolder(catalogGlassesServlet), "/catalog");
+        context.addServlet(new ServletHolder(catalogGlassesServlet), "/search");
 
         Resource resource = JarFileResource.newClassPathResource(PROPERTIES_READER.getProperties("RESOURCE_PATH"));
         context.setBaseResource(resource);
