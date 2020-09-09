@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Photo {
-    private long photoId;
+    private long id;
     private String address;
 }

@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 
 public class PhotoRowMapper {
     @SneakyThrows
-    public Photo photoMapRow(ResultSet resultSet) {
+    public Photo mapRow(ResultSet resultSet) {
         Photo photo = new Photo();
-        photo.setPhotoId(resultSet.getLong("photo_id"));
+        photo.setId(resultSet.getLong("photo_id"));
         photo.setAddress(resultSet.getString("address"));
         return photo;
     }

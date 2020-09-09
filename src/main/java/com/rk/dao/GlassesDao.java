@@ -7,7 +7,7 @@ import java.util.List;
 public interface GlassesDao {
     List<Glasses> findAll();
 
-    List<Glasses> findAll(int limit);
+    List<Glasses> findListOfRandom(int limit);
 
     List<Glasses> findAllByName(String name);
 
@@ -18,4 +18,6 @@ public interface GlassesDao {
     void updateById(Glasses glasses);
 
     void deleteById(long id);
+
+    List<Glasses> findByCategory(String category);
 }

@@ -1,6 +1,7 @@
 package com.rk.web.servlet;
 
 import com.rk.domain.Glasses;
+import com.rk.dto.FeaturesAndSpecialGlasses;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeServlet extends HttpServlet {
-    GlassesService glassesService;
+    private GlassesService glassesService;
 
     public HomeServlet(GlassesService glassesService) {
         this.glassesService = glassesService;
@@ -23,10 +24,11 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> pageVariables = new HashMap<>();
 
-        List<Glasses> glassesList = glassesService.findRandomGlasses(9);
-        List<Glasses> specialList = glassesService.findRandomGlasses(6);
-        pageVariables.put("randomList", glassesList);
-        pageVariables.put("specialList", specialList);
+        FeaturesAndSpecialGlasses glasses = glassesService.getListsFeaturesAndSpecialGlasses(9,6);
+        List<Glasses> feature = glasses.getFeature();
+        List<Glasses> special = glasses.getSpecial();
+        pageVariables.put("feature", feature);
+        pageVariables.put("special", special);
         response.setContentType("text/html;charset=utf-8");
 
         PageGenerator.instance().process("index", pageVariables, response.getWriter());

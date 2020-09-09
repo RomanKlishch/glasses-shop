@@ -1,0 +1,23 @@
+<!doctype html >
+<html lang="ru-UA" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Error</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+</head>
+<body>
+<section id="wrapper" class="container-fluid">
+    <div class="error-box">
+        <div class="error-body text-center">
+            <h1 class="text-danger" th:text="${code}">code</h1>
+            <h4 th:text="${code}">message</h4>
+            <a href="/" class="btn btn-danger btn-rounded m-b-40">Back to home page</a></div>
+    </div>
+</section>
+</body>
+</html>

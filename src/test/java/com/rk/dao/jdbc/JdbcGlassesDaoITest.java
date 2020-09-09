@@ -53,7 +53,7 @@ class JdbcGlassesDaoITest {
     @Test
     @DisplayName("Find random glasses")
     void findAllLimit() {
-        List<Glasses> glassesList = jdbcGlassesDao.findAll(1);
+        List<Glasses> glassesList = jdbcGlassesDao.findListOfRandom(1);
         assertEquals(1, glassesList.size());
     }
 
@@ -132,6 +132,17 @@ class JdbcGlassesDaoITest {
         assertEquals("pol", glassesList.get(1).getName());
     }
 
+    @Test
+    @DisplayName("Find by category")
+    void findByCategory() {
+        List<Glasses> glassesList = jdbcGlassesDao.findByCategory("sun");
+
+        assertEquals(1, glassesList.size());
+        assertEquals(1, glassesList.get(0).getId());
+        assertEquals("bas", glassesList.get(0).getName());
+    }
+
+
     private Glasses getGlasses() {
         List<Photo> photoList = new ArrayList<>();
         Photo photo1 = new Photo();
@@ -141,7 +152,7 @@ class JdbcGlassesDaoITest {
         photoList.add(photo1);
         photoList.add(photo2);
         Glasses expected = new Glasses();
-        expected.setGlassesId(2L);
+        expected.setId(2L);
         expected.setName("TEST");
         expected.setCollection("TEST");
         expected.setCategory("TEST");

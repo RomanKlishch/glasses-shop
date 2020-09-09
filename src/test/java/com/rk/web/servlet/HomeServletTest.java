@@ -1,5 +1,6 @@
 package com.rk.web.servlet;
 
+import com.rk.dto.FeaturesAndSpecialGlasses;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -36,27 +37,23 @@ class HomeServletTest {
     PrintWriter printWriter;
     @Spy
     PageGenerator pageGenerator;
+    @Mock
+    FeaturesAndSpecialGlasses glasses;
 
     @Test
     @DisplayName("Test response in method doGet()")
     void doGet() throws IOException {
         when(response.getWriter()).thenReturn(printWriter);
+        when(glassesService.getListsFeaturesAndSpecialGlasses(anyInt(), anyInt())).thenReturn(glasses);
         doNothing().when(pageGenerator).process(any(), any(), any());
+
         servlet.doGet(request, response);
         pageGenerator.process(anyString(), any(), any());
 
+        verify(glassesService, atLeast(1)).getListsFeaturesAndSpecialGlasses(anyInt(), anyInt());
         verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
         verify(response, atLeast(1)).getWriter();
         verify(printWriter, atLeast(1)).flush();
         verify(pageGenerator).process(any(), any(), any());
-    }
-
-    @Test
-    @DisplayName("check method findRandomGlasses()")
-    void doGetWithParameter() throws IOException {
-        when(response.getWriter()).thenReturn(printWriter);
-        servlet.doGet(request, response);
-
-        verify(glassesService, atLeast(2)).findRandomGlasses(anyInt());
     }
 }

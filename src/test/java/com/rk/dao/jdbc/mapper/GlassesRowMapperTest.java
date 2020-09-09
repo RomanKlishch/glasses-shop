@@ -27,9 +27,9 @@ class GlassesRowMapperTest {
         when(resultSet.getString("details")).thenReturn("ups");
         when(resultSet.getDouble("price")).thenReturn(20.00);
 
-        Glasses actualGlasses = mapper.glassesMapRow(resultSet);
+        Glasses actualGlasses = mapper.mapRow(resultSet);
 
-        assertEquals(1, actualGlasses.getGlassesId());
+        assertEquals(1, actualGlasses.getId());
         assertEquals("o-o", actualGlasses.getName());
         assertEquals("good", actualGlasses.getCollection());
         assertEquals("sun", actualGlasses.getCategory());

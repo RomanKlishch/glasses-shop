@@ -1,5 +1,6 @@
 package com.rk.web.servlet;
 
+import com.rk.dto.CatalogAndMessage;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -34,6 +35,8 @@ public class CatalogGlassesTest {
     HttpServletResponse response;
     @Mock
     PrintWriter printWriter;
+    @Mock
+    CatalogAndMessage catalogAndMessage;
     @Spy
     PageGenerator pageGenerator;
 
@@ -41,33 +44,16 @@ public class CatalogGlassesTest {
     @DisplayName("Test response in method doGet()")
     void doGet() throws IOException {
         when(response.getWriter()).thenReturn(printWriter);
+        when(glassesService.getCatalogAndMessage(any())).thenReturn(catalogAndMessage);
         doNothing().when(pageGenerator).process(any(), any(), any());
         servlet.doGet(request, response);
         pageGenerator.process(anyString(), any(), any());
 
+        verify(glassesService, atLeast(1)).getCatalogAndMessage(request);
         verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
         verify(response, atLeast(1)).getWriter();
         verify(printWriter, atLeast(1)).flush();
         verify(pageGenerator).process(any(), any(), any());
     }
 
-    @Test
-    @DisplayName("check method findAll()")
-    void doGetAllGlasses() throws IOException {
-        when(response.getWriter()).thenReturn(printWriter);
-        servlet.doGet(request, response);
-
-        verify(glassesService, atLeast(1)).findAll();
-    }
-
-    @Test
-    @DisplayName("check method findByName()")
-    void doGetWithParameter() throws IOException {
-        when(response.getWriter()).thenReturn(printWriter);
-        when(request.getParameter(anyString())).thenReturn(anyString());
-
-        servlet.doGet(request, response);
-
-        verify(glassesService).findByName(anyString());
-    }
 }

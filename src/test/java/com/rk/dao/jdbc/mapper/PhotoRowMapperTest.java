@@ -27,9 +27,9 @@ class PhotoRowMapperTest {
         when(resultSet.getLong("photo_id")).thenReturn(1L);
         when(resultSet.getString("address")).thenReturn("anyString");
 
-        Photo photo = mapper.photoMapRow(resultSet);
+        Photo photo = mapper.mapRow(resultSet);
 
-        assertEquals(1, photo.getPhotoId());
+        assertEquals(1, photo.getId());
         assertEquals("anyString", photo.getAddress());
     }
 }

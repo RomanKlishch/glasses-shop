@@ -2,7 +2,8 @@ package com.rk;
 
 import com.rk.dao.jdbc.JdbcGlassesDao;
 import com.rk.service.impl.DefaultGlassesService;
-import com.rk.util.PropertiesReader;
+import com.rk.util.PropertyReader;
+import com.rk.web.handler.DefaultErrorHandler;
 import com.rk.web.servlet.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ import java.util.Arrays;
 
 @Slf4j
 public class Starter {
-    private static final PropertiesReader PROPERTIES_READER = new PropertiesReader("properties/configDB.properties", "properties/config.properties");
+    private static final PropertyReader PROPERTIES_READER = new PropertyReader("properties/config.properties");
     private static final int PORT = Integer.parseInt(PROPERTIES_READER.getProperties("PORT"));
 
     @SneakyThrows
@@ -48,7 +49,9 @@ public class Starter {
         context.addServlet(new ServletHolder(categoryServlet), "/sun");
         context.addServlet(new ServletHolder(categoryServlet), "/optical");
 
-        Resource resource = JarFileResource.newClassPathResource(PROPERTIES_READER.getProperties("RESOURCE_PATH"));
+        context.setErrorHandler(new DefaultErrorHandler());
+
+        Resource resource = JarFileResource.newClassPathResource("/webapp/static");
         context.setBaseResource(resource);
         context.addServlet(DefaultServlet.class, "/");
 

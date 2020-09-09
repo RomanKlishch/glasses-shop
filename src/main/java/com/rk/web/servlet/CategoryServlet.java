@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CategoryServlet extends HttpServlet {
-    GlassesService glassesService;
+    private GlassesService glassesService;
 
     public CategoryServlet(GlassesService glassesService) {
         this.glassesService = glassesService;
@@ -22,22 +22,12 @@ public class CategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> pageVariables = new HashMap<>();
+        String category = request.getServletPath().substring(1);
+        List<Glasses> categoryList = glassesService.getCategoryList(category);
 
-        List<Glasses> catalogList;
-        String category = "SUN";
-        String information;
-        if ("sun".equals(category)){
-            catalogList = glassesService.findAll();
-            information = "SUN";
-        }else{
-            catalogList = glassesService.findAll();
-            information = "OPTICAL";
-        }
-        pageVariables.put("catalogList", catalogList);
-        pageVariables.put("information", information);
+        pageVariables.put("categoryList", categoryList);
         pageVariables.put("category", category);
         response.setContentType("text/html;charset=utf-8");
-
-        PageGenerator.instance().process("catalog", pageVariables, response.getWriter());
+        PageGenerator.instance().process("category", pageVariables, response.getWriter());
     }
 }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GlassesServlet extends HttpServlet {
-    GlassesService glassesService;
+    private GlassesService glassesService;
 
     public GlassesServlet(GlassesService glassesService) {
         this.glassesService = glassesService;

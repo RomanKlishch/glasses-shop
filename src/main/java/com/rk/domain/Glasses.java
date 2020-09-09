@@ -1,22 +1,21 @@
 package com.rk.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Glasses {
-    private long glassesId;
+    private long id;
     private String name;
     private String collection;
     private String category;
     private String details;
     private double price;
     @EqualsAndHashCode.Exclude
+    @Singular
     private List<Photo> photos;
 }

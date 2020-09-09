@@ -4,7 +4,7 @@
         <div class="row justify-content-around">
             <div class="col-3 ml-2 mr-2" th:each="glasses : ${glassesList}">
                 <div class="card random-glasses" style="width: 100%;">
-                    <a th:href="@{'glasses/' + ${glasses.getCategory}+'/'+${glasses.getGlassesId}}"><img
+                    <a th:href="@{'glasses/' + ${glasses.getCategory()}+'/'+${glasses.getId()}}"><img
                             th:src="${glasses.getPhotos().get(0).getAddress()}" class="card-img-top" alt="..."></a>
                     <div class="card-body">
                         <h3 class="card-text text-center" th:utext="${glasses.name} ? ${glasses.name} : 'Unknow name'"></h3>

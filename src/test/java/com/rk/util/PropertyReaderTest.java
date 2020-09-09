@@ -7,8 +7,9 @@ import static com.github.stefanbirkner.systemlambda.SystemLambda.withEnvironment
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class PropertiesReaderTest {
-    PropertiesReader propertiesReader = new PropertiesReader("properties/test.properties");
+class PropertyReaderTest {
+    PropertyReader propertyReader = new PropertyReader();
+
 
     @Test
     @DisplayName("Find variables from global list in production")
@@ -18,21 +19,21 @@ class PropertiesReaderTest {
                 .and("TEST_JDBC_DATABASE_USERNAME", "sa")
                 .and("TEST_JDBC_DATABASE_PASSWORD", "sa")
                 .and("TEST_PORT", "8080").execute(() -> {
-
-            assertEquals("host:port", propertiesReader.getProperties("TEST_JDBC_DATABASE_URL"));
-            assertEquals("sa", propertiesReader.getProperties("TEST_JDBC_DATABASE_USERNAME"));
-            assertEquals("sa", propertiesReader.getProperties("TEST_JDBC_DATABASE_PASSWORD"));
-            assertEquals("8080", propertiesReader.getProperties("TEST_PORT"));
+            propertyReader = new PropertyReader();
+            assertEquals("host:port", propertyReader.getProperties("TEST_JDBC_DATABASE_URL"));
+            assertEquals("sa", propertyReader.getProperties("TEST_JDBC_DATABASE_USERNAME"));
+            assertEquals("sa", propertyReader.getProperties("TEST_JDBC_DATABASE_PASSWORD"));
+            assertEquals("8080", propertyReader.getProperties("TEST_PORT"));
         });
     }
 
     @Test
     @DisplayName("Find variables from file in production")
     void getPropertiesFromFile() throws Exception {
-        assertEquals("test_host:port", propertiesReader.getProperties("TEST_JDBC_DATABASE_URL"));
-        assertEquals("test_sa", propertiesReader.getProperties("TEST_JDBC_DATABASE_USERNAME"));
-        assertEquals("test_sa", propertiesReader.getProperties("TEST_JDBC_DATABASE_PASSWORD"));
-        assertEquals("test_8080", propertiesReader.getProperties("TEST_PORT"));
+        assertEquals("test_host:port", propertyReader.getProperties("TEST_JDBC_DATABASE_URL"));
+        assertEquals("test_sa", propertyReader.getProperties("TEST_JDBC_DATABASE_USERNAME"));
+        assertEquals("test_sa", propertyReader.getProperties("TEST_JDBC_DATABASE_PASSWORD"));
+        assertEquals("test_8080", propertyReader.getProperties("TEST_PORT"));
 
     }
 
@@ -40,6 +41,6 @@ class PropertiesReaderTest {
     @DisplayName("Exception when path does not exist")
     void setUpProperties() {
         String[] path = new String[]{"ups"};
-        assertThrows(IllegalArgumentException.class, () -> propertiesReader.setUpProperties(path));
+        assertThrows(IllegalArgumentException.class, () -> propertyReader.setUpProdProperties(path));
     }
 }
