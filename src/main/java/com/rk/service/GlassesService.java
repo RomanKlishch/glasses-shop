@@ -22,4 +22,8 @@ public interface GlassesService {
     List<Glasses> getCategoryList(String category);
 
     void save(Glasses glasses, String[] arrayAddress);
+
+    void deleteById(long id);
+
+    void update(Glasses glasses, String[] id, String[] address);
 }

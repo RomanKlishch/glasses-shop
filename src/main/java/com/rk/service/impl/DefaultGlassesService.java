@@ -53,8 +53,7 @@ public class DefaultGlassesService implements GlassesService {
 
     @Override
     public List<Glasses> getCategoryList(String category) {
-        List<Glasses> glassesList = glassesDao.findByCategory(category);
-        return glassesList;
+        return glassesDao.findByCategory(category);
     }
 
     @Override
@@ -69,6 +68,24 @@ public class DefaultGlassesService implements GlassesService {
         }
         glasses.setPhotos(photoList);
         glassesDao.saveGlasses(glasses);
+    }
+
+    @Override
+    public void deleteById(long id) {
+        glassesDao.deleteById(id);
+    }
+
+    @Override
+    public void update(Glasses glasses, String[] id, String[] address) {
+        List<Photo> photoList = new ArrayList<>();
+        for (int i = 0; i < id.length; i++) {
+            if (!id[i].isEmpty() && !address[i].isEmpty()) {
+                photoList.add(Photo.builder()
+                        .id(Long.parseLong(id[i])).address(address[i]).build());
+            }
+        }
+        glasses.setPhotos(photoList);
+        glassesDao.updateById(glasses);
     }
 
 }

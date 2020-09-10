@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -90,7 +91,15 @@ class JdbcGlassesDaoITest {
     @Test
     @DisplayName("Save glasses")
     void testSaveGlasses() {
-        Glasses expected = getGlasses();
+        Photo photo = Photo.builder().address("test-first").build();
+        Photo photo2 = Photo.builder().address("test-second").build();
+        Glasses expected = Glasses.builder()
+                .name("TEST")
+                .collection("TEST")
+                .category("TEST")
+                .details("TEST")
+                .price(5)
+                .photos(Arrays.asList(photo,photo2)).build();
 
         jdbcGlassesDao.saveGlasses(expected);
 
@@ -112,7 +121,15 @@ class JdbcGlassesDaoITest {
     @Test
     @DisplayName("Update glasses by id")
     void testUpdateById() {
-        Glasses expected = getGlasses();
+        Photo photo = Photo.builder().address("test-first").build();
+        Photo photo2 = Photo.builder().address("test-second").build();
+        Glasses expected = Glasses.builder().id(2L)
+                .name("TEST")
+                .collection("TEST")
+                .category("TEST")
+                .details("TEST")
+                .price(5)
+                .photos(Arrays.asList(photo,photo2)).build();
 
         jdbcGlassesDao.updateById(expected);
         Glasses actual = jdbcGlassesDao.findById(2);
@@ -144,21 +161,16 @@ class JdbcGlassesDaoITest {
 
 
     private Glasses getGlasses() {
-        List<Photo> photoList = new ArrayList<>();
-        Photo photo1 = new Photo();
-        Photo photo2 = new Photo();
-        photo1.setAddress("test-first");
-        photo2.setAddress("test-second");
-        photoList.add(photo1);
-        photoList.add(photo2);
-        Glasses expected = new Glasses();
-        expected.setId(2L);
-        expected.setName("TEST");
-        expected.setCollection("TEST");
-        expected.setCategory("TEST");
-        expected.setDetails("TEST");
-        expected.setPrice(1.0);
-        expected.setPhotos(photoList);
+        Photo photo = Photo.builder().address("test-first").build();
+        Photo photo2 = Photo.builder().address("test-second").build();
+        Glasses expected = Glasses.builder()
+                .name("TEST")
+                .collection("TEST")
+                .category("TEST")
+                .details("TEST")
+                .price(5)
+                .photos(Arrays.asList(photo,photo2)).build();
+
         return expected;
     }
 }

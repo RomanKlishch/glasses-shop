@@ -13,7 +13,7 @@ a:hover {
     font-size: 11px;
 }
 
-.small-navbar{
+.small-navbar {
     height: 30px !important;
 }
 
@@ -21,7 +21,7 @@ a:hover {
     color: #0c0c0d;
 }
 
-.small-navbar a{
+.small-navbar a {
     color: #0c0c0d !important;
 }
 
@@ -135,53 +135,62 @@ a:hover {
 }
 
 /*index - second image*/
-.second-img-for-index{
+.second-img-for-index {
     width: 100%;
     text-align: center;
     margin-bottom: 50px;
 }
-.second-img-for-index img{
+
+.second-img-for-index img {
     min-width: 100%;
     height: 750px;
 }
+
 /*index - article image*/
-.article-img-for-index{
+.article-img-for-index {
     width: 100%;
     text-align: center;
     margin-bottom: 50px;
 }
 
-.article-img-for-index img{
+.article-img-for-index img {
     max-height: 700px;
 
 }
+
 /*article*/
-.article h3{
+.article h3 {
     text-indent: 40px;
     font-size: 25px;
     font-weight: 400;
     line-height: 180%
 }
-.article p{
+
+.article p {
     text-indent: 15px;
     font-size: 15px;
     line-height: 180%
 }
+
 /*contact*/
 .map-contacts {
     margin-top: 30px;
 }
+
 /*glasses card*/
-.glasses-card{
+.glasses-card {
     margin-top: 50px;
 }
-.head-details{
-    margin-top: 100px;
-}
+
 .head-details {
     margin-top: 100px;
 }
-.button-add-cart{
+
+.head-details {
+    margin-top: 100px;
+}
+
+.button-add-cart {
     margin-top: 50px;
     margin-bottom: 30px;
 }
@@ -191,6 +200,7 @@ a:hover {
     background: #000;
     color: #fff;
 }
+
 .button-add-cart:hover {
     background: #000;
     color: #fff;
@@ -214,6 +224,7 @@ error-box {
     font-weight: 900;
     line-height: 210px
 }
+
 @media only screen and (max-width: 1200px) {
 
 }

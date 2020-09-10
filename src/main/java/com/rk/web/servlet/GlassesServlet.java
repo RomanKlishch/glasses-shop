@@ -23,7 +23,7 @@ public class GlassesServlet extends HttpServlet {
         Map<String, Object> pageVariables = new HashMap<>();
 
         String[] path = request.getPathInfo().split("/");
-        long id = Long.parseLong(path[path.length-1]);
+        long id = Long.parseLong(path[path.length - 1]);
         Glasses glasses = glassesService.findById(id);
         pageVariables.put("glasses", glasses);
         response.setContentType("text/html;charset=utf-8");

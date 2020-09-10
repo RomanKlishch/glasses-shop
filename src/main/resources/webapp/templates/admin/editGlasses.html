@@ -1,0 +1,62 @@
+<!doctype html >
+<html lang="ru-UA" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{/fragments/header.html :: head(title='add')}"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form action="/edit" method="POST">
+                <div class="form-group">
+                    <label for="addName">Name</label>
+                    <input required type="text" class="form-control" name="name" aria-describedby="nameHelp"
+                           id="addName"
+                           placeholder="Enter name" th:value="${glasses.name}">
+                    <small id="emailHelp" class="form-text text-muted">The name consists of only letters</small>
+                </div>
+                <div class="form-group">
+                    <label for="addCollection">Collection</label>
+                    <input required type="text" class="form-control" name="collection" aria-describedby="collectionHelp"
+                           placeholder="Enter name" th:value="${glasses.collection}" id="addCollection">
+                    <small id="collectionHelp" class="form-text text-muted">Enter collection of classes</small>
+                </div>
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select class="custom-select" id="type" name="category" required>
+                        <option value="SUN">SUN</option>
+                        <option value="OPTICAL">OPTICAL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="addDetails">Details</label>
+                    <textarea required class="form-control" data-val="true" aria-describedby="descriptionHelp"
+                              id="addDetails" name="details" rows="5" placeholder="Describe glasses..."
+                              th:text="${glasses.details}"></textarea>
+                    <small id="descriptionHelp" class="form-text text-muted mb-3">Small description of glasses</small>
+
+                    <label for="addPrice">Price</label>
+                    <input required type="number" class="form-control" step=".01" min="0" max="999999999999"
+                           name="price" placeholder="price" th:value="${glasses.price}" id="addPrice">
+                </div>
+                <div class="form-group" th:each="photo : ${glasses.getPhotos()}">
+                    <label>
+                        Photo <input type="text" class="form-control" name="photo" placeholder="Add photo"
+                                     th:value="${photo.address}">
+                    </label>
+                    <label class="text-inline">
+                        <input type="hidden" class="form-control" name="photoId" placeholder="Add photo"
+                               th:value="${photo.id}">
+                    </label>
+                </div>
+                <label class="text-inline">
+                    <input type="hidden" class="form-control" name="glassesId" placeholder="Add photo"
+                           th:value="${glasses.id}">
+                </label>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+<div th:replace="~{/fragments/footer.html :: foot}"></div>

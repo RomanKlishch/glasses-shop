@@ -9,31 +9,40 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-public class AddGlassesServlet extends HttpServlet {
+public class EditGlassesServlet extends HttpServlet {
     private GlassesService glassesService;
 
-    public AddGlassesServlet(DefaultGlassesService glassesService) {
+    public EditGlassesServlet(DefaultGlassesService glassesService) {
         this.glassesService = glassesService;
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map<String, Object> pageVariables = new HashMap<>();
+        long id = Long.parseLong(request.getParameter("id"));
+        Glasses glasses = glassesService.findById(id);
+
+        pageVariables.put("glasses", glasses);
+        pageVariables.put("photos", glasses.getPhotos());
+
         response.setContentType("text/html;charset=utf-8");
-        PageGenerator.instance().process("admin/addGlasses", response.getWriter());
+        PageGenerator.instance().process("admin/editGlasses", pageVariables, response.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Glasses glasses = Glasses.builder()
+        Glasses glasses = Glasses.builder().id(Long.parseLong(request.getParameter("glassesId")))
                 .name(request.getParameter("name"))
                 .collection(request.getParameter("collection"))
                 .category(request.getParameter("category"))
                 .details(request.getParameter("details"))
                 .price(Double.parseDouble(request.getParameter("price")))
                 .build();
-        glassesService.save(glasses, request.getParameterValues("photo"));
+
+        glassesService.update(glasses, request.getParameterValues("photoId"), request.getParameterValues("photo"));
         response.sendRedirect("");
     }
-
 }

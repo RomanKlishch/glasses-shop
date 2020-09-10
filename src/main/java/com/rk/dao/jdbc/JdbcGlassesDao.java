@@ -27,17 +27,17 @@ public class JdbcGlassesDao implements GlassesDao {
     private DataSource dataSource;
     private PropertyReader propertyReader = new PropertyReader("properties/sqlQueries.properties");
 
-    private String findAll = propertyReader.getProperties("find.all");
-    private String findByName = propertyReader.getProperties("find.by.name");
-    private String findByCategory = propertyReader.getProperties("find.by.category");
-    private String findById = propertyReader.getProperties("find.by.id");
-    private String saveGlasses = propertyReader.getProperties("save.glasses");
-    private String savePhoto = propertyReader.getProperties("save.photo");
-    private String updateGlasses = propertyReader.getProperties("update.glasses");
-    private String updatePhoto = propertyReader.getProperties("update.photo");
-    private String deleteGlasses = propertyReader.getProperties("delete.glasses");
-    private String deletePhoto = propertyReader.getProperties("delete.photo");
-    private String findRandomGlasses = propertyReader.getProperties("find.random.glasses");
+    private final String findAll = propertyReader.getProperties("find.all");
+    private final String findByName = propertyReader.getProperties("find.by.name");
+    private final String findByCategory = propertyReader.getProperties("find.by.category");
+    private final String findById = propertyReader.getProperties("find.by.id");
+    private final String saveGlasses = propertyReader.getProperties("save.glasses");
+    private final String savePhoto = propertyReader.getProperties("save.photo");
+    private final String updateGlasses = propertyReader.getProperties("update.glasses");
+    private final String updatePhoto = propertyReader.getProperties("update.photo");
+    private final String deleteGlasses = propertyReader.getProperties("delete.glasses");
+    private final String deletePhoto = propertyReader.getProperties("delete.photo");
+    private final String findRandomGlasses = propertyReader.getProperties("find.random.glasses");
 
     public JdbcGlassesDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -64,7 +64,6 @@ public class JdbcGlassesDao implements GlassesDao {
         return mapRowGlassesAndPhoto(resultSet);
     }
 
-    //TODO: последовательность операций JOIN и SELECT, какая из них первая какая вторая и можна ли их менять местами?
     @Override
     @SneakyThrows
     public List<Glasses> findAllByName(String name) {
@@ -97,17 +96,6 @@ public class JdbcGlassesDao implements GlassesDao {
         return glasses;
     }
 
-    @SneakyThrows
-    protected void savePhoto(Connection connection, List<Photo> photos, long id) {
-        @Cleanup PreparedStatement statement = connection.prepareStatement(savePhoto);
-        for (Photo photo : photos) {
-            statement.setLong(1, id);
-            statement.setString(2, photo.getAddress());
-            statement.addBatch();
-        }
-        statement.executeBatch();
-    }
-
     @Override
     @SneakyThrows
     public void saveGlasses(Glasses glasses) {
@@ -129,12 +117,13 @@ public class JdbcGlassesDao implements GlassesDao {
         connection.commit();
     }
 
+    //TODO:JdbcBatchUpdateException: Нарушение ссылочной целостности: "CONSTRAINT_8C: PUBLIC.PHOTOS FOREIGN KEY(GLASSES_ID) REFERENCES PUBLIC.GLASSES(GLASSES_ID) (4)
     @SneakyThrows
-    private void updatePhoto(Connection connection, List<Photo> photos) {
-        @Cleanup PreparedStatement statement = connection.prepareStatement(updatePhoto);
+    protected void savePhoto(Connection connection, List<Photo> photos, long id) {
+        @Cleanup PreparedStatement statement = connection.prepareStatement(savePhoto);
         for (Photo photo : photos) {
-            statement.setString(1, photo.getAddress());
-            statement.setLong(2, photo.getId());
+            statement.setLong(1, id);
+            statement.setString(2, photo.getAddress());
             statement.addBatch();
         }
         statement.executeBatch();
@@ -153,10 +142,23 @@ public class JdbcGlassesDao implements GlassesDao {
         statement.setDouble(5, glasses.getPrice());
         statement.setLong(6, glasses.getId());
         statement.execute();
-        updatePhoto(connection, glasses.getPhotos());
+        updatePhoto(glasses.getPhotos());
 
         connection.commit();
     }
+
+    @SneakyThrows
+    private void updatePhoto(List<Photo> photos) {
+        @Cleanup Connection connection = dataSource.getConnection();
+        @Cleanup PreparedStatement statement = connection.prepareStatement(updatePhoto);
+        for (Photo photo : photos) {
+            statement.setString(1, photo.getAddress());
+            statement.setLong(2, photo.getId());
+            statement.addBatch();
+        }
+        statement.executeBatch();
+    }
+
     //TODO: у не могу удалить просто glasses, без фото. Допустим ситуация я удаляю пользователя но список его заказов должен остаться(все заказы подвязаны на user_id заказчика)
     @Override
     @SneakyThrows

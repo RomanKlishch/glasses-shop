@@ -1,6 +1,5 @@
 package com.rk.web.servlet;
 
-import com.rk.domain.Glasses;
 import com.rk.dto.CatalogAndMessage;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CatalogGlassesServlet extends HttpServlet {

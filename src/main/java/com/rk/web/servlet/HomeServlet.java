@@ -24,7 +24,7 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> pageVariables = new HashMap<>();
 
-        FeaturesAndSpecialGlasses glasses = glassesService.getListsFeaturesAndSpecialGlasses(9,6);
+        FeaturesAndSpecialGlasses glasses = glassesService.getListsFeaturesAndSpecialGlasses(9, 6);
         List<Glasses> feature = glasses.getFeature();
         List<Glasses> special = glasses.getSpecial();
         pageVariables.put("feature", feature);
