@@ -39,6 +39,7 @@ public class Starter {
         CategoryServlet categoryServlet = new CategoryServlet(glassesService);
         ArticleServlet articleServlet = new ArticleServlet();
         ContactServlet contactServlet = new ContactServlet();
+        AddGlassesServlet addGlassesServlet = new AddGlassesServlet(glassesService);
 
         context.addServlet(new ServletHolder(homeServlet), "");
         context.addServlet(new ServletHolder(glassesServlet), "/glasses/*");
@@ -48,6 +49,7 @@ public class Starter {
         context.addServlet(new ServletHolder(catalogGlassesServlet), "/search");
         context.addServlet(new ServletHolder(categoryServlet), "/sun");
         context.addServlet(new ServletHolder(categoryServlet), "/optical");
+        context.addServlet(new ServletHolder(addGlassesServlet), "/addGlasses");
 
         context.setErrorHandler(new DefaultErrorHandler());
 
@@ -59,6 +61,5 @@ public class Starter {
         server.setHandler(context);
         server.start();
         log.info("Server START - {}", Arrays.toString(server.getConnectors()));
-
     }
 }

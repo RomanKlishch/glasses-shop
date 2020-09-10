@@ -2,11 +2,13 @@ package com.rk.service.impl;
 
 import com.rk.dao.GlassesDao;
 import com.rk.domain.Glasses;
+import com.rk.domain.Photo;
 import com.rk.dto.CatalogAndMessage;
 import com.rk.dto.FeaturesAndSpecialGlasses;
 import com.rk.service.GlassesService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultGlassesService implements GlassesService {
@@ -54,5 +56,20 @@ public class DefaultGlassesService implements GlassesService {
         List<Glasses> glassesList = glassesDao.findByCategory(category);
         return glassesList;
     }
+
+    @Override
+    public void save(Glasses glasses, String[] arrayAddress) {
+        List<Photo> photoList = new ArrayList<>();
+        for (String address : arrayAddress) {
+            if (!address.isEmpty()) {
+                Photo photo = new Photo();
+                photo.setAddress(address);
+                photoList.add(photo);
+            }
+        }
+        glasses.setPhotos(photoList);
+        glassesDao.saveGlasses(glasses);
+    }
+
 }
 

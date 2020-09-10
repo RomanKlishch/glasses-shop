@@ -3,6 +3,7 @@ package com.rk.util;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
@@ -54,11 +55,14 @@ public class PropertyReader {
                 "src/main/resources/properties/sqlQueries.properties",
                 "src/test/resources/properties/test.properties"};
         for (String path : paths) {
+            //TODO: нормально ли пользоваться такой записью !new File(path).exists() ?
+            // Пару слов как ты поступаешь, когда нужно создавать "переменную",
+            // а когда в сигнатуру метода передаешь сразу другой метод ( void method(obj.method){} )
+            if (!new File(path).exists()){
+                log.error("path  does not exist - {}", path);
+                throw new IllegalArgumentException("No properties on path - ".concat(path));
+            }
             try (InputStream stream = new FileInputStream(path)) {
-                if (stream == null) {
-                    log.error("path  does not exist - {}", path);
-                    throw new IllegalArgumentException("No properties on path - ".concat(path));
-                }
                 properties.load(stream);
             }
         }

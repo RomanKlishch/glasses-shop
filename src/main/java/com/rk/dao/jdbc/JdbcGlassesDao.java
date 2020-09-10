@@ -157,7 +157,7 @@ public class JdbcGlassesDao implements GlassesDao {
 
         connection.commit();
     }
-
+    //TODO: у не могу удалить просто glasses, без фото. Допустим ситуация я удаляю пользователя но список его заказов должен остаться(все заказы подвязаны на user_id заказчика)
     @Override
     @SneakyThrows
     public void deleteById(long id) {

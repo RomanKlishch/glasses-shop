@@ -20,4 +20,6 @@ public interface GlassesService {
     CatalogAndMessage getCatalogAndMessage(HttpServletRequest request);
 
     List<Glasses> getCategoryList(String category);
+
+    void save(Glasses glasses, String[] arrayAddress);
 }
