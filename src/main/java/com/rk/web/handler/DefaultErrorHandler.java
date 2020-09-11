@@ -19,18 +19,18 @@ public class DefaultErrorHandler extends ErrorPageErrorHandler {
                                               HttpServletResponse response, int code,
                                               String message, String mimeType) {
 
-        Map<String, Object> pageVeriables = new HashMap<>();
+        Map<String, Object> pageVariables = new HashMap<>();
 
         String servletName = (String) request.getAttribute("javax.servlet.error.servlet_name");
         Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
 
         baseRequest.setHandled(true);
-        pageVeriables.put("code", code);
-        pageVeriables.put("message", message);
+        pageVariables.put("code", code);
+        pageVariables.put("message", message);
 
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        PageGenerator.instance().process("error", pageVeriables, response.getWriter());
+        PageGenerator.instance().process("error", pageVariables, response.getWriter());
         log.error("Error in servlet: {}, code: {}, message: {}", servletName, code, message, exception);
     }
 }
