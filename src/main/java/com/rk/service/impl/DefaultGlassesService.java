@@ -24,16 +24,6 @@ public class DefaultGlassesService implements GlassesService {
     }
 
     @Override
-    public List<Glasses> findAll() {
-        return glassesDao.findAll();
-    }
-
-    @Override
-    public List<Glasses> findByName(String name) {
-        return glassesDao.findAllByName(name);
-    }
-
-    @Override
     public FeaturesAndSpecialGlasses getListsFeaturesAndSpecialGlasses(int limitFeature, int limitSpecial) {
         List<Glasses> featureList = glassesDao.findListOfRandom(limitFeature);
         List<Glasses> specialList = glassesDao.findListOfRandom(limitSpecial);

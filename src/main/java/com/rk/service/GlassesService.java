@@ -11,10 +11,6 @@ public interface GlassesService {
 
     Glasses findById(long id);
 
-    List<Glasses> findAll();
-
-    List<Glasses> findByName(String name);
-
     FeaturesAndSpecialGlasses getListsFeaturesAndSpecialGlasses(int limitFeature, int limitSpecial);
 
     CatalogAndMessage getCatalogAndMessage(HttpServletRequest request);

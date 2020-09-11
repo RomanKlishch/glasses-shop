@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class PropertyReaderTest {
     PropertyReader propertyReader = new PropertyReader();
 
-
     @Test
     @DisplayName("Find variables from global list in production")
     void getPropertiesGlobal() throws Exception {
