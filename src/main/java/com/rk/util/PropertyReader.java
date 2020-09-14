@@ -20,7 +20,7 @@ public class PropertyReader {
         }
     }
 
-    public String getProperties(String name) {
+    public String getProperty(String name) {
         String value;
         if ((value = properties.getProperty(name)) != null) {
             return value;

@@ -27,17 +27,17 @@ public class JdbcGlassesDao implements GlassesDao {
     private DataSource dataSource;
     private PropertyReader propertyReader = new PropertyReader("properties/sqlQueries.properties");
 
-    private final String findAll = propertyReader.getProperties("find.all");
-    private final String findByName = propertyReader.getProperties("find.by.name");
-    private final String findByCategory = propertyReader.getProperties("find.by.category");
-    private final String findById = propertyReader.getProperties("find.by.id");
-    private final String saveGlasses = propertyReader.getProperties("save.glasses");
-    private final String savePhoto = propertyReader.getProperties("save.photo");
-    private final String updateGlasses = propertyReader.getProperties("update.glasses");
-    private final String updatePhoto = propertyReader.getProperties("update.photo");
-    private final String deleteGlasses = propertyReader.getProperties("delete.glasses");
-    private final String deletePhoto = propertyReader.getProperties("delete.photo");
-    private final String findRandomGlasses = propertyReader.getProperties("find.random.glasses");
+    private final String findAll = propertyReader.getProperty("find.all");
+    private final String findByName = propertyReader.getProperty("find.by.name");
+    private final String findByCategory = propertyReader.getProperty("find.by.category");
+    private final String findById = propertyReader.getProperty("find.by.id");
+    private final String saveGlasses = propertyReader.getProperty("save.glasses");
+    private final String savePhoto = propertyReader.getProperty("save.photo");
+    private final String updateGlasses = propertyReader.getProperty("update.glasses");
+    private final String updatePhoto = propertyReader.getProperty("update.photo");
+    private final String deleteGlasses = propertyReader.getProperty("delete.glasses");
+    private final String deletePhoto = propertyReader.getProperty("delete.photo");
+    private final String findRandomGlasses = propertyReader.getProperty("find.random.glasses");
 
     public JdbcGlassesDao(DataSource dataSource) {
         this.dataSource = dataSource;

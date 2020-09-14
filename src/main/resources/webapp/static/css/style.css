@@ -61,7 +61,11 @@ a:hover {
 .navbar-toggler-icon {
     background-image: url(https://i.stack.imgur.com/mSXoO.png) !important;
 }
-
+/*img fragment listGlasses*/
+.random-glasses-group img{
+    max-width:635px ;
+    max-height: 302px;
+}
 /*img under navbar*/
 .img-under-header img {
     margin-bottom: 50px;

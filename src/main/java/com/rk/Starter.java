@@ -13,21 +13,28 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.JarFileResource;
 import org.eclipse.jetty.util.resource.Resource;
+import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import java.util.Arrays;
 
+
 @Slf4j
 public class Starter {
+
     private static final PropertyReader PROPERTIES_READER = new PropertyReader("properties/config.properties");
-    private static final int PORT = Integer.parseInt(PROPERTIES_READER.getProperties("PORT"));
+    private static final int PORT = Integer.parseInt(PROPERTIES_READER.getProperty("PORT"));
 
     @SneakyThrows
     public static void main(String[] args) {
+        Flyway flyway = Flyway.configure().dataSource(PROPERTIES_READER.getProperty("JDBC_DATABASE_URL"),
+                PROPERTIES_READER.getProperty("JDBC_DATABASE_USERNAME"), PROPERTIES_READER.getProperty("JDBC_DATABASE_PASSWORD")).baselineOnMigrate(true).load();
+        flyway.migrate();
+
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        dataSource.setURL(PROPERTIES_READER.getProperties("JDBC_DATABASE_URL"));
-        dataSource.setUser(PROPERTIES_READER.getProperties("JDBC_DATABASE_USERNAME"));
-        dataSource.setPassword(PROPERTIES_READER.getProperties("JDBC_DATABASE_PASSWORD"));
+        dataSource.setURL(PROPERTIES_READER.getProperty("JDBC_DATABASE_URL"));
+        dataSource.setUser(PROPERTIES_READER.getProperty("JDBC_DATABASE_USERNAME"));
+        dataSource.setPassword(PROPERTIES_READER.getProperty("JDBC_DATABASE_PASSWORD"));
 
         JdbcGlassesDao jdbcGateDao = new JdbcGlassesDao(dataSource);
         DefaultGlassesService glassesService = new DefaultGlassesService(jdbcGateDao);
@@ -67,3 +74,6 @@ public class Starter {
         log.info("Server START - {}", Arrays.toString(server.getConnectors()));
     }
 }
+
+//TODO: Не важные вопросы, если будет свободное время
+// 1. В видео на Stepik  лектор говорит что операция isEmpty "гораздо, более дешовая операция" чем if(size==0)?

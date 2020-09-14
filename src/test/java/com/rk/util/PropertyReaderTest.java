@@ -19,20 +19,20 @@ class PropertyReaderTest {
                 .and("TEST_JDBC_DATABASE_PASSWORD", "sa")
                 .and("TEST_PORT", "8080").execute(() -> {
             propertyReader = new PropertyReader();
-            assertEquals("host:port", propertyReader.getProperties("TEST_JDBC_DATABASE_URL"));
-            assertEquals("sa", propertyReader.getProperties("TEST_JDBC_DATABASE_USERNAME"));
-            assertEquals("sa", propertyReader.getProperties("TEST_JDBC_DATABASE_PASSWORD"));
-            assertEquals("8080", propertyReader.getProperties("TEST_PORT"));
+            assertEquals("host:port", propertyReader.getProperty("TEST_JDBC_DATABASE_URL"));
+            assertEquals("sa", propertyReader.getProperty("TEST_JDBC_DATABASE_USERNAME"));
+            assertEquals("sa", propertyReader.getProperty("TEST_JDBC_DATABASE_PASSWORD"));
+            assertEquals("8080", propertyReader.getProperty("TEST_PORT"));
         });
     }
 
     @Test
     @DisplayName("Find variables from file in production")
     void getPropertiesFromFile() throws Exception {
-        assertEquals("test_host:port", propertyReader.getProperties("TEST_JDBC_DATABASE_URL"));
-        assertEquals("test_sa", propertyReader.getProperties("TEST_JDBC_DATABASE_USERNAME"));
-        assertEquals("test_sa", propertyReader.getProperties("TEST_JDBC_DATABASE_PASSWORD"));
-        assertEquals("test_8080", propertyReader.getProperties("TEST_PORT"));
+        assertEquals("test_host:port", propertyReader.getProperty("TEST_JDBC_DATABASE_URL"));
+        assertEquals("test_sa", propertyReader.getProperty("TEST_JDBC_DATABASE_USERNAME"));
+        assertEquals("test_sa", propertyReader.getProperty("TEST_JDBC_DATABASE_PASSWORD"));
+        assertEquals("test_8080", propertyReader.getProperty("TEST_PORT"));
 
     }
 

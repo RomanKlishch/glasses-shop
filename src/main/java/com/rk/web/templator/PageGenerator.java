@@ -14,9 +14,9 @@ public class PageGenerator {
     private PropertyReader propertyReader = new PropertyReader("properties/config.properties");
     private TemplateEngine templateEngine;
 
-    private boolean cache = Boolean.parseBoolean(propertyReader.getProperties("resolver.cacheable"));
-    private String prefix = propertyReader.getProperties("resolver.prefix");
-    private String suffix = propertyReader.getProperties("resolver.suffix");
+    private boolean cache = Boolean.parseBoolean(propertyReader.getProperty("resolver.cacheable"));
+    private String prefix = propertyReader.getProperty("resolver.prefix");
+    private String suffix = propertyReader.getProperty("resolver.suffix");
 
     public static PageGenerator instance() {
         if (pageGenerator == null) {
