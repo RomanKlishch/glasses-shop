@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -21,7 +22,7 @@ class PhotoRowMapperTest {
     @Test
     @SneakyThrows
     @DisplayName("Test mapper for entity photo")
-    void photoMapRow() {
+    void photoMapRow(){
         PhotoRowMapper mapper = new PhotoRowMapper();
 
         when(resultSet.getLong("photo_id")).thenReturn(1L);

@@ -16,20 +16,26 @@ import org.eclipse.jetty.util.resource.Resource;
 import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Arrays;
 
 
 @Slf4j
 public class Starter {
-
     private static final PropertyReader PROPERTIES_READER = new PropertyReader("properties/config.properties");
     private static final int PORT = Integer.parseInt(PROPERTIES_READER.getProperty("PORT"));
+    private static final String DEFAULT_URL = "jdbc:postgresql://localhost:5432/testDriver?user=admin&password=admin";
 
     @SneakyThrows
     public static void main(String[] args) {
+
         Flyway flyway = Flyway.configure().dataSource(PROPERTIES_READER.getProperty("JDBC_DATABASE_URL"),
                 PROPERTIES_READER.getProperty("JDBC_DATABASE_USERNAME"), PROPERTIES_READER.getProperty("JDBC_DATABASE_PASSWORD")).baselineOnMigrate(true).load();
         flyway.migrate();
+
+        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432");
+        connection.prepareStatement("select * from glasses");
 
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setURL(PROPERTIES_READER.getProperty("JDBC_DATABASE_URL"));
