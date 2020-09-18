@@ -17,12 +17,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-class JdbcGlassesDaoITest {
+class JdbcGlassesDaoI {
     Flyway flyway;
     JdbcDataSource jdbcDataSource;
     JdbcGlassesDao jdbcGlassesDao;
 
-    public JdbcGlassesDaoITest() {
+    public JdbcGlassesDaoI() {
         jdbcDataSource = new JdbcDataSource();
         jdbcDataSource.setURL("jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;");
         jdbcDataSource.setUser("admin");
