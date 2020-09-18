@@ -17,16 +17,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-class JdbcGlassesDaoI {
+class JdbcGlassesDaoITest {
     Flyway flyway;
     JdbcDataSource jdbcDataSource;
     JdbcGlassesDao jdbcGlassesDao;
 
-    public JdbcGlassesDaoI() {
+    public JdbcGlassesDaoITest() {
         jdbcDataSource = new JdbcDataSource();
         jdbcDataSource.setURL("jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;");
-        jdbcDataSource.setUser("admin");
-        jdbcDataSource.setPassword("admin");
         FluentConfiguration configuration = new FluentConfiguration();
         configuration.locations("db/migration");
         configuration.dataSource(jdbcDataSource);

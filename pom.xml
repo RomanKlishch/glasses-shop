@@ -25,33 +25,32 @@
         <stefanbirkner.version>1.1.0</stefanbirkner.version>
     </properties>
 
-<!--    <profiles>-->
-<!--        <profile>-->
-<!--        <id>development</id>-->
-<!--            <activation>-->
-<!--                <activeByDefault>true</activeByDefault>-->
-<!--            </activation>-->
-<!--        <properties>-->
-<!--            <flyway.url>jdbc:postgresql://ec2-54-216-202-161.eu-west-1.compute.amazonaws.com:5432/d8icbl0ij246nt?sslmode=require&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory&amp;</flyway.url>-->
-<!--            <flayway.user>bfstegzdexeriz</flayway.user>-->
-<!--            <flayway.password>06fae8ec51de03ffeadcf7d88de0cbab3bf3f0e2d2547078afcdfe2152647bab</flayway.password>-->
-<!--        </properties>-->
-<!--    </profile>-->
-<!--        <profile>-->
-<!--        <id>productionServer</id>-->
-<!--            <activation>-->
-<!--                <property>-->
-<!--                    <name>Profile</name>-->
-<!--                    <value>PROD</value>-->
-<!--                </property>-->
-<!--            </activation>-->
-<!--        <properties>-->
-<!--            <flyway.url>${env.JDBC_DATABASE_URL}</flyway.url>-->
-<!--            <flayway.user>${env.JDBC_DATABASE_USERNAME}</flayway.user>-->
-<!--            <flayway.password>${env.JDBC_DATABASE_PASSWORD}</flayway.password>-->
-<!--        </properties>-->
-<!--    </profile>-->
-<!--    </profiles>-->
+    <profiles>
+        <profile>
+        <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        <properties>
+            <flyway.url>jdbc:postgresql://ec2-54-216-202-161.eu-west-1.compute.amazonaws.com:5432/d8icbl0ij246nt?sslmode=require&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory&amp;</flyway.url>
+            <flyway.user>bfstegzdexeriz</flyway.user>
+            <flyway.password>06fae8ec51de03ffeadcf7d88de0cbab3bf3f0e2d2547078afcdfe2152647bab</flyway.password>
+        </properties>
+    </profile>
+        <profile>
+        <id>productionServer</id>
+            <activation>
+                <property>
+                    <name>Profile</name>
+                    <value>PROD</value>
+                </property>
+            </activation>
+        <properties>
+            <!--suppress UnresolvedMavenProperty -->
+            <flyway.url>${env.JDBC_DATABASE_URL}</flyway.url>
+        </properties>
+    </profile>
+    </profiles>
 
     <build>
         <plugins>
@@ -130,7 +129,9 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <configuration>
                     <!--suppress UnresolvedMavenProperty -->
-                    <url>${env.JDBC_DATABASE_URL}</url>
+                    <url>${flyway.url}</url>
+                    <user>${flyway.user}</user>
+                    <password>${flyway.password}</password>
                 </configuration>
             </plugin>
         </plugins>
