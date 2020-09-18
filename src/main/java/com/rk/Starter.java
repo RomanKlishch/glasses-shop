@@ -24,13 +24,9 @@ import java.util.Arrays;
 public class Starter {
     private static final PropertyReader PROPERTIES_READER = new PropertyReader("properties/config.properties");
     private static final int PORT = Integer.parseInt(PROPERTIES_READER.getProperty("PORT"));
-    private static final String DEFAULT_URL = "jdbc:postgresql://localhost:5432/testDriver?user=admin&password=admin";
 
     @SneakyThrows
     public static void main(String[] args) {
-
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432");
-        connection.prepareStatement("select * from glasses");
 
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setURL(PROPERTIES_READER.getProperty("JDBC_DATABASE_URL"));
