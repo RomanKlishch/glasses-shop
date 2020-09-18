@@ -13,7 +13,6 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.JarFileResource;
 import org.eclipse.jetty.util.resource.Resource;
-import org.flywaydb.core.Flyway;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import java.sql.Connection;
@@ -29,10 +28,6 @@ public class Starter {
 
     @SneakyThrows
     public static void main(String[] args) {
-
-        Flyway flyway = Flyway.configure().dataSource(PROPERTIES_READER.getProperty("JDBC_DATABASE_URL"),
-                PROPERTIES_READER.getProperty("JDBC_DATABASE_USERNAME"), PROPERTIES_READER.getProperty("JDBC_DATABASE_PASSWORD")).baselineOnMigrate(true).load();
-        flyway.migrate();
 
         Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432");
         connection.prepareStatement("select * from glasses");
