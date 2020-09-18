@@ -25,6 +25,8 @@ class JdbcGlassesDaoITest {
     public JdbcGlassesDaoITest() {
         jdbcDataSource = new JdbcDataSource();
         jdbcDataSource.setURL("jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;");
+        jdbcDataSource.setUser("admin");
+        jdbcDataSource.setPassword("admin");
         FluentConfiguration configuration = new FluentConfiguration();
         configuration.locations("db/migration");
         configuration.dataSource(jdbcDataSource);
