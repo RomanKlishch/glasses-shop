@@ -5,7 +5,6 @@ import com.rk.service.impl.DefaultGlassesService;
 import com.rk.util.PropertyReader;
 import com.rk.web.handler.DefaultErrorHandler;
 import com.rk.web.servlet.*;
-import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
@@ -21,7 +20,7 @@ import java.util.Arrays;
 
 @Slf4j
 public class Starter {
-    private static final PropertyReader PROPERTIES_READER = new PropertyReader("properties/application.properties","properties/sqlQueries.properties");
+   /* private static final PropertyReader PROPERTIES_READER = new PropertyReader("properties/application.properties","properties/sqlQueries.properties");
     private static final int PORT = Integer.parseInt(PROPERTIES_READER.getProperty("PORT"));
 
     @SneakyThrows
@@ -46,17 +45,17 @@ public class Starter {
         EditGlassesServlet editGlassesServlet = new EditGlassesServlet(glassesService);
         DeleteServlet deleteServlet = new DeleteServlet(glassesService);
 
-        context.addServlet(new ServletHolder(homeServlet), "");
-        context.addServlet(new ServletHolder(glassesServlet), "/glasses/*");
-        context.addServlet(new ServletHolder(articleServlet), "/articles");
-        context.addServlet(new ServletHolder(contactServlet), "/contacts");
-        context.addServlet(new ServletHolder(catalogGlassesServlet), "/catalog");
-        context.addServlet(new ServletHolder(catalogGlassesServlet), "/search");
-        context.addServlet(new ServletHolder(categoryServlet), "/sun");
-        context.addServlet(new ServletHolder(categoryServlet), "/optical");
-        context.addServlet(new ServletHolder(addGlassesServlet), "/addGlasses");
-        context.addServlet(new ServletHolder(editGlassesServlet), "/edit");
-        context.addServlet(new ServletHolder(deleteServlet), "/delete");
+        //context.addServlet(new ServletHolder(homeServlet), "");
+        //context.addServlet(new ServletHolder(glassesServlet), "/glasses/*");
+        //context.addServlet(new ServletHolder(articleServlet), "/articles");
+        //context.addServlet(new ServletHolder(contactServlet), "/contacts");
+        //context.addServlet(new ServletHolder(catalogGlassesServlet), "/catalog");
+        //context.addServlet(new ServletHolder(catalogGlassesServlet), "/search");
+        //context.addServlet(new ServletHolder(categoryServlet), "/sun");
+        //context.addServlet(new ServletHolder(categoryServlet), "/optical");
+        //context.addServlet(new ServletHolder(addGlassesServlet), "/addGlasses");
+        //context.addServlet(new ServletHolder(editGlassesServlet), "/edit");
+        //context.addServlet(new ServletHolder(deleteServlet), "/delete");
 
         context.setErrorHandler(new DefaultErrorHandler());
 
@@ -68,7 +67,7 @@ public class Starter {
         server.setHandler(context);
         server.start();
         log.info("Server START - {}", Arrays.toString(server.getConnectors()));
-    }
+    }*/
 }
 
 //TODO: Не важные вопросы, если будет свободное время

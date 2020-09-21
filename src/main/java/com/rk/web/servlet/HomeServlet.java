@@ -1,5 +1,6 @@
 package com.rk.web.servlet;
 
+import com.rk.ServiceLocator;
 import com.rk.domain.Glasses;
 import com.rk.dto.FeaturesAndSpecialGlasses;
 import com.rk.service.GlassesService;
@@ -14,11 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeServlet extends HttpServlet {
-    private GlassesService glassesService;
-
-    public HomeServlet(GlassesService glassesService) {
-        this.glassesService = glassesService;
-    }
+    private GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

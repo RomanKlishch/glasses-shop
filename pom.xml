@@ -7,6 +7,7 @@
     <groupId>com.rk</groupId>
     <artifactId>online-shop</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,6 +33,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         <properties>
+            <port>8080</port>
             <flyway.url>jdbc:postgresql://ec2-54-216-202-161.eu-west-1.compute.amazonaws.com:5432/d8icbl0ij246nt?sslmode=require&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory&amp;</flyway.url>
             <flyway.user>bfstegzdexeriz</flyway.user>
             <flyway.password>06fae8ec51de03ffeadcf7d88de0cbab3bf3f0e2d2547078afcdfe2152647bab</flyway.password>
@@ -47,6 +49,8 @@
             </activation>
         <properties>
             <!--suppress UnresolvedMavenProperty -->
+            <port>${env.PORT}</port>
+            <!--suppress UnresolvedMavenProperty -->
             <flyway.url>${env.JDBC_DATABASE_URL}</flyway.url>
         </properties>
     </profile>
@@ -55,11 +59,34 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.31.v20200723</version>
+                <configuration>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+                    <war>${project.basedir}/target/online-shop-1.0-SNAPSHOT.war</war>
+                    <httpConnector>
+                        <port>${port}</port>
+                    </httpConnector>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
                     <release>13</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <webXml>src\main\webapp\WEB-INF\web.xml</webXml>
                 </configuration>
             </plugin>
             <plugin>
@@ -129,7 +156,6 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>${flyway.version}</version>
                 <configuration>
-                    <!--suppress UnresolvedMavenProperty -->
                     <url>${flyway.url}</url>
                     <user>${flyway.user}</user>
                     <password>${flyway.password}</password>
@@ -138,6 +164,12 @@
         </plugins>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>org.fujion.webjars</groupId>
+            <artifactId>webjar-jshashes</artifactId>
+            <version>1.0.8</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
