@@ -1,10 +1,7 @@
 package com.rk.web.servlet;
 
-import com.rk.domain.Glasses;
-import com.rk.service.GlassesService;
 import com.rk.service.impl.DefaultGlassesService;
 import com.rk.web.templator.PageGenerator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,17 +26,17 @@ import static org.mockito.Mockito.*;
 class AddGlassesServletTest {
 
     @Mock
-    DefaultGlassesService service;//TODO: во всех классах кроме этого я мокаю интерфейс, я не могу найти разницу в этих классах
+    private DefaultGlassesService service;//TODO: во всех классах тестах кроме этого я мокаю интерфейс(здесь реализацию этого интерфейса иначе не работает), я не могу найти разницу в этих классах
     @InjectMocks
-    AddGlassesServlet servlet;
+    private AddGlassesServlet servlet;
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
     @Mock
-    PrintWriter printWriter;
+    private PrintWriter printWriter;
     @Spy
-    PageGenerator pageGenerator;
+    private PageGenerator pageGenerator;
 
     @Test
     @DisplayName("Test response in method doGet()")
@@ -47,12 +44,12 @@ class AddGlassesServletTest {
         when(response.getWriter()).thenReturn(printWriter);
         doNothing().when(pageGenerator).process(any(), any());
         servlet.doGet(request, response);
-        pageGenerator.process(anyString(), any());
+        pageGenerator.process("admin/addGlasses", printWriter);
 
         verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
         verify(response, atLeast(1)).getWriter();
         verify(printWriter, atLeast(1)).flush();
-        verify(pageGenerator).process(any(), any());
+        verify(pageGenerator).process("admin/addGlasses", printWriter);
     }
 
     @Test

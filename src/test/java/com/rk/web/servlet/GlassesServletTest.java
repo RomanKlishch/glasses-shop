@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,21 +26,21 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class GlassesServletTest {
     @Mock
-    GlassesService glassesService;
+    private GlassesService glassesService;
     @InjectMocks
-    GlassesServlet servlet;
+    private GlassesServlet servlet;
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
     @Mock
-    PrintWriter printWriter;
+    private PrintWriter printWriter;
     @Spy
-    PageGenerator pageGenerator;
+    private PageGenerator pageGenerator;
 
     @Test
     @DisplayName("Check parameter from request, method findById() and response in method doGet")
-    void doGet() throws IOException, ServletException {
+    void doGet() throws IOException {
         when(request.getPathInfo()).thenReturn("sun/1");
         when(response.getWriter()).thenReturn(printWriter);
         when(glassesService.findById(anyLong())).thenReturn(new Glasses());
@@ -54,6 +53,6 @@ class GlassesServletTest {
         verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
         verify(response, atLeast(1)).getWriter();
         verify(printWriter, atLeast(1)).flush();
-        verify(pageGenerator).process(any(), any(), any());
+        verify(pageGenerator).process(anyString(), any(), any());
     }
 }

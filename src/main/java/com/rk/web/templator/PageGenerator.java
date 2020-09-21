@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class PageGenerator {
     private static PageGenerator pageGenerator;
-    private PropertyReader propertyReader = new PropertyReader("properties/config.properties");
+    private PropertyReader propertyReader = new PropertyReader("properties/application.properties");
     private TemplateEngine templateEngine;
 
     private boolean cache = Boolean.parseBoolean(propertyReader.getProperty("resolver.cacheable"));

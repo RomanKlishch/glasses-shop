@@ -26,22 +26,22 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class HomeServletTest {
     @Mock
-    GlassesService glassesService;
+    private GlassesService glassesService;
     @InjectMocks
-    HomeServlet servlet;
+    private HomeServlet servlet;
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
     @Mock
-    PrintWriter printWriter;
+    private PrintWriter printWriter;
     @Spy
-    PageGenerator pageGenerator;
+    private PageGenerator pageGenerator;
     @Mock
-    FeaturesAndSpecialGlasses glasses;
+    private FeaturesAndSpecialGlasses glasses;
 
     @Test
-    @DisplayName("Test response in method doGet()")
+    @DisplayName("Test method doGet() in HomeServlet")
     void doGet() throws IOException {
         when(response.getWriter()).thenReturn(printWriter);
         when(glassesService.getListsFeaturesAndSpecialGlasses(anyInt(), anyInt())).thenReturn(glasses);
@@ -54,6 +54,6 @@ class HomeServletTest {
         verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
         verify(response, atLeast(1)).getWriter();
         verify(printWriter, atLeast(1)).flush();
-        verify(pageGenerator).process(any(), any(), any());
+        verify(pageGenerator).process(anyString(), any(), any());
     }
 }

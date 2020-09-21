@@ -127,6 +127,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
                 <configuration>
                     <!--suppress UnresolvedMavenProperty -->
                     <url>${flyway.url}</url>

@@ -7,6 +7,7 @@ import com.rk.domain.Glasses;
 import com.rk.domain.Photo;
 import com.rk.util.PropertyReader;
 import lombok.Cleanup;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,33 +22,24 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
+@NoArgsConstructor
 public class JdbcGlassesDao implements GlassesDao {
     private static final GlassesRowMapper glassesRowMapper = new GlassesRowMapper(); //TODO: почему метод mapRow не статический? Отсюда соответственно вопрос правильно ли я понимаю поведение сттатических методов в многопоточности?
     private static final PhotoRowMapper photoRowMapper = new PhotoRowMapper();
     private DataSource dataSource;
-    private PropertyReader propertyReader = new PropertyReader("properties/sqlQueries.properties");
+    private PropertyReader propertyReader;
 
-    private final String findAll = propertyReader.getProperty("find.all");
-    private final String findByName = propertyReader.getProperty("find.by.name");
-    private final String findByCategory = propertyReader.getProperty("find.by.category");
-    private final String findById = propertyReader.getProperty("find.by.id");
-    private final String saveGlasses = propertyReader.getProperty("save.glasses");
-    private final String savePhoto = propertyReader.getProperty("save.photo");
-    private final String updateGlasses = propertyReader.getProperty("update.glasses");
-    private final String updatePhoto = propertyReader.getProperty("update.photo");
-    private final String deleteGlasses = propertyReader.getProperty("delete.glasses");
-    private final String deletePhoto = propertyReader.getProperty("delete.photo");
-    private final String findRandomGlasses = propertyReader.getProperty("find.random.glasses");
-
-    public JdbcGlassesDao(DataSource dataSource) {
+    public JdbcGlassesDao(DataSource dataSource, PropertyReader propertyReader) {
         this.dataSource = dataSource;
+        this.propertyReader = propertyReader;
     }
 
     @Override
     @SneakyThrows
     public List<Glasses> findAll() {
+        String query = propertyReader.getProperty("find.all");
         @Cleanup Connection connection = dataSource.getConnection();
-        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(findAll);
+        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(query);
         @Cleanup ResultSet resultSet = statementGlasses.executeQuery();
 
         return mapRowGlassesAndPhoto(resultSet);
@@ -56,8 +48,9 @@ public class JdbcGlassesDao implements GlassesDao {
     @SneakyThrows
     @Override
     public List<Glasses> findListOfRandom(int limit) {
+        String query = propertyReader.getProperty("find.random.glasses");
         @Cleanup Connection connection = dataSource.getConnection();
-        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(findRandomGlasses);
+        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(query);
         statementGlasses.setInt(1, limit);
         @Cleanup ResultSet resultSet = statementGlasses.executeQuery();
 
@@ -67,11 +60,11 @@ public class JdbcGlassesDao implements GlassesDao {
     @Override
     @SneakyThrows
     public List<Glasses> findAllByName(String name) {
-        String parameter = "%".concat(name).concat("%");
+        String query = propertyReader.getProperty("find.by.name");
         @Cleanup Connection connection = dataSource.getConnection();
-        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(findByName);
-        statementGlasses.setString(1, parameter);
-        statementGlasses.setString(2, parameter);
+        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(query);
+        statementGlasses.setString(1, name);
+        statementGlasses.setString(2, name);
         @Cleanup ResultSet resultSet = statementGlasses.executeQuery();
 
         return mapRowGlassesAndPhoto(resultSet);
@@ -80,8 +73,9 @@ public class JdbcGlassesDao implements GlassesDao {
     @Override
     @SneakyThrows
     public Glasses findById(long id) {
+        String query = propertyReader.getProperty("find.by.id");
         @Cleanup Connection connection = dataSource.getConnection();
-        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(findById);
+        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(query);
         statementGlasses.setLong(1, id);
         @Cleanup ResultSet resultSet = statementGlasses.executeQuery();
         Glasses glasses = null;
@@ -99,8 +93,9 @@ public class JdbcGlassesDao implements GlassesDao {
     @Override
     @SneakyThrows
     public void saveGlasses(Glasses glasses) {
+        String query = propertyReader.getProperty("save.glasses");
         @Cleanup Connection connection = dataSource.getConnection();
-        @Cleanup PreparedStatement statement = connection.prepareStatement(saveGlasses, PreparedStatement.RETURN_GENERATED_KEYS);
+        @Cleanup PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         connection.setAutoCommit(false);
         statement.setString(1, glasses.getName());
         statement.setString(2, glasses.getCollection());
@@ -120,7 +115,8 @@ public class JdbcGlassesDao implements GlassesDao {
     //TODO:JdbcBatchUpdateException: Нарушение ссылочной целостности: "CONSTRAINT_8C: PUBLIC.PHOTOS FOREIGN KEY(GLASSES_ID) REFERENCES PUBLIC.GLASSES(GLASSES_ID) (4)
     @SneakyThrows
     protected void savePhoto(Connection connection, List<Photo> photos, long id) {
-        @Cleanup PreparedStatement statement = connection.prepareStatement(savePhoto);
+        String query = propertyReader.getProperty("save.photo");
+        @Cleanup PreparedStatement statement = connection.prepareStatement(query);
         for (Photo photo : photos) {
             statement.setLong(1, id);
             statement.setString(2, photo.getAddress());
@@ -132,8 +128,9 @@ public class JdbcGlassesDao implements GlassesDao {
     @Override
     @SneakyThrows
     public void updateById(Glasses glasses) {
+        String query = propertyReader.getProperty("update.glasses");
         @Cleanup Connection connection = dataSource.getConnection();
-        @Cleanup PreparedStatement statement = connection.prepareStatement(updateGlasses);
+        @Cleanup PreparedStatement statement = connection.prepareStatement(query);
         connection.setAutoCommit(false);
         statement.setString(1, glasses.getName());
         statement.setString(2, glasses.getCollection());
@@ -149,8 +146,9 @@ public class JdbcGlassesDao implements GlassesDao {
 
     @SneakyThrows
     private void updatePhoto(List<Photo> photos) {
+        String query = propertyReader.getProperty("update.photo");
         @Cleanup Connection connection = dataSource.getConnection();
-        @Cleanup PreparedStatement statement = connection.prepareStatement(updatePhoto);
+        @Cleanup PreparedStatement statement = connection.prepareStatement(query);
         for (Photo photo : photos) {
             statement.setString(1, photo.getAddress());
             statement.setLong(2, photo.getId());
@@ -163,8 +161,9 @@ public class JdbcGlassesDao implements GlassesDao {
     @Override
     @SneakyThrows
     public void deleteById(long id) {
+        String query = propertyReader.getProperty("delete.glasses");
         @Cleanup Connection connection = dataSource.getConnection();
-        @Cleanup PreparedStatement statement = connection.prepareStatement(deleteGlasses);
+        @Cleanup PreparedStatement statement = connection.prepareStatement(query);
         connection.setAutoCommit(false);
         statement.setLong(1, id);
         deletePhotoById(connection, id);
@@ -175,8 +174,9 @@ public class JdbcGlassesDao implements GlassesDao {
     @Override
     @SneakyThrows
     public List<Glasses> findByCategory(String category) {
+        String query = propertyReader.getProperty("find.by.category");
         @Cleanup Connection connection = dataSource.getConnection();
-        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(findByCategory);
+        @Cleanup PreparedStatement statementGlasses = connection.prepareStatement(query);
         statementGlasses.setString(1, category);
         @Cleanup ResultSet resultSet = statementGlasses.executeQuery();
 
@@ -185,7 +185,8 @@ public class JdbcGlassesDao implements GlassesDao {
 
     @SneakyThrows
     protected void deletePhotoById(Connection connection, long id) {
-        @Cleanup PreparedStatement statement = connection.prepareStatement(deletePhoto);
+        String query = propertyReader.getProperty("delete.photo");
+        @Cleanup PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, id);
         statement.execute();
     }

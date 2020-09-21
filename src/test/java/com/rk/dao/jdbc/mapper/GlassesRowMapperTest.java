@@ -20,7 +20,7 @@ class GlassesRowMapperTest {
         GlassesRowMapper mapper = new GlassesRowMapper();
         ResultSet resultSet = mock(ResultSet.class);
 
-        when(resultSet.getLong("glasses_id")).thenReturn(1l);
+        when(resultSet.getLong("glasses_id")).thenReturn(1L);
         when(resultSet.getString("name")).thenReturn("o-o");
         when(resultSet.getString("collection")).thenReturn("good");
         when(resultSet.getString("category")).thenReturn("sun");

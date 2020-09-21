@@ -5,6 +5,7 @@ import com.rk.service.impl.DefaultGlassesService;
 import com.rk.util.PropertyReader;
 import com.rk.web.handler.DefaultErrorHandler;
 import com.rk.web.servlet.*;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
@@ -15,14 +16,12 @@ import org.eclipse.jetty.util.resource.JarFileResource;
 import org.eclipse.jetty.util.resource.Resource;
 import org.postgresql.ds.PGSimpleDataSource;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Arrays;
 
 
 @Slf4j
 public class Starter {
-    private static final PropertyReader PROPERTIES_READER = new PropertyReader("properties/config.properties");
+    private static final PropertyReader PROPERTIES_READER = new PropertyReader("properties/application.properties","properties/sqlQueries.properties");
     private static final int PORT = Integer.parseInt(PROPERTIES_READER.getProperty("PORT"));
 
     @SneakyThrows
@@ -33,7 +32,7 @@ public class Starter {
         dataSource.setUser(PROPERTIES_READER.getProperty("JDBC_DATABASE_USERNAME"));
         dataSource.setPassword(PROPERTIES_READER.getProperty("JDBC_DATABASE_PASSWORD"));
 
-        JdbcGlassesDao jdbcGateDao = new JdbcGlassesDao(dataSource);
+        JdbcGlassesDao jdbcGateDao = new JdbcGlassesDao(dataSource,PROPERTIES_READER);
         DefaultGlassesService glassesService = new DefaultGlassesService(jdbcGateDao);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 

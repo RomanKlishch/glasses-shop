@@ -10,7 +10,7 @@ import java.util.Properties;
 
 @Slf4j
 public class PropertyReader {
-    private Properties properties;
+    private final Properties properties;
 
     public PropertyReader(String... path) {
         if ("PROD".equalsIgnoreCase(System.getenv("Profile"))) {
@@ -50,14 +50,10 @@ public class PropertyReader {
     @SneakyThrows
     Properties setUpDevelopProperty() {
         Properties properties = new Properties();
-        String[] paths = new String[]{"src/main/resources/properties/develop/develop.properties",
-                "src/main/resources/properties/develop/developConfigDB.properties",
+        String[] paths = new String[]{"src/main/resources/properties/dev.application.properties",
                 "src/main/resources/properties/sqlQueries.properties",
                 "src/test/resources/properties/test.properties"};
         for (String path : paths) {
-            //TODO: нормально ли пользоваться такой записью !new File(path).exists() ?
-            // Пару слов как ты поступаешь, когда нужно создавать "переменную",
-            // а когда в сигнатуру метода передаешь сразу другой метод ( void method(obj.method){} )
             if (!new File(path).exists()){
                 log.error("path  does not exist - {}", path);
                 throw new IllegalArgumentException("No properties on path - ".concat(path));

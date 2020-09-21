@@ -16,9 +16,9 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class DefaultGlassesServiceTest {
     @Mock
-    GlassesDao glassesDao;
+    private GlassesDao glassesDao;
     @InjectMocks
-    DefaultGlassesService service;
+    private DefaultGlassesService service;
 
     @Test
     void findById() {

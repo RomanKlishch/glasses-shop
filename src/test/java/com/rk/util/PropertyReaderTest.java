@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PropertyReaderTest {
-    PropertyReader propertyReader = new PropertyReader();
+    private PropertyReader propertyReader = new PropertyReader();
 
     @Test
     @DisplayName("Find variables from global list in production")
@@ -18,7 +18,7 @@ class PropertyReaderTest {
                 .and("TEST_JDBC_DATABASE_USERNAME", "sa")
                 .and("TEST_JDBC_DATABASE_PASSWORD", "sa")
                 .and("TEST_PORT", "8080").execute(() -> {
-            propertyReader = new PropertyReader();
+            PropertyReader propertyReader = new PropertyReader();
             assertEquals("host:port", propertyReader.getProperty("TEST_JDBC_DATABASE_URL"));
             assertEquals("sa", propertyReader.getProperty("TEST_JDBC_DATABASE_USERNAME"));
             assertEquals("sa", propertyReader.getProperty("TEST_JDBC_DATABASE_PASSWORD"));
@@ -28,7 +28,7 @@ class PropertyReaderTest {
 
     @Test
     @DisplayName("Find variables from file in production")
-    void getPropertiesFromFile() throws Exception {
+    void getPropertiesFromFile() {
         assertEquals("test_host:port", propertyReader.getProperty("TEST_JDBC_DATABASE_URL"));
         assertEquals("test_sa", propertyReader.getProperty("TEST_JDBC_DATABASE_USERNAME"));
         assertEquals("test_sa", propertyReader.getProperty("TEST_JDBC_DATABASE_PASSWORD"));

@@ -2,6 +2,7 @@ package com.rk.dao.jdbc;
 
 import com.rk.domain.Glasses;
 import com.rk.domain.Photo;
+import com.rk.util.PropertyReader;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.h2.jdbcx.JdbcDataSource;
@@ -18,18 +19,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 class JdbcGlassesDaoITest {
-    Flyway flyway;
-    JdbcDataSource jdbcDataSource;
-    JdbcGlassesDao jdbcGlassesDao;
+    private final Flyway flyway;
+    private final JdbcGlassesDao jdbcGlassesDao;
+    private PropertyReader propertyReader = new PropertyReader();
 
     public JdbcGlassesDaoITest() {
-        jdbcDataSource = new JdbcDataSource();
+        JdbcDataSource jdbcDataSource = new JdbcDataSource();
         jdbcDataSource.setURL("jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;");
         FluentConfiguration configuration = new FluentConfiguration();
-        configuration.locations("db/migration");
+        configuration.locations("db/migration/test");
         configuration.dataSource(jdbcDataSource);
         flyway = new Flyway(configuration);
-        jdbcGlassesDao = new JdbcGlassesDao(jdbcDataSource);
+        jdbcGlassesDao = new JdbcGlassesDao(jdbcDataSource,propertyReader);
     }
 
     @BeforeEach
@@ -163,14 +164,13 @@ class JdbcGlassesDaoITest {
     private Glasses getGlasses() {
         Photo photo = Photo.builder().address("test-first").build();
         Photo photo2 = Photo.builder().address("test-second").build();
-        Glasses expected = Glasses.builder()
+
+        return Glasses.builder()
                 .name("TEST")
                 .collection("TEST")
                 .category("TEST")
                 .details("TEST")
                 .price(5)
                 .photos(Arrays.asList(photo,photo2)).build();
-
-        return expected;
     }
 }

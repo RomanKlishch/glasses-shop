@@ -11,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,27 +24,27 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ArticleServletTest {
     @InjectMocks
-    ArticleServlet servlet;
+    private ArticleServlet servlet;
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
     @Mock
-    PrintWriter printWriter;
+    private PrintWriter printWriter;
     @Spy
-    PageGenerator pageGenerator;
+    private PageGenerator pageGenerator;
 
     @Test
-    @DisplayName("Check method doGet")
-    void doGet() throws IOException, ServletException {
+    @DisplayName("Test doGet article")
+    void doGet() throws IOException {
         when(response.getWriter()).thenReturn(printWriter);
-        doNothing().when(pageGenerator).process(any(), any(), any());
+        doNothing().when(pageGenerator).process(anyString(), anyMap(), any());
         servlet.doGet(request, response);
-        pageGenerator.process(anyString(), any(), any());
+        pageGenerator.process(anyString(), anyMap(), any());
 
         verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
         verify(response, atLeast(1)).getWriter();
         verify(printWriter, atLeast(1)).flush();
-        verify(pageGenerator).process(any(), any(), any());
+        verify(pageGenerator).process(anyString(), anyMap(), any());
     }
 }

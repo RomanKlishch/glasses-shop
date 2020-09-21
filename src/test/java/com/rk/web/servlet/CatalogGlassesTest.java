@@ -26,19 +26,19 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class CatalogGlassesTest {
     @Mock
-    GlassesService glassesService;
+    private GlassesService glassesService;
     @InjectMocks
-    CatalogGlassesServlet servlet;
+    private CatalogGlassesServlet servlet;
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
     @Mock
-    PrintWriter printWriter;
+    private PrintWriter printWriter;
     @Mock
-    CatalogAndMessage catalogAndMessage;
+    private CatalogAndMessage catalogAndMessage;
     @Spy
-    PageGenerator pageGenerator;
+    private PageGenerator pageGenerator;
 
     @Test
     @DisplayName("Test response in method doGet()")
@@ -53,7 +53,7 @@ public class CatalogGlassesTest {
         verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
         verify(response, atLeast(1)).getWriter();
         verify(printWriter, atLeast(1)).flush();
-        verify(pageGenerator).process(any(), any(), any());
+        verify(pageGenerator).process(anyString(), any(), any());
     }
 
 }

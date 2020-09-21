@@ -3,11 +3,12 @@ dependency-reduced-pom.xml
 /workspace.xml
 online-shop.iml
 Test.java
+TestClose.java
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
 V4__setUpOptical.sql
-V5__setUpOptical.sql
+V5__setUpSun.sql
 reachSun.sql
 setUpOptical.sql
 .idea
