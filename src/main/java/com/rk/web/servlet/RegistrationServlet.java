@@ -14,10 +14,6 @@ import java.io.IOException;
 public class RegistrationServlet extends HttpServlet {
     private UserService userService = ServiceLocator.getBean(UserService.class);
 
-    public RegistrationServlet(UserService userService) {
-        this.userService = userService;
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
