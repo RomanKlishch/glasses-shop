@@ -1,6 +1,5 @@
 package com.rk;
 
-import com.rk.dao.UserDao;
 import com.rk.dao.jdbc.JdbcGlassesDao;
 import com.rk.dao.jdbc.JdbcUserDao;
 import com.rk.service.GlassesService;

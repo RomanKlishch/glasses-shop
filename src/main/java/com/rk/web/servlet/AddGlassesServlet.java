@@ -3,7 +3,6 @@ package com.rk.web.servlet;
 import com.rk.ServiceLocator;
 import com.rk.domain.Glasses;
 import com.rk.service.GlassesService;
-import com.rk.service.impl.DefaultGlassesService;
 import com.rk.web.templator.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AddGlassesServlet extends HttpServlet {
-    private GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
+    private final GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

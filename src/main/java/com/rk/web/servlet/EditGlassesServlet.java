@@ -3,7 +3,6 @@ package com.rk.web.servlet;
 import com.rk.ServiceLocator;
 import com.rk.domain.Glasses;
 import com.rk.service.GlassesService;
-import com.rk.service.impl.DefaultGlassesService;
 import com.rk.web.templator.PageGenerator;
 
 import javax.servlet.http.HttpServlet;

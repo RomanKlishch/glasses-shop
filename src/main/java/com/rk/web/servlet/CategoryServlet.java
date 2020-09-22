@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CategoryServlet extends HttpServlet {
-    private GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
+    private final GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

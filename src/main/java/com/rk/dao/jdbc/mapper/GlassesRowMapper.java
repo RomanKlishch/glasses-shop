@@ -1,7 +1,6 @@
 package com.rk.dao.jdbc.mapper;
 
 import com.rk.domain.Glasses;
-import com.rk.domain.Photo;
 import lombok.SneakyThrows;
 
 import java.sql.ResultSet;
