@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultGlassesService implements GlassesService {
-    private final GlassesDao glassesDao = ServiceLocator.getBean(JdbcGlassesDao.class);
+    private final GlassesDao glassesDao = ServiceLocator.getBean(GlassesDao.class);
 
     @Override
     public Glasses findById(long id) {
@@ -47,11 +47,13 @@ public class DefaultGlassesService implements GlassesService {
     @Override
     public void save(Glasses glasses, String[] arrayAddress) {
         List<Photo> photoList = new ArrayList<>();
-        for (String address : arrayAddress) {
-            if (!address.isEmpty()) {
-                Photo photo = new Photo();
-                photo.setAddress(address);
-                photoList.add(photo);
+        if (arrayAddress!=null){
+            for (String address : arrayAddress) {
+                if (!address.isEmpty()) {
+                    Photo photo = new Photo();
+                    photo.setAddress(address);
+                    photoList.add(photo);
+                }
             }
         }
         glasses.setPhotos(photoList);

@@ -1,5 +1,7 @@
 package com.rk;
 
+import com.rk.dao.GlassesDao;
+import com.rk.dao.UserDao;
 import com.rk.dao.jdbc.JdbcGlassesDao;
 import com.rk.dao.jdbc.JdbcUserDao;
 import com.rk.service.GlassesService;
@@ -24,11 +26,11 @@ public class ServiceLocator<T> {
         dataSource.setUser(propertyReader.getProperty("JDBC_DATABASE_USERNAME"));
         dataSource.setPassword(propertyReader.getProperty("JDBC_DATABASE_PASSWORD"));
 
-        JdbcGlassesDao jdbcGlassesDao = new JdbcGlassesDao(dataSource,propertyReader);
-        register(JdbcGlassesDao.class,jdbcGlassesDao);
+        GlassesDao glassesDao = new JdbcGlassesDao(dataSource,propertyReader);
+        register(GlassesDao.class,glassesDao);
 
-        JdbcUserDao jdbcUserDao = new JdbcUserDao(dataSource,propertyReader);
-        register(JdbcUserDao.class,jdbcUserDao);
+        UserDao userDao = new JdbcUserDao(dataSource,propertyReader);
+        register(UserDao.class,userDao);
 
         GlassesService glassesService = new DefaultGlassesService();
         register(GlassesService.class,glassesService);
