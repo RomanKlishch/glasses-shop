@@ -61,7 +61,7 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.31.v20200723</version>
+                <version>${jetty.version}</version>
                 <configuration>
                     <webXml>src\main\webapp\WEB-INF\web.xml</webXml>
                     <webApp>
@@ -110,16 +110,14 @@
                 <executions>
                     <execution>
                         <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
+                        <goals><goal>copy</goal></goals>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>com.heroku</groupId>
-                                    <artifactId>webapp-runner</artifactId>
-                                    <version>9.0.30.0</version>
-                                    <destFileName>webapp-runner.jar</destFileName>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-runner</artifactId>
+                                    <version>${jetty.version}</version>
+                                    <destFileName>jetty-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
