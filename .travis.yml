@@ -7,7 +7,7 @@ deploy:
   provider: heroku
   strategy: "api"
   edge: true
-  api_key: "82a74cf8-171a-4054-9364-8f02f19bbe4e"
+  api_key: "8b27acc7-27a2-44ab-85c5-3ddd0c43a2bf"
   app: tlas-shop
   on:
     branch: master
