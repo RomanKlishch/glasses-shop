@@ -47,5 +47,11 @@ public class ServiceLocator<T> {
     public static<T> T getBean(Class<T> classBean) {
         return (T) CONTAINER.get(classBean);
     }
-
 }
+
+//TODO:
+// 1. я не смог настроить static/*, с помощью defaultServlet
+
+
+// Не важные вопросы, если будет свободное время
+// В видео на Stepik  лектор говорит что операция isEmpty "гораздо, более дешовая операция" чем if(size==0)?

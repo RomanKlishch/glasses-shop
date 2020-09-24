@@ -38,7 +38,7 @@ public class JdbcUserDao implements UserDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 User user = null;
                 while (resultSet.next()) {
-                    user = userRowMapper.rowMap(resultSet);
+                    user = userRowMapper.mapRow(resultSet);
                     if (resultSet.next()) {
                         throw new JdbcException("More then one user found");
                     }
@@ -59,7 +59,7 @@ public class JdbcUserDao implements UserDao {
              ResultSet resultSet = statement.executeQuery()) {
             List<User> userList = new ArrayList<>();
             while (resultSet.next()) {
-                User user = userRowMapper.rowMap(resultSet);
+                User user = userRowMapper.mapRow(resultSet);
                 userList.add(user);
             }
             return userList;

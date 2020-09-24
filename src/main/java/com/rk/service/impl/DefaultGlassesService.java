@@ -30,10 +30,9 @@ public class DefaultGlassesService implements GlassesService {
     }
 
     @Override
-    public CatalogAndMessage getCatalogAndMessage(HttpServletRequest request) {
-        String name = request.getParameter("searchName");
-        if (name != null) {
-            return CatalogAndMessage.builder().catalog(glassesDao.findAllByName(name)).message("Found by your request").build();
+    public CatalogAndMessage getCatalogAndMessage(String nameOfCatalog) {
+        if (nameOfCatalog != null) {
+            return CatalogAndMessage.builder().catalog(glassesDao.findAllByName(nameOfCatalog)).message("Found by your request").build();
         } else {
             return CatalogAndMessage.builder().catalog(glassesDao.findAll()).message("Catalog of glasses").build();
         }
@@ -45,18 +44,7 @@ public class DefaultGlassesService implements GlassesService {
     }
 
     @Override
-    public void save(Glasses glasses, String[] arrayAddress) {
-        List<Photo> photoList = new ArrayList<>();
-        if (arrayAddress!=null){
-            for (String address : arrayAddress) {
-                if (!address.isEmpty()) {
-                    Photo photo = new Photo();
-                    photo.setAddress(address);
-                    photoList.add(photo);
-                }
-            }
-        }
-        glasses.setPhotos(photoList);
+    public void save(Glasses glasses) {
         glassesDao.saveGlasses(glasses);
     }
 
@@ -66,17 +54,8 @@ public class DefaultGlassesService implements GlassesService {
     }
 
     @Override
-    public void update(Glasses glasses, String[] id, String[] address) {
-        List<Photo> photoList = new ArrayList<>();
-        for (int i = 0; i < id.length; i++) {
-            if (!id[i].isEmpty() && !address[i].isEmpty()) {
-                photoList.add(Photo.builder()
-                        .id(Long.parseLong(id[i])).address(address[i]).build());
-            }
-        }
-        glasses.setPhotos(photoList);
+    public void update(Glasses glasses) {
         glassesDao.updateById(glasses);
     }
-
 }
 

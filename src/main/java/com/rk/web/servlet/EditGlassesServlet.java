@@ -2,6 +2,7 @@ package com.rk.web.servlet;
 
 import com.rk.ServiceLocator;
 import com.rk.domain.Glasses;
+import com.rk.domain.Photo;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EditGlassesServlet extends HttpServlet {
@@ -30,15 +33,26 @@ public class EditGlassesServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        List<Photo> photoList = new ArrayList<>();
+        String[] photoIds = request.getParameterValues("photoId");
+        String[] urlPhotos = request.getParameterValues("photo");
+        for (int i = 0; i < photoIds.length; i++) {
+            if (!photoIds[i].isEmpty() && !urlPhotos[i].isEmpty()) {
+                photoList.add(Photo.builder()
+                        .id(Long.parseLong(photoIds[i])).address(urlPhotos[i]).build());
+            }
+        }
+
         Glasses glasses = Glasses.builder().id(Long.parseLong(request.getParameter("glassesId")))
                 .name(request.getParameter("name"))
                 .collection(request.getParameter("collection"))
                 .category(request.getParameter("category"))
                 .details(request.getParameter("details"))
                 .price(Double.parseDouble(request.getParameter("price")))
+                .photos(photoList)
                 .build();
 
-        glassesService.update(glasses, request.getParameterValues("photoId"), request.getParameterValues("photo"));
+        glassesService.update(glasses);
         response.sendRedirect("");
     }
 }

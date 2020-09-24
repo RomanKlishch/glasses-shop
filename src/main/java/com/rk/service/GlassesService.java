@@ -13,13 +13,13 @@ public interface GlassesService {
 
     FeaturesAndSpecialGlasses getListsFeaturesAndSpecialGlasses(int limitFeature, int limitSpecial);
 
-    CatalogAndMessage getCatalogAndMessage(HttpServletRequest request);
+    CatalogAndMessage getCatalogAndMessage(String nameOfCatalog);
 
     List<Glasses> getCategoryList(String category);
 
-    void save(Glasses glasses, String[] arrayAddress);
+    void save(Glasses glasses);
 
     void deleteById(long id);
 
-    void update(Glasses glasses, String[] id, String[] address);
+    void update(Glasses glasses);
 }

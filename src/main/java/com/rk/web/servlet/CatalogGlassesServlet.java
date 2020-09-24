@@ -18,8 +18,8 @@ public class CatalogGlassesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> pageVariables = new HashMap<>();
-
-        CatalogAndMessage catalogAndMessage = glassesService.getCatalogAndMessage(request);
+        String nameOfCatalog = request.getParameter("searchName");
+        CatalogAndMessage catalogAndMessage = glassesService.getCatalogAndMessage(nameOfCatalog);
         pageVariables.put("catalogList", catalogAndMessage.getCatalog());
         pageVariables.put("information", catalogAndMessage.getMessage());
         response.setContentType("text/html;charset=utf-8");

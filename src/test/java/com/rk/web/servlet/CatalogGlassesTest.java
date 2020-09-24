@@ -49,7 +49,7 @@ public class CatalogGlassesTest {
         servlet.doGet(request, response);
         pageGenerator.process(anyString(), any(), any());
 
-        verify(glassesService, atLeast(1)).getCatalogAndMessage(request);
+        verify(glassesService, atLeast(1)).getCatalogAndMessage(null);
         verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
         verify(response, atLeast(1)).getWriter();
         verify(printWriter, atLeast(1)).flush();
