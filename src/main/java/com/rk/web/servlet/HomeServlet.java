@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeServlet extends HttpServlet {
-    private GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
+    private final GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -28,6 +28,6 @@ public class HomeServlet extends HttpServlet {
         pageVariables.put("special", special);
         response.setContentType("text/html;charset=utf-8");
 
-        PageGenerator.instance().process("index", pageVariables, response.getWriter());
+        PageGenerator.process("index", pageVariables, response.getWriter());
     }
 }

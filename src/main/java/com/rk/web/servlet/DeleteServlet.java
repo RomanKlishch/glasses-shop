@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DeleteServlet extends HttpServlet {
-    private GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
+    private final GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

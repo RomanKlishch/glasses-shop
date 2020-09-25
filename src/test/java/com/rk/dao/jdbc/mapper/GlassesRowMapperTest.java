@@ -1,25 +1,36 @@
 package com.rk.dao.jdbc.mapper;
 
+import com.rk.dao.exception.JdbcException;
 import com.rk.domain.Glasses;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class GlassesRowMapperTest {
+    GlassesRowMapper mapper;
+    @Mock
+    ResultSet resultSet;
 
     @SneakyThrows
     @Test
     @DisplayName("Test mapper for entity glasses")
     void glassesMapRow() {
-        GlassesRowMapper mapper = new GlassesRowMapper();
-        ResultSet resultSet = mock(ResultSet.class);
-
+        mapper = new GlassesRowMapper();
         when(resultSet.getLong("glasses_id")).thenReturn(1L);
         when(resultSet.getString("name")).thenReturn("o-o");
         when(resultSet.getString("collection")).thenReturn("good");
@@ -35,5 +46,14 @@ class GlassesRowMapperTest {
         assertEquals("sun", actualGlasses.getCategory());
         assertEquals("ups", actualGlasses.getDetails());
         assertEquals(20.00, actualGlasses.getPrice(), 2);
+    }
+
+    @SneakyThrows
+    @Test
+    @DisplayName("Test exception in mapper of glasses")
+    void mapRow_Exception() {
+        mapper = new GlassesRowMapper();
+        when(resultSet.getLong("glasses_id")).thenThrow(SQLException.class);
+        assertThrows(JdbcException.class, () -> mapper.mapRow(resultSet));
     }
 }

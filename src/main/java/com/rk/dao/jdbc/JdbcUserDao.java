@@ -94,7 +94,7 @@ public class JdbcUserDao implements UserDao {
             statement.setString(2,user.getEmail());
             statement.setString(3,user.getPassword());
             statement.setString(4, user.getRole().getUserRole());
-            statement.setLong(4, user.getId().getId());
+            statement.setLong(5, user.getId().getId());
             statement.execute();
         } catch (SQLException e) {
             log.error("Update user", e);
@@ -107,7 +107,7 @@ public class JdbcUserDao implements UserDao {
         String query = propertyReader.getProperty("delete.user");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(4, id);
+            statement.setLong(1, id);
             statement.execute();
         } catch (SQLException e) {
             log.error("Delete user", e);

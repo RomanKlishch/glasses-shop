@@ -27,7 +27,7 @@ class JdbcGlassesDaoITest {
         JdbcDataSource jdbcDataSource = new JdbcDataSource();
         jdbcDataSource.setURL("jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;");
         FluentConfiguration configuration = new FluentConfiguration();
-        configuration.locations("db/migration/test");
+        configuration.locations("db/migration/glasses");
         configuration.dataSource(jdbcDataSource);
         flyway = new Flyway(configuration);
         jdbcGlassesDao = new JdbcGlassesDao(jdbcDataSource,propertyReader);

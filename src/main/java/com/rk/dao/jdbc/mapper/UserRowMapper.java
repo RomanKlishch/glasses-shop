@@ -19,7 +19,7 @@ public class UserRowMapper {
                     .name(resultSet.getString("name"))
                     .email(resultSet.getString("email"))
                     .password(resultSet.getString("password"))
-                    .role(UserRole.valueOf(resultSet.getString("password")))
+                    .role(UserRole.valueOf(resultSet.getString("role")))
                     .build();
         } catch (SQLException e) {
             log.error("Can not find field of user in ResultSet", e);

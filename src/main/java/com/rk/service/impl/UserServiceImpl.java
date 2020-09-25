@@ -7,7 +7,11 @@ import com.rk.domain.User;
 import com.rk.service.UserService;
 
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao = ServiceLocator.getBean(UserDao.class);
+    private UserDao userDao;
+
+    public UserServiceImpl() {
+        this.userDao = ServiceLocator.getBean(UserDao.class);
+    }
 
     @Override
     public void save(User user) {

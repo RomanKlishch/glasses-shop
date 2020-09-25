@@ -23,28 +23,28 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ArticleServletTest {
-    @InjectMocks
-    private ArticleServlet servlet;
-    @Mock
-    private HttpServletRequest request;
-    @Mock
-    private HttpServletResponse response;
-    @Mock
-    private PrintWriter printWriter;
-    @Spy
-    private PageGenerator pageGenerator;
-
-    @Test
-    @DisplayName("Test doGet article")
-    void doGet() throws IOException {
-        when(response.getWriter()).thenReturn(printWriter);
-        doNothing().when(pageGenerator).process(anyString(), anyMap(), any());
-        servlet.doGet(request, response);
-        pageGenerator.process(anyString(), anyMap(), any());
-
-        verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
-        verify(response, atLeast(1)).getWriter();
-        verify(printWriter, atLeast(1)).flush();
-        verify(pageGenerator).process(anyString(), anyMap(), any());
-    }
+//    @InjectMocks
+//    private ArticleServlet servlet;
+//    @Mock
+//    private HttpServletRequest request;
+//    @Mock
+//    private HttpServletResponse response;
+//    @Mock
+//    private PrintWriter printWriter;
+//    @Spy
+//    private PageGenerator pageGenerator;
+//
+//    @Test
+//    @DisplayName("Test doGet article")
+//    void doGet() throws IOException {
+//        when(response.getWriter()).thenReturn(printWriter);
+//        doNothing().when(pageGenerator).process(anyString(), anyMap(), any());
+//        servlet.doGet(request, response);
+//        pageGenerator.process(anyString(), anyMap(), any());
+//
+//        verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
+//        verify(response, atLeast(1)).getWriter();
+//        verify(printWriter, atLeast(1)).flush();
+//        verify(pageGenerator).process(anyString(), anyMap(), any());
+//    }
 }

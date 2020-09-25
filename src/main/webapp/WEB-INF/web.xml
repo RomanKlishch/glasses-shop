@@ -4,7 +4,9 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-
+<listener>
+    <listener-class>com.rk.web.listener.ThymeLeafInitializerListener</listener-class>
+</listener>
     <servlet>
         <servlet-name>AddGlassesServlet</servlet-name>
         <servlet-class>com.rk.web.servlet.AddGlassesServlet</servlet-class>
@@ -49,15 +51,6 @@
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern></url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>StaticResourcesServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.StaticResourcesServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StaticResourcesServlet</servlet-name>
-        <url-pattern>/myapp/static/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -106,12 +99,8 @@
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>default</servlet-name>-->
-<!--        <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>default</servlet-name>-->
-<!--        <url-pattern>/myapp/static/*</url-pattern>-->
-<!--    </servlet-mapping>-->
+      <error-page>
+            <location>/error.html</location>
+        </error-page>
+
 </web-app>

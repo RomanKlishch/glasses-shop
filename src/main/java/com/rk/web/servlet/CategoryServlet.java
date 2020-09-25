@@ -25,6 +25,6 @@ public class CategoryServlet extends HttpServlet {
         pageVariables.put("categoryList", categoryList);
         pageVariables.put("category", category);
         response.setContentType("text/html;charset=utf-8");
-        PageGenerator.instance().process("category", pageVariables, response.getWriter());
+        PageGenerator.process("category", pageVariables, response.getWriter());
     }
 }

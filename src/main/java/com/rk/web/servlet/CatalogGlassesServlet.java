@@ -24,6 +24,6 @@ public class CatalogGlassesServlet extends HttpServlet {
         pageVariables.put("information", catalogAndMessage.getMessage());
         response.setContentType("text/html;charset=utf-8");
 
-        PageGenerator.instance().process("catalog", pageVariables, response.getWriter());
+        PageGenerator.process("catalog", pageVariables, response.getWriter());
     }
 }

@@ -28,7 +28,7 @@ public class EditGlassesServlet extends HttpServlet {
         pageVariables.put("photos", glasses.getPhotos());
 
         response.setContentType("text/html;charset=utf-8");
-        PageGenerator.instance().process("admin/editGlasses", pageVariables, response.getWriter());
+        PageGenerator.process("admin/editGlasses", pageVariables, response.getWriter());
     }
 
     @Override

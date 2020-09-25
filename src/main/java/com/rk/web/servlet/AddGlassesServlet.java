@@ -19,7 +19,7 @@ public class AddGlassesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
-        PageGenerator.instance().process("admin/addGlasses", response.getWriter());
+        PageGenerator.process("admin/addGlasses", response.getWriter());
     }
 
     @Override

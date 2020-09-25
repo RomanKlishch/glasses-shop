@@ -17,7 +17,7 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
-        PageGenerator.instance().process("registration", response.getWriter());
+        PageGenerator.process("registration", response.getWriter());
     }
 
     @Override
