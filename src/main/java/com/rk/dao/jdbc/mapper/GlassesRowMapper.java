@@ -2,7 +2,6 @@ package com.rk.dao.jdbc.mapper;
 
 import com.rk.dao.exception.JdbcException;
 import com.rk.domain.Glasses;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.ResultSet;

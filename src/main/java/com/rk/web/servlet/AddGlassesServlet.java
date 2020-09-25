@@ -6,6 +6,7 @@ import com.rk.domain.Photo;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddGlassesServlet extends HttpServlet {
-    private final GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
+    private GlassesService glassesService;
+
+    public AddGlassesServlet() {
+        glassesService = ServiceLocator.getBean(GlassesService.class);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -23,10 +28,10 @@ public class AddGlassesServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<Photo> photoList = new ArrayList<>();
         String[] urlPhoto = request.getParameterValues("photo");
-        if (urlPhoto!=null){
+        if (urlPhoto != null) {
             for (String address : urlPhoto) {
                 if (!address.isEmpty()) {
                     Photo photo = new Photo();
@@ -44,6 +49,12 @@ public class AddGlassesServlet extends HttpServlet {
                 .photos(photoList)
                 .build();
         glassesService.save(glasses);
+
+//        RequestDispatcher dispatcher = request
+//                .getSession()
+//                .getServletContext()
+//                .getRequestDispatcher("");
+//        dispatcher.forward(request,response);
         response.sendRedirect("");
     }
 

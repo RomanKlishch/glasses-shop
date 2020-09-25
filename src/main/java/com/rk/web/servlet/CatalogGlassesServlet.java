@@ -13,7 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CatalogGlassesServlet extends HttpServlet {
-    private GlassesService glassesService = ServiceLocator.getBean(GlassesService.class);
+    private GlassesService glassesService;
+
+    public CatalogGlassesServlet() {
+        this.glassesService  = ServiceLocator.getBean(GlassesService.class);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

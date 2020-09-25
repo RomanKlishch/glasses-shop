@@ -33,7 +33,6 @@ class PropertyReaderTest {
         assertEquals("test_sa", propertyReader.getProperty("TEST_JDBC_DATABASE_USERNAME"));
         assertEquals("test_sa", propertyReader.getProperty("TEST_JDBC_DATABASE_PASSWORD"));
         assertEquals("test_8080", propertyReader.getProperty("TEST_PORT"));
-
     }
 
     @Test

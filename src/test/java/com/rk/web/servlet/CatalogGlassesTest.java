@@ -25,35 +25,31 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class CatalogGlassesTest {
-//    @Mock
-//    private GlassesService glassesService;
-//    @InjectMocks
-//    private CatalogGlassesServlet servlet;
-//    @Mock
-//    private HttpServletRequest request;
-//    @Mock
-//    private HttpServletResponse response;
-//    @Mock
-//    private PrintWriter printWriter;
-//    @Mock
-//    private CatalogAndMessage catalogAndMessage;
-//    @Spy
-//    private PageGenerator pageGenerator;
-//
-//    @Test
-//    @DisplayName("Test response in method doGet()")
-//    void doGet() throws IOException {
-//        when(response.getWriter()).thenReturn(printWriter);
-//        when(glassesService.getCatalogAndMessage(any())).thenReturn(catalogAndMessage);
-//        doNothing().when(pageGenerator).process(any(), any(), any());
-//        servlet.doGet(request, response);
-//        pageGenerator.process(anyString(), any(), any());
-//
-//        verify(glassesService, atLeast(1)).getCatalogAndMessage(null);
-//        verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
-//        verify(response, atLeast(1)).getWriter();
-//        verify(printWriter, atLeast(1)).flush();
-//        verify(pageGenerator).process(anyString(), any(), any());
-//    }
+    @Mock
+    private GlassesService glassesService;
+    @InjectMocks
+    private CatalogGlassesServlet servlet;
+    @Mock
+    private HttpServletRequest request;
+    @Mock
+    private HttpServletResponse response;
+    @Mock
+    private PrintWriter printWriter;
+    @Mock
+    private CatalogAndMessage catalogAndMessage;
+
+    @Test
+    @DisplayName("Test response in method doGet()")
+    void doGet() throws IOException {
+        when(response.getWriter()).thenReturn(printWriter);
+        when(glassesService.getCatalogAndMessage(any())).thenReturn(catalogAndMessage);
+
+        servlet.doGet(request, response);
+
+        verify(glassesService, atLeast(1)).getCatalogAndMessage(null);
+        verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
+        verify(response, atLeast(1)).getWriter();
+        verify(printWriter, atLeast(1)).flush();
+    }
 
 }

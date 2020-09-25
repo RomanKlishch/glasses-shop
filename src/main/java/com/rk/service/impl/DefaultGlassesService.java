@@ -2,19 +2,19 @@ package com.rk.service.impl;
 
 import com.rk.ServiceLocator;
 import com.rk.dao.GlassesDao;
-import com.rk.dao.jdbc.JdbcGlassesDao;
 import com.rk.domain.Glasses;
-import com.rk.domain.Photo;
 import com.rk.dto.CatalogAndMessage;
 import com.rk.dto.FeaturesAndSpecialGlasses;
 import com.rk.service.GlassesService;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultGlassesService implements GlassesService {
-    private final GlassesDao glassesDao = ServiceLocator.getBean(GlassesDao.class);
+    private GlassesDao glassesDao;
+
+    public DefaultGlassesService() {
+        glassesDao = ServiceLocator.getBean(GlassesDao.class);
+    }
 
     @Override
     public Glasses findById(long id) {

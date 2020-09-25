@@ -47,7 +47,6 @@ class DefaultGlassesServiceTest {
         when(glassesDao.findByCategory("OPTICAL")).thenReturn(null);
         glassesService.getCategoryList("OPTICAL");
         verify(glassesDao, atLeast(1)).findByCategory("OPTICAL");
-
     }
 
     @Test

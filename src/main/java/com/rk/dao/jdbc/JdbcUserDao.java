@@ -74,13 +74,13 @@ public class JdbcUserDao implements UserDao {
         String query = propertyReader.getProperty("save.user");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1,user.getName());
-            statement.setString(2,user.getEmail());
-            statement.setString(3,user.getPassword());
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
             statement.setString(4, user.getRole().getUserRole());
             statement.execute();
         } catch (SQLException e) {
-            log.error("Save user", e);
+            log.error("Save user - {}",user, e);
             throw new JdbcException("Save user", e);
         }
     }
@@ -90,14 +90,14 @@ public class JdbcUserDao implements UserDao {
         String query = propertyReader.getProperty("update.user");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1,user.getName());
-            statement.setString(2,user.getEmail());
-            statement.setString(3,user.getPassword());
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
             statement.setString(4, user.getRole().getUserRole());
             statement.setLong(5, user.getId().getId());
             statement.execute();
         } catch (SQLException e) {
-            log.error("Update user", e);
+            log.error("Update user - {}", user, e);
             throw new JdbcException("Update user", e);
         }
     }
@@ -110,7 +110,7 @@ public class JdbcUserDao implements UserDao {
             statement.setLong(1, id);
             statement.execute();
         } catch (SQLException e) {
-            log.error("Delete user", e);
+            log.error("Delete user by id - {}",id, e);
             throw new JdbcException("Delete user", e);
         }
     }

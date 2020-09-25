@@ -25,34 +25,30 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class GlassesServletTest {
-//    @Mock
-//    private GlassesService glassesService;
-//    @InjectMocks
-//    private GlassesServlet servlet;
-//    @Mock
-//    private HttpServletRequest request;
-//    @Mock
-//    private HttpServletResponse response;
-//    @Mock
-//    private PrintWriter printWriter;
-//    @Spy
-//    private PageGenerator pageGenerator;
-//
-//    @Test
-//    @DisplayName("Check parameter from request, method findById() and response in method doGet")
-//    void doGet() throws IOException {
-//        when(request.getPathInfo()).thenReturn("sun/1");
-//        when(response.getWriter()).thenReturn(printWriter);
-//        when(glassesService.findById(anyLong())).thenReturn(new Glasses());
-//        doNothing().when(pageGenerator).process(any(), any(), any());
-//        servlet.doGet(request, response);
-//        pageGenerator.process(anyString(), any(), any());
-//
-//        verify(glassesService).findById(anyLong());
-//        verify(request).getPathInfo();
-//        verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
-//        verify(response, atLeast(1)).getWriter();
-//        verify(printWriter, atLeast(1)).flush();
-//        verify(pageGenerator).process(anyString(), any(), any());
-//    }
+    @Mock
+    private GlassesService glassesService;
+    @InjectMocks
+    private GlassesServlet servlet;
+    @Mock
+    private HttpServletRequest request;
+    @Mock
+    private HttpServletResponse response;
+    @Mock
+    private PrintWriter printWriter;
+
+    @Test
+    @DisplayName("Check parameter from request, method findById() and response in method doGet")
+    void doGet() throws IOException {
+        when(request.getPathInfo()).thenReturn("sun/1");
+        when(response.getWriter()).thenReturn(printWriter);
+        when(glassesService.findById(anyLong())).thenReturn(new Glasses());
+
+        servlet.doGet(request, response);
+
+        verify(glassesService).findById(anyLong());
+        verify(request).getPathInfo();
+        verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
+        verify(response, atLeast(1)).getWriter();
+        verify(printWriter, atLeast(1)).flush();
+    }
 }

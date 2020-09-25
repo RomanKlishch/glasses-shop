@@ -23,28 +23,24 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ContactServletTest {
-//    @InjectMocks
-//    private ContactServlet servlet;
-//    @Mock
-//    private HttpServletRequest request;
-//    @Mock
-//    private HttpServletResponse response;
-//    @Mock
-//    private PrintWriter printWriter;
-//    @Spy
-//    private PageGenerator pageGenerator;
-//
-//    @Test
-//    @DisplayName("Test method doGet in ContactServlet")
-//    void doGet() throws IOException {
-//        when(response.getWriter()).thenReturn(printWriter);
-//        doNothing().when(pageGenerator).process(any(), any(), any());
-//        servlet.doGet(request, response);
-//        pageGenerator.process(anyString(), any(), any());
-//
-//        verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
-//        verify(response, atLeast(1)).getWriter();
-//        verify(printWriter, atLeast(1)).flush();
-//        verify(pageGenerator).process(anyString(), any(), any());
-//    }
+    @InjectMocks
+    private ContactServlet servlet;
+    @Mock
+    private HttpServletRequest request;
+    @Mock
+    private HttpServletResponse response;
+    @Mock
+    private PrintWriter printWriter;
+
+    @Test
+    @DisplayName("Test method doGet in ContactServlet")
+    void doGet() throws IOException {
+        when(response.getWriter()).thenReturn(printWriter);
+
+        servlet.doGet(request, response);
+
+        verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
+        verify(response, atLeast(1)).getWriter();
+        verify(printWriter, atLeast(1)).flush();
+    }
 }

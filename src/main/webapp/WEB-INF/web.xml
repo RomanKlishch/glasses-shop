@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-<listener>
-    <listener-class>com.rk.web.listener.ThymeLeafInitializerListener</listener-class>
-</listener>
+    <listener>
+        <listener-class>com.rk.web.listener.ThymeLeafInitializerListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>AddGlassesServlet</servlet-name>
         <servlet-class>com.rk.web.servlet.AddGlassesServlet</servlet-class>
@@ -23,6 +24,15 @@
     <servlet-mapping>
         <servlet-name>ContactServlet</servlet-name>
         <url-pattern>/contacts</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ArticleServlet</servlet-name>
+        <servlet-class>com.rk.web.servlet.ArticleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ArticleServlet</servlet-name>
+        <url-pattern>/articles</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -51,15 +61,6 @@
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern></url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ArticleServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.ArticleServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ArticleServlet</servlet-name>
-        <url-pattern>/articles</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -99,8 +100,8 @@
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
 
-      <error-page>
-            <location>/error.html</location>
-        </error-page>
+    <error-page>
+        <location>/error.html</location>
+    </error-page>
 
 </web-app>

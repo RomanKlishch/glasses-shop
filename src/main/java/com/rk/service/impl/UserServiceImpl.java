@@ -2,7 +2,6 @@ package com.rk.service.impl;
 
 import com.rk.ServiceLocator;
 import com.rk.dao.UserDao;
-import com.rk.dao.jdbc.JdbcUserDao;
 import com.rk.domain.User;
 import com.rk.service.UserService;
 

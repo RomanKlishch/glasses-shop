@@ -4,7 +4,6 @@ import com.rk.dao.exception.JdbcException;
 import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.ResultSet;
