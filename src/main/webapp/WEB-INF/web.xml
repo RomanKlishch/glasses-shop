@@ -8,6 +8,12 @@
         <listener-class>com.rk.web.listener.ThymeLeafInitializerListener</listener-class>
     </listener>
 
+<!--    //TODO:это не работает, я не знаю почему-->
+    <context-param>
+        <param-name>cookieTokensss</param-name>
+        <param-value>java.util.HashMap</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>AddGlassesServlet</servlet-name>
         <servlet-class>com.rk.web.servlet.AddGlassesServlet</servlet-class>
@@ -60,6 +66,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
         <url-pattern></url-pattern>
     </servlet-mapping>
 
@@ -98,6 +105,15 @@
     <servlet-mapping>
         <servlet-name>Registration</servlet-name>
         <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>com.rk.web.servlet.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
     <error-page>

@@ -6,18 +6,13 @@ import com.rk.dao.jdbc.mapper.GlassesRowMapper;
 import com.rk.dao.jdbc.mapper.PhotoRowMapper;
 import com.rk.domain.Glasses;
 import com.rk.domain.Photo;
-import com.rk.domain.User;
 import com.rk.util.PropertyReader;
-import lombok.Cleanup;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +21,8 @@ import java.util.Map;
 @Slf4j
 @NoArgsConstructor
 public class JdbcGlassesDao implements GlassesDao {
-    private static final GlassesRowMapper glassesRowMapper = new GlassesRowMapper(); //TODO: почему метод mapRow не статический? Отсюда соответственно вопрос правильно ли я понимаю поведение сттатических методов в многопоточности?
-    private static final PhotoRowMapper photoRowMapper = new PhotoRowMapper();
+    private static final GlassesRowMapper GLASSES_ROW_MAPPER = new GlassesRowMapper();
+    private static final PhotoRowMapper PHOTO_ROW_MAPPER = new PhotoRowMapper();
     private DataSource dataSource;
     private PropertyReader propertyReader;
 
@@ -40,8 +35,8 @@ public class JdbcGlassesDao implements GlassesDao {
     public List<Glasses> findAll() {
         String query = propertyReader.getProperty("find.all");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statementGlasses = connection.prepareStatement(query);
-             ResultSet resultSet = statementGlasses.executeQuery()) {
+             Statement statementGlasses = connection.createStatement();
+             ResultSet resultSet = statementGlasses.executeQuery(query)) {
             return mapRowGlassesAndPhoto(resultSet);
         } catch (SQLException e) {
             log.error("Can not find all Glasses - ", e);
@@ -94,7 +89,7 @@ public class JdbcGlassesDao implements GlassesDao {
                 while (resultSet.next()) {
                     List<Glasses> glassesList = mapRowGlassesAndPhoto(resultSet);
                     glasses = glassesList.get(0);
-                    if (glassesList.size()>1) {
+                    if (glassesList.size() > 1) {
                         throw new JdbcException("More then one glasses found");
                     }
                 }
@@ -120,14 +115,16 @@ public class JdbcGlassesDao implements GlassesDao {
             statement.setDouble(5, glasses.getPrice());
             statement.execute();
 
-            ResultSet resultSet = statement.getGeneratedKeys();
-            while (resultSet.next()) {
-                glasses.setId(resultSet.getLong(1));
+            try (ResultSet resultSet = statement.getGeneratedKeys()){
+                while (resultSet.next()) {
+                    glasses.setId(resultSet.getLong(1));
+                }
             }
+
             savePhoto(connection, glasses.getPhotos(), glasses.getId());
             connection.commit();
         } catch (SQLException e) {
-            log.error("Can not save glasses - {}", glasses.toString(), e);
+            log.error("Can not save glasses - {}", glasses, e);
             throw new JdbcException("Can not save glasses", e);
         }
     }
@@ -149,7 +146,7 @@ public class JdbcGlassesDao implements GlassesDao {
 
             connection.commit();
         } catch (SQLException e) {
-            log.error("Can not update glasses - {}", glasses.toString(), e);
+            log.error("Can not update glasses - {}", glasses, e);
             throw new JdbcException("Can not update glasses", e);
         }
 
@@ -158,16 +155,23 @@ public class JdbcGlassesDao implements GlassesDao {
     @Override
     public void deleteById(long id) {
         String query = propertyReader.getProperty("delete.glasses");
+
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        ) {
             connection.setAutoCommit(false);
-            statement.setLong(1, id);
-            deletePhotoById(connection, id);
-            statement.execute();
-            connection.commit();
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                deletePhotoByGlassesId(connection, id);
+                statement.setLong(1, id);
+                statement.execute();
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                log.error("Can not delete glasses", e);
+                throw new JdbcException("Can not delete glasses", e);
+            }
         } catch (SQLException e) {
-            log.error("Can not delete glasses", e);
-            throw new JdbcException("Can not delete glasses", e);
+            log.error("Connection or rollback was not executed during deletion Glasses", e);
+            throw new JdbcException("Connection or rollback was not executed during deletion Glasses", e);
         }
     }
 
@@ -218,7 +222,7 @@ public class JdbcGlassesDao implements GlassesDao {
         }
     }
 
-    void deletePhotoById(Connection connection, long id) {
+    void deletePhotoByGlassesId(Connection connection, long id) {
         String query = propertyReader.getProperty("delete.photo");
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
@@ -233,10 +237,10 @@ public class JdbcGlassesDao implements GlassesDao {
         Map<Long, Glasses> glassesMap = new HashMap<>();
         while (resultSet.next()) {
             long id = resultSet.getLong("glasses_id");
-            glassesMap.putIfAbsent(id, glassesRowMapper.mapRow(resultSet));
-            resultSet.getLong("photo_id");
+            glassesMap.putIfAbsent(id, GLASSES_ROW_MAPPER.mapRow(resultSet));
+
             if (resultSet.getLong("photo_id") != 0) {
-                Photo photo = photoRowMapper.mapRow(resultSet);
+                Photo photo = PHOTO_ROW_MAPPER.mapRow(resultSet);
                 glassesMap.get(id).getPhotos().add(photo);
             }
         }

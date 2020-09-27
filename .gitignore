@@ -8,8 +8,8 @@ TestClose.java
 /dataSources/
 /dataSources.local.xml
 R__setUpOptical.sql
-src/main/resources/db/migration/R__setUpSun.sql
-
+R__setUpSun.sql
+R__setUpUser.sql
 .idea
 # Maven
 target/

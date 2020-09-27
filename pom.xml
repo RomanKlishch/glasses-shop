@@ -62,16 +62,6 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
-                <configuration>
-                    <webXml>src\main\webapp\WEB-INF\web.xml</webXml>
-                    <webApp>
-                        <contextPath>/</contextPath>
-                    </webApp>
-                    <war>${project.basedir}/target/online-shop-1.0-SNAPSHOT.war</war>
-                    <httpConnector>
-                        <port>${port}</port>
-                    </httpConnector>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -152,12 +142,6 @@
         </plugins>
     </build>
     <dependencies>
-        <dependency>
-            <groupId>org.fujion.webjars</groupId>
-            <artifactId>webjar-jshashes</artifactId>
-            <version>1.0.8</version>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

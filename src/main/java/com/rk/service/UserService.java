@@ -4,4 +4,6 @@ import com.rk.domain.User;
 
 public interface UserService {
     void save(User user);
+
+    User findByLoginPassword(String login, String password);
 }

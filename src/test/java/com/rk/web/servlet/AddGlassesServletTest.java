@@ -41,7 +41,7 @@ class AddGlassesServletTest {
         when(response.getWriter()).thenReturn(printWriter);
 
         servlet.doGet(request, response);
-        PageGenerator.process("admin/addGlasses", printWriter);
+        PageGenerator.instance().process("admin/addGlasses", printWriter);
 
         verify(response, atLeast(1)).setContentType("text/html;charset=utf-8");
         verify(response, atLeast(1)).getWriter();

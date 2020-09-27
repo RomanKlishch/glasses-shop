@@ -10,7 +10,7 @@ public class ThymeLeafInitializerListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
-        PageGenerator.configureTemplate(servletContext);
+        PageGenerator.instance().configureTemplate(servletContext);
     }
 
     @Override

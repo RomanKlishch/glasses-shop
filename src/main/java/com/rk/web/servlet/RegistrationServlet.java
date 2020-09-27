@@ -12,12 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RegistrationServlet extends HttpServlet {
-    private UserService userService = ServiceLocator.getBean(UserService.class);
+    private UserService userService;
+
+    public RegistrationServlet() {
+        this.userService = ServiceLocator.getBean(UserService.class);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
-        PageGenerator.process("registration", response.getWriter());
+        PageGenerator.instance().process("registration", response.getWriter());
     }
 
     @Override

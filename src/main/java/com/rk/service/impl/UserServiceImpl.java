@@ -16,4 +16,9 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         userDao.save(user);
     }
+
+    @Override
+    public User findByLoginPassword(String login, String password) {
+        return userDao.findByLoginPassword(login, password);
+    }
 }

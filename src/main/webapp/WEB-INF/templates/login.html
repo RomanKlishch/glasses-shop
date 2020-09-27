@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+    <div class="message">
+        <div class="row text-center">
+            <div class="col">
+                <h4><p th:if="${messages}"></p></h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="login">Login</label>
+                    <input required type="text" class="form-control" name="login" aria-describedby="loginHelp"
+                           placeholder="Enter name" id="login">
+                    <small id="loginlHelp" class="form-text text-muted">Enter email</small>
+                </div>
+                <div class="form-group">
+                    <label for="repeatPassword">Password</label>
+                    <input required type="password" class="form-control" name="password"
+                           aria-describedby="repeatPassword"
+                           placeholder="Enter password" id="repeat">
+                    <small id="repeatPassword" class="form-text text-muted">Enter password</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+</body>
+</html>
