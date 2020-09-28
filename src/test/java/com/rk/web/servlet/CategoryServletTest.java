@@ -3,6 +3,7 @@ package com.rk.web.servlet;
 import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
+import com.rk.service.GlassesService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,9 +23,11 @@ import java.util.Map;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ArticleServletTest {
+class CategoryServletTest {
+    @Mock
+    private GlassesService glassesService;
     @InjectMocks
-    private ArticleServlet servlet;
+    private CategoryServlet servlet;
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -36,7 +39,7 @@ class ArticleServletTest {
     private Cookie cookieAdmin;
     private Cookie cookieUser;
 
-    public ArticleServletTest() {
+    public CategoryServletTest() {
         cookieUserMap = new HashMap<>();
 
         User userAdmin = User.builder().id(new LongId<>(1L)).email("admin").name("admin").password("admin").role(UserRole.ADMIN).build();
@@ -54,9 +57,11 @@ class ArticleServletTest {
         Cookie[] cookies = {cookieUser};
         when(response.getWriter()).thenReturn(printWriter);
         when(request.getCookies()).thenReturn(cookies);
+        when(request.getServletPath()).thenReturn("/SUN");
 
         servlet.doGet(request, response);
 
+        verify(glassesService, times(1)).getCategoryList("SUN");
         verify(response, times(1)).setContentType("text/html;charset=utf-8");
         verify(response, times(1)).getWriter();
     }
@@ -67,9 +72,11 @@ class ArticleServletTest {
         Cookie[] cookies = {cookieUser};
         when(response.getWriter()).thenReturn(printWriter);
         when(request.getCookies()).thenReturn(cookies);
+        when(request.getServletPath()).thenReturn("/OPTICAL");
 
         servlet.doGet(request, response);
 
+        verify(glassesService, times(1)).getCategoryList(eq("OPTICAL"));
         verify(response, times(1)).setContentType("text/html;charset=utf-8");
         verify(response, times(1)).getWriter();
     }

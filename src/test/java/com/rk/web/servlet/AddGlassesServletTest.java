@@ -1,5 +1,6 @@
 package com.rk.web.servlet;
 
+import com.rk.domain.Glasses;
 import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
@@ -11,8 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -27,7 +26,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class AddGlassesServletTest {
     @Mock
     private GlassesService service;
@@ -73,7 +71,6 @@ class AddGlassesServletTest {
     @DisplayName("Test method doGet when user role is user ")
     void doGet_User() throws IOException {
         Cookie[] cookies = {cookieUser};
-        when(response.getWriter()).thenReturn(printWriter);
         when(request.getCookies()).thenReturn(cookies);
 
         servlet.doGet(request, response);
@@ -85,7 +82,6 @@ class AddGlassesServletTest {
     @DisplayName("Test redirect in method doGet()")
     void doGet_Redirect() throws IOException {
         Cookie[] cookies = new Cookie[0];
-        when(response.getWriter()).thenReturn(printWriter);
         when(request.getCookies()).thenReturn(cookies);
 
         servlet.doGet(request, response);
@@ -101,8 +97,7 @@ class AddGlassesServletTest {
         when(request.getParameter("category")).thenReturn("SUN");
         when(request.getParameter("details")).thenReturn("details");
         when(request.getParameter("price")).thenReturn("1");
-        when(response.getWriter()).thenReturn(printWriter);
-        doNothing().when(service).save(null);
+        doNothing().when(service).save(any(Glasses.class));
 
         servlet.doPost(request, response);
 
@@ -111,6 +106,6 @@ class AddGlassesServletTest {
         verify(request, times(1)).getParameter("category");
         verify(request, times(1)).getParameter("details");
         verify(request, times(1)).getParameter("price");
-        verify(service, times(1)).save(any());
+        verify(service, times(1)).save(any(Glasses.class));
     }
 }

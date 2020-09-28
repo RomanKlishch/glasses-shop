@@ -1,8 +1,10 @@
 package com.rk.web.servlet;
 
+import com.rk.domain.Glasses;
 import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
+import com.rk.service.GlassesService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,9 +24,11 @@ import java.util.Map;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ArticleServletTest {
+class EditGlassesServletTest {
+    @Mock
+    private GlassesService service;
     @InjectMocks
-    private ArticleServlet servlet;
+    private EditGlassesServlet servlet;
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -36,7 +40,7 @@ class ArticleServletTest {
     private Cookie cookieAdmin;
     private Cookie cookieUser;
 
-    public ArticleServletTest() {
+    EditGlassesServletTest() {
         cookieUserMap = new HashMap<>();
 
         User userAdmin = User.builder().id(new LongId<>(1L)).email("admin").name("admin").password("admin").role(UserRole.ADMIN).build();
@@ -51,12 +55,16 @@ class ArticleServletTest {
     @Test
     @DisplayName("Test method doGet when user role is admin ")
     void doGet_Admin() throws IOException {
-        Cookie[] cookies = {cookieUser};
+        Glasses glasses = new Glasses();
+        Cookie[] cookies = {cookieAdmin};
         when(response.getWriter()).thenReturn(printWriter);
         when(request.getCookies()).thenReturn(cookies);
+        when(request.getParameter("id")).thenReturn("1");
+        when(service.findById(1L)).thenReturn(glasses);
 
         servlet.doGet(request, response);
 
+        verify(service, times(1)).findById(1);
         verify(response, times(1)).setContentType("text/html;charset=utf-8");
         verify(response, times(1)).getWriter();
     }
@@ -65,17 +73,15 @@ class ArticleServletTest {
     @DisplayName("Test method doGet when user role is user ")
     void doGet_User() throws IOException {
         Cookie[] cookies = {cookieUser};
-        when(response.getWriter()).thenReturn(printWriter);
         when(request.getCookies()).thenReturn(cookies);
 
         servlet.doGet(request, response);
 
-        verify(response, times(1)).setContentType("text/html;charset=utf-8");
-        verify(response, times(1)).getWriter();
+        verify(response, times(1)).sendRedirect("/login");
     }
 
     @Test
-    @DisplayName("Test redirect in method doGet() when user role is guest")
+    @DisplayName("Test redirect in method doGet()")
     void doGet_Redirect() throws IOException {
         Cookie[] cookies = new Cookie[0];
         when(request.getCookies()).thenReturn(cookies);
@@ -84,4 +90,5 @@ class ArticleServletTest {
 
         verify(response, times(1)).sendRedirect("/login");
     }
+
 }

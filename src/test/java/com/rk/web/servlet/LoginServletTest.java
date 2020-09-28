@@ -11,8 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +24,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class LoginServletTest {
     @Mock
     private UserService service;
@@ -77,7 +74,6 @@ class LoginServletTest {
     @Test
     @DisplayName("Token creation test ")
     void doPost_CreateToken() throws IOException {
-        when(response.getWriter()).thenReturn(printWriter);
         when(request.getParameter("login")).thenReturn("admin");
         when(request.getParameter("password")).thenReturn("admin");
         when(service.findByLoginPassword("admin", "admin")).thenReturn(userAdmin);

@@ -12,8 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +25,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 public class CatalogGlassesTest {
     @Mock
     private GlassesService glassesService;
@@ -92,7 +89,6 @@ public class CatalogGlassesTest {
     @DisplayName("Test redirect in method doGet() when user role is guest")
     void doGet_Redirect() throws IOException {
         Cookie[] cookies = new Cookie[0];
-        when(response.getWriter()).thenReturn(printWriter);
         when(request.getCookies()).thenReturn(cookies);
 
         servlet.doGet(request, response);

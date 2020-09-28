@@ -49,19 +49,4 @@ class DefaultGlassesServiceTest {
         verify(glassesDao, atLeast(1)).findByCategory("OPTICAL");
     }
 
-    @Test
-    void getCategoryList() {
-    }
-
-    @Test
-    void save() {
-    }
-
-    @Test
-    void deleteById() {
-    }
-
-    @Test
-    void update() {
-    }
 }

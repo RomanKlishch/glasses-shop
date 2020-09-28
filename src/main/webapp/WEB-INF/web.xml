@@ -4,15 +4,10 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
     <listener>
         <listener-class>com.rk.web.listener.ThymeLeafInitializerListener</listener-class>
     </listener>
-
-<!--    //TODO:это не работает, я не знаю почему-->
-    <context-param>
-        <param-name>cookieTokensss</param-name>
-        <param-value>java.util.HashMap</param-value>
-    </context-param>
 
     <servlet>
         <servlet-name>AddGlassesServlet</servlet-name>
