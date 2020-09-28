@@ -17,7 +17,6 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.when;
 class UserRowMapperTest {
     UserRowMapper mapper;
     @Mock
-    ResultSet resultSet ;
+    ResultSet resultSet;
 
     @SneakyThrows
     @Test

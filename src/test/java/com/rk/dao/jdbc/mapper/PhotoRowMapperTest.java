@@ -16,7 +16,6 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,7 +28,7 @@ class PhotoRowMapperTest {
     @Test
     @SneakyThrows
     @DisplayName("Test mapper for entity photo")
-    void photoMapRow(){
+    void photoMapRow() {
         mapper = new PhotoRowMapper();
         when(resultSet.getLong("photo_id")).thenReturn(1L);
         when(resultSet.getString("address")).thenReturn("anyString");
@@ -37,6 +36,7 @@ class PhotoRowMapperTest {
         assertEquals(1, photo.getId());
         assertEquals("anyString", photo.getAddress());
     }
+
     @SneakyThrows
     @Test
     @DisplayName("Test exception in mapper of photo")

@@ -13,7 +13,7 @@ public interface GlassesService {
 
     FeaturesAndSpecialGlasses getListsFeaturesAndSpecialGlasses(int limitFeature, int limitSpecial);
 
-    CatalogAndMessage getCatalogAndMessage(String nameOfCatalog);
+    CatalogAndMessage getCatalogAndMessage(String catalog);
 
     List<Glasses> getCategoryList(String category);
 

@@ -61,7 +61,7 @@ class JdbcUserDaoITest {
                 .email("test-test").name("test-test")
                 .password("test-test").role(UserRole.ADMIN).build();
         jdbcUserDao.save(userActual);
-        assertEquals(userActual,jdbcUserDao.findById(4));
+        assertEquals(userActual, jdbcUserDao.findById(4));
     }
 
     @Test
@@ -71,9 +71,9 @@ class JdbcUserDaoITest {
                 .password("test-test").role(UserRole.ADMIN).build();
         jdbcUserDao.update(userActual);
         User userExpected = jdbcUserDao.findById(1L);
-        assertEquals(userActual.getEmail(),userExpected.getEmail());
+        assertEquals(userActual.getEmail(), userExpected.getEmail());
         assertEquals(userActual.getName(), userExpected.getName());
-        assertEquals(userActual.getPassword(),userExpected.getPassword());
+        assertEquals(userActual.getPassword(), userExpected.getPassword());
     }
 
     @Test

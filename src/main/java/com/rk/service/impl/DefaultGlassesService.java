@@ -30,9 +30,9 @@ public class DefaultGlassesService implements GlassesService {
     }
 
     @Override
-    public CatalogAndMessage getCatalogAndMessage(String nameOfCatalog) {
-        if (nameOfCatalog != null) {
-            return CatalogAndMessage.builder().catalog(glassesDao.findAllByName(nameOfCatalog)).message("Found by your request").build();
+    public CatalogAndMessage getCatalogAndMessage(String catalog) {
+        if (catalog != null) {
+            return CatalogAndMessage.builder().catalog(glassesDao.findAllByName(catalog)).message("Found by your request").build();
         } else {
             return CatalogAndMessage.builder().catalog(glassesDao.findAll()).message("Catalog of glasses").build();
         }

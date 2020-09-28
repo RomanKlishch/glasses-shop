@@ -41,8 +41,7 @@ public class LoginServlet extends HttpServlet {
             cookieTokens.put(cookieToken, user);
             response.addCookie(cookie);
             response.sendRedirect("");
-//            RequestDispatcher dispatcher = request.getRequestDispatcher("/home");
-//            dispatcher.forward(request, response);
+
         } else {
             Map<String, Object> pageVariables = new HashMap<>();
             pageVariables.put("message", "Login or password not found");

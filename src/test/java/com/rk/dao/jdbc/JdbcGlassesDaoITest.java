@@ -30,7 +30,7 @@ class JdbcGlassesDaoITest {
         configuration.locations("db/migration/glasses");
         configuration.dataSource(jdbcDataSource);
         flyway = new Flyway(configuration);
-        jdbcGlassesDao = new JdbcGlassesDao(jdbcDataSource,propertyReader);
+        jdbcGlassesDao = new JdbcGlassesDao(jdbcDataSource, propertyReader);
     }
 
     @BeforeEach
@@ -100,7 +100,7 @@ class JdbcGlassesDaoITest {
                 .category("TEST")
                 .details("TEST")
                 .price(5)
-                .photos(Arrays.asList(photo,photo2)).build();
+                .photos(Arrays.asList(photo, photo2)).build();
 
         jdbcGlassesDao.saveGlasses(expected);
 
@@ -130,7 +130,7 @@ class JdbcGlassesDaoITest {
                 .category("TEST")
                 .details("TEST")
                 .price(5)
-                .photos(Arrays.asList(photo,photo2)).build();
+                .photos(Arrays.asList(photo, photo2)).build();
 
         jdbcGlassesDao.updateById(expected);
         Glasses actual = jdbcGlassesDao.findById(2);
@@ -171,6 +171,6 @@ class JdbcGlassesDaoITest {
                 .category("TEST")
                 .details("TEST")
                 .price(5)
-                .photos(Arrays.asList(photo,photo2)).build();
+                .photos(Arrays.asList(photo, photo2)).build();
     }
 }

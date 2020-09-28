@@ -12,7 +12,6 @@ import com.rk.service.impl.UserServiceImpl;
 import com.rk.util.PropertyReader;
 import org.postgresql.ds.PGSimpleDataSource;
 
-import javax.servlet.http.Cookie;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +39,7 @@ public class ServiceLocator<T> {
         UserService userService = new UserServiceImpl();
         register(UserService.class, userService);
 
-        Map<Cookie, User> cookieTokens = new HashMap<>();
+        Map<String, User> cookieTokens = new HashMap<>();
         register(Map.class, cookieTokens);
 
     }
