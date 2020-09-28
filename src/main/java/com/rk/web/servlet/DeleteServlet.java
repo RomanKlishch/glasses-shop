@@ -13,11 +13,9 @@ import java.util.Map;
 
 public class DeleteServlet extends HttpServlet {
     private GlassesService glassesService;
-    private Map<String, User> cookieTokens;
 
     public DeleteServlet() {
         this.glassesService = ServiceLocator.getBean(GlassesService.class);
-        this.cookieTokens = ServiceLocator.getBean(Map.class);
     }
 
     @Override
@@ -26,6 +24,7 @@ public class DeleteServlet extends HttpServlet {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("user-token")) {
+                    Map<String, User> cookieTokens = (Map<String, User>) request.getServletContext().getAttribute("cookieTokens");
                     User user = cookieTokens.get(cookie.getValue());
                     if (user != null && user.getRole().getUserRole().equals("ADMIN")) {
                         long id = Long.parseLong(request.getParameter("id"));

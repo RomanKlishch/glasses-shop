@@ -12,17 +12,13 @@ import java.io.IOException;
 import java.util.Map;
 
 public class ContactServlet extends HttpServlet {
-    private Map<String, User> cookieTokens;
-
-    public ContactServlet() {
-        this.cookieTokens = ServiceLocator.getBean(Map.class);
-    }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("user-token")) {
+                    Map<String, User> cookieTokens = (Map<String, User>) request.getServletContext().getAttribute("cookieTokens");
                     if (cookieTokens.containsKey(cookie.getValue())) {
                         response.setContentType("text/html;charset=utf-8");
                         PageGenerator.instance().process("contacts", response.getWriter());

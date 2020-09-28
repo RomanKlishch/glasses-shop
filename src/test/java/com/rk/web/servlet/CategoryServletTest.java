@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,8 +35,10 @@ class CategoryServletTest {
     private HttpServletResponse response;
     @Mock
     private PrintWriter printWriter;
+    @Mock
+    private ServletContext context;
     @Spy
-    Map<String, User> cookieUserMap;
+    private Map<String, User> cookieUserMap;
     private Cookie cookieAdmin;
     private Cookie cookieUser;
 
@@ -58,6 +61,8 @@ class CategoryServletTest {
         when(response.getWriter()).thenReturn(printWriter);
         when(request.getCookies()).thenReturn(cookies);
         when(request.getServletPath()).thenReturn("/SUN");
+        when(request.getServletContext()).thenReturn(context);
+        when(context.getAttribute("cookieTokens")).thenReturn(cookieUserMap);
 
         servlet.doGet(request, response);
 
@@ -73,6 +78,8 @@ class CategoryServletTest {
         when(response.getWriter()).thenReturn(printWriter);
         when(request.getCookies()).thenReturn(cookies);
         when(request.getServletPath()).thenReturn("/OPTICAL");
+        when(request.getServletContext()).thenReturn(context);
+        when(context.getAttribute("cookieTokens")).thenReturn(cookieUserMap);
 
         servlet.doGet(request, response);
 

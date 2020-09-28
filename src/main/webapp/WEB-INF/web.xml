@@ -8,6 +8,9 @@
     <listener>
         <listener-class>com.rk.web.listener.ThymeLeafInitializerListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>com.rk.web.listener.MapToServletContextListener</listener-class>
+    </listener>
 
     <servlet>
         <servlet-name>AddGlassesServlet</servlet-name>

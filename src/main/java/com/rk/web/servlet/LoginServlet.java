@@ -16,11 +16,9 @@ import java.util.UUID;
 
 public class LoginServlet extends HttpServlet {
     private UserService userService;
-    private Map<String, User> cookieTokens;
 
     public LoginServlet() {
         this.userService = ServiceLocator.getBean(UserService.class);
-        this.cookieTokens = ServiceLocator.getBean(Map.class);
     }
 
     @Override
@@ -38,6 +36,7 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
             String cookieToken = UUID.randomUUID().toString();
             Cookie cookie = new Cookie("user-token", cookieToken);
+            Map<String,User> cookieTokens = (Map<String, User>) request.getServletContext().getAttribute("cookieTokens");
             cookieTokens.put(cookieToken, user);
             response.addCookie(cookie);
             response.sendRedirect("");

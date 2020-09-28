@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,8 +36,10 @@ class GlassesServletTest {
     private HttpServletResponse response;
     @Mock
     private PrintWriter printWriter;
+    @Mock
+    private ServletContext context;
     @Spy
-    Map<String, User> cookieUserMap;
+    private Map<String, User> cookieUserMap;
     private Cookie cookieAdmin;
     private Cookie cookieUser;
 
@@ -60,6 +63,8 @@ class GlassesServletTest {
         when(request.getCookies()).thenReturn(cookies);
         when(request.getPathInfo()).thenReturn("sun/1");
         when(glassesService.findById(anyLong())).thenReturn(new Glasses());
+        when(request.getServletContext()).thenReturn(context);
+        when(context.getAttribute("cookieTokens")).thenReturn(cookieUserMap);
 
         servlet.doGet(request, response);
 
@@ -77,6 +82,8 @@ class GlassesServletTest {
         when(request.getCookies()).thenReturn(cookies);
         when(request.getPathInfo()).thenReturn("sun/1");
         when(glassesService.findById(anyLong())).thenReturn(new Glasses());
+        when(request.getServletContext()).thenReturn(context);
+        when(context.getAttribute("cookieTokens")).thenReturn(cookieUserMap);
 
         servlet.doGet(request, response);
 

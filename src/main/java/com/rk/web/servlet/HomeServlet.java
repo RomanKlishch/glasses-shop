@@ -18,11 +18,9 @@ import java.util.Map;
 
 public class HomeServlet extends HttpServlet {
     private GlassesService glassesService;
-    private Map<String, User> cookieTokens;
 
     public HomeServlet() {
         this.glassesService = ServiceLocator.getBean(GlassesService.class);
-        this.cookieTokens = ServiceLocator.getBean(Map.class);
     }
 
     @Override
@@ -31,6 +29,7 @@ public class HomeServlet extends HttpServlet {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("user-token")) {
+                    Map<String, User> cookieTokens = (Map<String, User>) request.getServletContext().getAttribute("cookieTokens");
                     if (cookieTokens.containsKey(cookie.getValue())) {
                         Map<String, Object> pageVariables = new HashMap<>();
 
