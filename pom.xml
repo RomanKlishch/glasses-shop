@@ -138,6 +138,7 @@
                     <url>${flyway.url}</url>
                     <user>${flyway.user}</user>
                     <password>${flyway.password}</password>
+                    <schemas>public</schemas>
                 </configuration>
             </plugin>
         </plugins>
