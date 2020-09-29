@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServiceLocator<T> {
+
     private static final Map<Class<?>, Object> CONTAINER = new HashMap<>();
 
     static {
