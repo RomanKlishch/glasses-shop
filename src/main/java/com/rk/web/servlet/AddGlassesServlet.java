@@ -35,7 +35,7 @@ public class AddGlassesServlet extends HttpServlet {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("user-token")) {
                     User user = cookieTokens.get(cookie.getValue());
-                    if (user != null && user.getRole().getUserRole().equals("ADMIN")) {
+                    if (user != null && user.getRole().getNameRole().equals("ADMIN")) {
                         response.setContentType("text/html;charset=utf-8");
                         PageGenerator.instance().process("admin/addGlasses", response.getWriter());
                         return;

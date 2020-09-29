@@ -30,7 +30,7 @@ public class DeleteServlet extends HttpServlet {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("user-token")) {
                     User user = cookieTokens.get(cookie.getValue());
-                    if (user != null && user.getRole().getUserRole().equals("ADMIN")) {
+                    if (user != null && user.getRole().getNameRole().equals("ADMIN")) {
                         long id = Long.parseLong(request.getParameter("id"));
                         glassesService.deleteById(id);
                         dispatcher = request.getRequestDispatcher("/home");

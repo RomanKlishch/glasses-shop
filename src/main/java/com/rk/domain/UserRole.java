@@ -3,13 +3,13 @@ package com.rk.domain;
 public enum UserRole {
     ADMIN("ADMIN"),USER("USER"),GUEST("GUEST");
 
-    private String userRole;
+    private String nameRole;
 
     UserRole(String userRole) {
-        this.userRole = userRole;
+        this.nameRole = userRole;
     }
 
-    public String getUserRole() {
-        return userRole;
+    public String getNameRole() {
+        return nameRole;
     }
 }

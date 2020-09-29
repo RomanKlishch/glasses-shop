@@ -33,11 +33,12 @@ public class GlassesServlet extends HttpServlet {
                 if (cookie.getName().equals("user-token")) {
                     if (cookieTokens.containsKey(cookie.getValue())) {
                         Map<String, Object> pageVariables = new HashMap<>();
-
+                        User user = cookieTokens.get(cookie.getValue());
                         String[] path = request.getPathInfo().split("/");
                         long id = Long.parseLong(path[path.length - 1]);
                         Glasses glasses = glassesService.findById(id);
                         pageVariables.put("glasses", glasses);
+                        pageVariables.put("role",user.getRole().getNameRole());
                         response.setContentType("text/html;charset=utf-8");
 
                         PageGenerator.instance().process("glassesCard", pageVariables, response.getWriter());
