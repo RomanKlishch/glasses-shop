@@ -3,7 +3,6 @@ package com.rk.web.servlet;
 import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +12,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,10 +78,9 @@ class ArticleServletTest {
         verify(response, times(1)).getWriter();
     }
 
-    @SneakyThrows
     @Test
     @DisplayName("Test redirect in method doGet() when user role is guest")
-    void doGet_Redirect() throws IOException {
+    void doGet_Redirect() throws IOException, ServletException {
         Cookie[] cookies = new Cookie[0];
         when(request.getCookies()).thenReturn(cookies);
         when(request.getRequestDispatcher("/login")).thenReturn(dispatcher);

@@ -24,6 +24,9 @@ public class PageGenerator {
         return pageGenerator;
     }
 
+    private PageGenerator() {
+    }
+
     public synchronized void configureTemplate(ServletContext context) {
         if (ifConfigured) {
             return;

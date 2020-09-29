@@ -82,10 +82,5 @@ public class EditGlassesServlet extends HttpServlet {
                 .concat(glasses.getCategory())
                 .concat("/")
                 .concat(String.valueOf(glasses.getId())));
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("/glasses/"
-//                .concat(glasses.getCategory())
-//                .concat("/")
-//                .concat(String.valueOf(glasses.getId())));
-//        dispatcher.forward(request,response);
     }
 }

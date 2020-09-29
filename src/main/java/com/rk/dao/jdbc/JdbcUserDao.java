@@ -104,8 +104,8 @@ public class JdbcUserDao implements UserDao {
     public void delete(long id) {
         String query = propertyReader.getProperty("delete.user");
         try (Connection connection = dataSource.getConnection();
-
              PreparedStatement statement = connection.prepareStatement(query)) {
+
             statement.setLong(1, id);
             statement.execute();
 

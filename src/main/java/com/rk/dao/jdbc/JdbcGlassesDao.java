@@ -42,10 +42,8 @@ public class JdbcGlassesDao implements GlassesDao {
             log.error("Can not find all Glasses - ", e);
             throw new JdbcException("Can not find all Glasses", e);
         }
-
     }
 
-    @SneakyThrows
     @Override
     public List<Glasses> findListOfRandom(int limit) {
         String query = propertyReader.getProperty("find.random.glasses");
@@ -156,8 +154,7 @@ public class JdbcGlassesDao implements GlassesDao {
     public void deleteById(long id) {
         String query = propertyReader.getProperty("delete.glasses");
 
-        try (Connection connection = dataSource.getConnection();
-        ) {
+        try (Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false);
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 deletePhotoByGlassesId(connection, id);

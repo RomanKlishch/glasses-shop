@@ -50,5 +50,4 @@ public class CatalogGlassesServlet extends HttpServlet {
             dispatcher.forward(request, response);
         }
     }
-
 }

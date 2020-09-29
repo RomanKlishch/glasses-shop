@@ -9,7 +9,6 @@ import com.rk.web.templator.PageGenerator;
 import lombok.SneakyThrows;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +49,7 @@ public class AddGlassesServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<Photo> photoList = new ArrayList<>();
         String[] urlPhoto = request.getParameterValues("photo");
         if (urlPhoto != null) {

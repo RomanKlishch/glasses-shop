@@ -64,7 +64,6 @@ public class PropertyReader {
         }
         return properties;
     }
-
 }
 
 

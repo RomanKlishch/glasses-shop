@@ -50,7 +50,6 @@ public class GlassesServlet extends HttpServlet {
             dispatcher.forward(request, response);
         }
     }
-
 }
 
 

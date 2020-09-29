@@ -5,7 +5,6 @@ import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
 import com.rk.service.GlassesService;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -71,10 +70,9 @@ class AddGlassesServletTest {
         verify(response, times(1)).getWriter();
     }
 
-    @SneakyThrows
     @Test
     @DisplayName("Test method doGet when user role is user ")
-    void doGet_User() throws IOException {
+    void doGet_User() throws IOException, ServletException {
         Cookie[] cookies = {cookieUser};
         when(request.getCookies()).thenReturn(cookies);
         when(request.getRequestDispatcher("/login")).thenReturn(dispatcher);
@@ -84,10 +82,9 @@ class AddGlassesServletTest {
         verify(dispatcher, times(1)).forward(request, response);
     }
 
-    @SneakyThrows
     @Test
     @DisplayName("Test redirect in method doGet()")
-    void doGet_Redirect() throws IOException {
+    void doGet_Redirect() throws IOException, ServletException {
         Cookie[] cookies = new Cookie[0];
         when(request.getCookies()).thenReturn(cookies);
         when(request.getRequestDispatcher("/login")).thenReturn(dispatcher);
