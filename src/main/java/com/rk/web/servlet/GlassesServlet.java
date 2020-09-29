@@ -38,7 +38,7 @@ public class GlassesServlet extends HttpServlet {
                         long id = Long.parseLong(path[path.length - 1]);
                         Glasses glasses = glassesService.findById(id);
                         pageVariables.put("glasses", glasses);
-                        pageVariables.put("role",user.getRole().getNameRole());
+                        pageVariables.put("role",user.getRole().getUserRole());
                         response.setContentType("text/html;charset=utf-8");
 
                         PageGenerator.instance().process("glassesCard", pageVariables, response.getWriter());

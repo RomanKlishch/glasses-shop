@@ -35,7 +35,7 @@ public class EditGlassesServlet extends HttpServlet {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("user-token")) {
                     User user = cookieTokens.get(cookie.getValue());
-                    if (user != null && user.getRole().getNameRole().equals("ADMIN")) {
+                    if (user != null && user.getRole().getUserRole().equals("ADMIN")) {
                         Map<String, Object> pageVariables = new HashMap<>();
                         long id = Long.parseLong(request.getParameter("id"));
                         Glasses glasses = glassesService.findById(id);

@@ -72,7 +72,7 @@ public class JdbcUserDao implements UserDao {
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
-            statement.setString(4, user.getRole().getNameRole());
+            statement.setString(4, user.getRole().getUserRole());
             statement.execute();
 
         } catch (SQLException e) {
@@ -90,7 +90,7 @@ public class JdbcUserDao implements UserDao {
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
-            statement.setString(4, user.getRole().getNameRole());
+            statement.setString(4, user.getRole().getUserRole());
             statement.setLong(5, user.getId().getId());
             statement.execute();
 

@@ -54,3 +54,8 @@ public class ServiceLocator<T> {
         return (T) CONTAINER.get(classBean);
     }
 }
+
+//TODO:  Exception in thread "JettyShutdownThread" java.lang.AbstractMethodError:
+// Receiver class com.rk.web.listener.ThymeLeafInitializerListener does not
+// define or inherit an implementation of the resolved method 'abstract void
+// contextDestroyed(javax.servlet.ServletContextEvent)' of interface javax.servlet.ServletContextListener.
