@@ -7,7 +7,6 @@ import com.rk.domain.User;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +29,9 @@ public class AddGlassesServlet extends HttpServlet {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("user-token")) {
-                    Map<String,User> cookieTokens = (Map<String, User>) request.getServletContext().getAttribute("cookieTokens");
+                    Map<String, User> cookieTokens = (Map<String, User>) request
+                            .getServletContext()
+                            .getAttribute("cookieTokens");
                     User user = cookieTokens.get(cookie.getValue());
                     if (user != null && user.getRole().getUserRole().equals("ADMIN")) {
                         response.setContentType("text/html;charset=utf-8");
@@ -44,7 +45,7 @@ public class AddGlassesServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<Photo> photoList = new ArrayList<>();
         String[] urlPhoto = request.getParameterValues("photo");
         if (urlPhoto != null) {

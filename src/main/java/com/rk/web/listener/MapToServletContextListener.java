@@ -4,13 +4,13 @@ import com.rk.domain.User;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MapToServletContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        Map<String, User> cookieTokens = new HashMap<>();
-        event.getServletContext().setAttribute("cookieTokens",cookieTokens);
+        Map<String, User> cookieTokens = new ConcurrentHashMap<>();
+        event.getServletContext().setAttribute("cookieTokens", cookieTokens);
     }
 }
