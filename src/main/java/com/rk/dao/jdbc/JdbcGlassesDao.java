@@ -115,13 +115,13 @@ public class JdbcGlassesDao implements GlassesDao {
             statement.setDouble(5, glasses.getPrice());
             statement.execute();
 
-            try (ResultSet resultSet = statement.getGeneratedKeys()){
+            try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 while (resultSet.next()) {
                     glasses.setId(resultSet.getLong(1));
                 }
             }
 
-            savePhoto(connection, glasses.getPhotos(), glasses.getId());
+            savePhoto(glasses.getPhotos(), glasses.getId());
             connection.commit();
         } catch (SQLException e) {
             log.error("Can not save glasses - {}", glasses, e);
@@ -191,9 +191,10 @@ public class JdbcGlassesDao implements GlassesDao {
     }
 
     //TODO:JdbcBatchUpdateException: Нарушение ссылочной целостности: "CONSTRAINT_8C: PUBLIC.PHOTOS FOREIGN KEY(GLASSES_ID) REFERENCES PUBLIC.GLASSES(GLASSES_ID) (4)
-    void savePhoto(Connection connection, List<Photo> photos, long id) {
+    void savePhoto(List<Photo> photos, long id) {
         String query = propertyReader.getProperty("save.photo");
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
             for (Photo photo : photos) {
                 statement.setLong(1, id);
                 statement.setString(2, photo.getAddress());
