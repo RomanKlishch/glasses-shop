@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html >
+<html lang="ru-UA" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -9,7 +9,7 @@
     <div class="message">
         <div class="row text-center">
             <div class="col">
-                <h4><p th:if="${messages}"></p></h4>
+                <h4><p th:text="${message}"></p></h4>
             </div>
         </div>
     </div>

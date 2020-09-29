@@ -13,6 +13,8 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,8 +37,10 @@ class EditGlassesServletTest {
     private HttpServletResponse response;
     @Mock
     private PrintWriter printWriter;
+    @Mock
+    private RequestDispatcher dispatcher;
     @Spy
-    Map<String, User> cookieUserMap;
+    private Map<String, User> cookieUserMap;
     private Cookie cookieAdmin;
     private Cookie cookieUser;
 
@@ -71,24 +75,26 @@ class EditGlassesServletTest {
 
     @Test
     @DisplayName("Test method doGet when user role is user ")
-    void doGet_User() throws IOException {
+    void doGet_User() throws IOException, ServletException {
         Cookie[] cookies = {cookieUser};
         when(request.getCookies()).thenReturn(cookies);
+        when(request.getRequestDispatcher("/login")).thenReturn(dispatcher);
 
         servlet.doGet(request, response);
 
-        verify(response, times(1)).sendRedirect("/login");
+        verify(dispatcher, times(1)).forward(request,response);
     }
 
     @Test
     @DisplayName("Test redirect in method doGet()")
-    void doGet_Redirect() throws IOException {
+    void doGet_Redirect() throws IOException, ServletException {
         Cookie[] cookies = new Cookie[0];
         when(request.getCookies()).thenReturn(cookies);
+        when(request.getRequestDispatcher("/login")).thenReturn(dispatcher);
 
         servlet.doGet(request, response);
 
-        verify(response, times(1)).sendRedirect("/login");
+        verify(dispatcher, times(1)).forward(request, response);
     }
 
 }

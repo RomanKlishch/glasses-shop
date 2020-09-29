@@ -36,9 +36,9 @@ class LoginServletTest {
     @Mock
     private PrintWriter printWriter;
     @Spy
-    Map<String, User> cookieUserMap;
+    private Map<String, User> cookieUserMap;
     private Cookie cookieAdmin;
-    User userAdmin;
+    private User userAdmin;
 
     public LoginServletTest() {
         cookieUserMap = new HashMap<>();
@@ -77,6 +77,7 @@ class LoginServletTest {
         when(request.getParameter("login")).thenReturn("admin");
         when(request.getParameter("password")).thenReturn("admin");
         when(service.findByLoginPassword("admin", "admin")).thenReturn(userAdmin);
+        when(request.getHeader("Referer")).thenReturn("");
 
         servlet.doPost(request, response);
 

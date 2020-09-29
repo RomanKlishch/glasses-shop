@@ -4,6 +4,7 @@ import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
 import com.rk.service.GlassesService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,8 +36,10 @@ class CategoryServletTest {
     private HttpServletResponse response;
     @Mock
     private PrintWriter printWriter;
+    @Mock
+    private RequestDispatcher dispatcher;
     @Spy
-    Map<String, User> cookieUserMap;
+    private Map<String, User> cookieUserMap;
     private Cookie cookieAdmin;
     private Cookie cookieUser;
 
@@ -81,14 +85,16 @@ class CategoryServletTest {
         verify(response, times(1)).getWriter();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("Test redirect in method doGet() when user role is guest")
     void doGet_Redirect() throws IOException {
         Cookie[] cookies = new Cookie[0];
         when(request.getCookies()).thenReturn(cookies);
+        when(request.getRequestDispatcher("/login")).thenReturn(dispatcher);
 
         servlet.doGet(request, response);
 
-        verify(response, times(1)).sendRedirect("/login");
+        verify(dispatcher, times(1)).forward(request, response);
     }
 }

@@ -14,6 +14,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ServiceLocator<T> {
     private static final Map<Class<?>, Object> CONTAINER = new HashMap<>();
@@ -39,7 +40,7 @@ public class ServiceLocator<T> {
         UserService userService = new UserServiceImpl();
         register(UserService.class, userService);
 
-        Map<String, User> cookieTokens = new HashMap<>();
+        Map<String, User> cookieTokens = new ConcurrentHashMap<>();
         register(Map.class, cookieTokens);
 
     }

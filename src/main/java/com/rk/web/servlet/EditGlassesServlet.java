@@ -6,12 +6,13 @@ import com.rk.domain.Photo;
 import com.rk.domain.User;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
+import lombok.SneakyThrows;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +27,9 @@ public class EditGlassesServlet extends HttpServlet {
         this.cookieTokens = ServiceLocator.getBean(Map.class);
     }
 
+    @SneakyThrows
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -47,13 +49,15 @@ public class EditGlassesServlet extends HttpServlet {
                     }
                 }
             }
-            response.sendRedirect("/login");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+            request.setAttribute("message", "You must be logged in as ADMIN to access this resource");
+            dispatcher.forward(request, response);
         }
-
     }
 
+    @SneakyThrows
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         List<Photo> photoList = new ArrayList<>();
         String[] photoIds = request.getParameterValues("photoId");
         String[] urlPhotos = request.getParameterValues("photo");
@@ -74,6 +78,14 @@ public class EditGlassesServlet extends HttpServlet {
                 .build();
 
         glassesService.update(glasses);
-        response.sendRedirect("");
+        response.sendRedirect("/glasses/"
+                .concat(glasses.getCategory())
+                .concat("/")
+                .concat(String.valueOf(glasses.getId())));
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("/glasses/"
+//                .concat(glasses.getCategory())
+//                .concat("/")
+//                .concat(String.valueOf(glasses.getId())));
+//        dispatcher.forward(request,response);
     }
 }

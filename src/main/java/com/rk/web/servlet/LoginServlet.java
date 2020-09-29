@@ -4,6 +4,7 @@ import com.rk.ServiceLocator;
 import com.rk.domain.User;
 import com.rk.service.UserService;
 import com.rk.web.templator.PageGenerator;
+import lombok.SneakyThrows;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -25,10 +26,13 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map<String, Object> pageVariables = new HashMap<>();
+        pageVariables.put("message", request.getAttribute("message"));
         response.setContentType("text/html;charset=utf-8");
-        PageGenerator.instance().process("login", response.getWriter());
+        PageGenerator.instance().process("login", pageVariables, response.getWriter());
     }
 
+    @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String login = request.getParameter("login");
@@ -40,7 +44,12 @@ public class LoginServlet extends HttpServlet {
             Cookie cookie = new Cookie("user-token", cookieToken);
             cookieTokens.put(cookieToken, user);
             response.addCookie(cookie);
-            response.sendRedirect("");
+            String path = request.getHeader("Referer");
+
+//            RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+//            dispatcher.forward(request,response);
+
+            response.sendRedirect(path);
 
         } else {
             Map<String, Object> pageVariables = new HashMap<>();

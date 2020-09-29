@@ -6,7 +6,9 @@ import com.rk.domain.Photo;
 import com.rk.domain.User;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
+import lombok.SneakyThrows;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -19,15 +21,16 @@ import java.util.Map;
 
 public class AddGlassesServlet extends HttpServlet {
     private GlassesService glassesService;
-    private Map<String,User> cookieTokens;
+    private Map<String, User> cookieTokens;
 
     public AddGlassesServlet() {
         this.glassesService = ServiceLocator.getBean(GlassesService.class);
         this.cookieTokens = ServiceLocator.getBean(Map.class);
     }
 
+    @SneakyThrows
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -40,7 +43,9 @@ public class AddGlassesServlet extends HttpServlet {
                     }
                 }
             }
-            response.sendRedirect("/login");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+            request.setAttribute("message", "You must be logged in as ADMIN to access this resource");
+            dispatcher.forward(request, response);
         }
     }
 
@@ -66,6 +71,6 @@ public class AddGlassesServlet extends HttpServlet {
                 .photos(photoList)
                 .build();
         glassesService.save(glasses);
-        response.sendRedirect("");
+        response.sendRedirect("glasses/");
     }
 }
