@@ -72,7 +72,8 @@ public class JdbcUserDao implements UserDao {
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
-            statement.setString(4, user.getRole().getUserRole());
+            statement.setString(4, user.getSole());
+            statement.setString(5, user.getRole().getNameOfUserRole());
             statement.execute();
 
         } catch (SQLException e) {
@@ -90,7 +91,7 @@ public class JdbcUserDao implements UserDao {
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
-            statement.setString(4, user.getRole().getUserRole());
+            statement.setString(4, user.getRole().getNameOfUserRole());
             statement.setLong(5, user.getId().getId());
             statement.execute();
 
@@ -116,18 +117,17 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public User findByLoginPassword(String login, String password) {
-        String query = propertyReader.getProperty("find.by.login.password");
+    public User findByLogin(String login) {
+        String query = propertyReader.getProperty("find.by.login");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, login);
-            statement.setString(2, password);
             return getUser(statement);
 
         } catch (SQLException e) {
-            log.error("Find by id user", e);
-            throw new JdbcException("Find by id user", e);
+            log.error("Find by login user", e);
+            throw new JdbcException("Find by login user", e);
         }
     }
 

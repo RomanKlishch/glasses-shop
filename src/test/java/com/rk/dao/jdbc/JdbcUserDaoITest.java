@@ -45,7 +45,7 @@ class JdbcUserDaoITest {
         User userExpected = jdbcUserDao.findById(1L);
         User userActual = User.builder().id(new LongId<>(1L))
                 .email("test-ADMIN").name("test-ADMIN")
-                .password("test-ADMIN").role(UserRole.ADMIN).build();
+                .password("test-ADMIN").sole("sole").role(UserRole.ADMIN).build();
         assertEquals(userActual, userExpected);
     }
 
@@ -59,7 +59,7 @@ class JdbcUserDaoITest {
     void save() {
         User userActual = User.builder()
                 .email("test-test").name("test-test")
-                .password("test-test").role(UserRole.ADMIN).build();
+                .password("test-test").sole("sole").role(UserRole.ADMIN).build();
         jdbcUserDao.save(userActual);
         assertEquals(userActual, jdbcUserDao.findById(4));
     }
@@ -68,7 +68,7 @@ class JdbcUserDaoITest {
     void update() {
         User userActual = User.builder().id(new LongId<>(1L))
                 .email("test-test").name("test-test")
-                .password("test-test").role(UserRole.ADMIN).build();
+                .password("test-test").sole("sole").role(UserRole.ADMIN).build();
         jdbcUserDao.update(userActual);
         User userExpected = jdbcUserDao.findById(1L);
         assertEquals(userActual.getEmail(), userExpected.getEmail());
@@ -84,5 +84,14 @@ class JdbcUserDaoITest {
         assertEquals(2, userList.size());
         assertEquals("test-ADMIN", userList.get(0).getName());
         assertEquals("test-USER", userList.get(1).getName());
+    }
+
+    @Test
+    void findByLogin() {
+        User userExpected = jdbcUserDao.findByLogin("test-ADMIN");
+        User userActual = User.builder().id(new LongId<>(1L))
+                .email("test-ADMIN").name("test-ADMIN")
+                .password("test-ADMIN").sole("sole").role(UserRole.ADMIN).build();
+        assertEquals(userActual, userExpected);
     }
 }

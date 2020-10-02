@@ -8,7 +8,6 @@ import com.rk.domain.Glasses;
 import com.rk.domain.Photo;
 import com.rk.util.PropertyReader;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
@@ -193,7 +192,7 @@ public class JdbcGlassesDao implements GlassesDao {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             for (Photo photo : photos) {
                 statement.setLong(1, id);
-                statement.setString(2, photo.getAddress());
+                statement.setString(2, photo.getPathToImage());
                 statement.addBatch();
             }
             statement.executeBatch();
@@ -208,7 +207,7 @@ public class JdbcGlassesDao implements GlassesDao {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             for (Photo photo : photos) {
-                statement.setString(1, photo.getAddress());
+                statement.setString(1, photo.getPathToImage());
                 statement.setLong(2, photo.getId());
                 statement.addBatch();
             }

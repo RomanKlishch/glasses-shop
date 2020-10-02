@@ -31,10 +31,10 @@ class PhotoRowMapperTest {
     void photoMapRow() {
         mapper = new PhotoRowMapper();
         when(resultSet.getLong("photo_id")).thenReturn(1L);
-        when(resultSet.getString("address")).thenReturn("anyString");
+        when(resultSet.getString("path_to_image")).thenReturn("anyString");
         Photo photo = mapper.mapRow(resultSet);
         assertEquals(1, photo.getId());
-        assertEquals("anyString", photo.getAddress());
+        assertEquals("anyString", photo.getPathToImage());
     }
 
     @SneakyThrows

@@ -1,10 +1,11 @@
-package com.rk.web.servlet;
+package com.rk.web.servlet.admin;
 
 import com.rk.domain.Glasses;
 import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
 import com.rk.service.GlassesService;
+import com.rk.web.servlet.admin.AddGlassesServlet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,60 +39,16 @@ class AddGlassesServletTest {
     private HttpServletResponse response;
     @Mock
     private PrintWriter printWriter;
-    @Mock
-    private RequestDispatcher dispatcher;
-    @Spy
-    private Map<String, User> cookieUserMap;
-    private Cookie cookieAdmin;
-    private Cookie cookieUser;
-
-    AddGlassesServletTest() {
-        cookieUserMap = new HashMap<>();
-
-        User userAdmin = User.builder().id(new LongId<>(1L)).email("admin").name("admin").password("admin").role(UserRole.ADMIN).build();
-        User userUser = User.builder().id(new LongId<>(1L)).email("user").name("user").password("user").role(UserRole.USER).build();
-
-        cookieAdmin = new Cookie("user-token", "admin");
-        cookieUser = new Cookie("user-token", "user");
-        cookieUserMap.put(cookieAdmin.getValue(), userAdmin);
-        cookieUserMap.put(cookieUser.getValue(), userUser);
-    }
 
     @Test
-    @DisplayName("Test method doGet when user role is admin ")
+    @DisplayName("Test method doGet")
     void doGet_Admin() throws IOException {
-        Cookie[] cookies = {cookieAdmin};
         when(response.getWriter()).thenReturn(printWriter);
-        when(request.getCookies()).thenReturn(cookies);
 
         servlet.doGet(request, response);
 
         verify(response, times(1)).setContentType("text/html;charset=utf-8");
         verify(response, times(1)).getWriter();
-    }
-
-    @Test
-    @DisplayName("Test method doGet when user role is user ")
-    void doGet_User() throws IOException, ServletException {
-        Cookie[] cookies = {cookieUser};
-        when(request.getCookies()).thenReturn(cookies);
-        when(request.getRequestDispatcher("/login")).thenReturn(dispatcher);
-
-        servlet.doGet(request, response);
-
-        verify(dispatcher, times(1)).forward(request, response);
-    }
-
-    @Test
-    @DisplayName("Test redirect in method doGet()")
-    void doGet_Redirect() throws IOException, ServletException {
-        Cookie[] cookies = new Cookie[0];
-        when(request.getCookies()).thenReturn(cookies);
-        when(request.getRequestDispatcher("/login")).thenReturn(dispatcher);
-
-        servlet.doGet(request, response);
-
-        verify(dispatcher, times(1)).forward(request, response);
     }
 
     @Test

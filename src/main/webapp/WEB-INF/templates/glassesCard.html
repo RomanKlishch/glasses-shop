@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-7 card-image-glasses  text-center">
             <div class="" th:each="photo : ${glasses.getPhotos()}">
-                <p><img th:src="${photo.getAddress}" class="card-img-top" alt="..."></p>
+                <p><img th:src="${photo.getPathToImage}" class="card-img-top" alt="..."></p>
             </div>
         </div>
 

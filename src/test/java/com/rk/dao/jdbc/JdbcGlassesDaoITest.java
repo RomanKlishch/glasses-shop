@@ -92,8 +92,8 @@ class JdbcGlassesDaoITest {
     @Test
     @DisplayName("Save glasses")
     void testSaveGlasses() {
-        Photo photo = Photo.builder().address("test-first").build();
-        Photo photo2 = Photo.builder().address("test-second").build();
+        Photo photo = Photo.builder().pathToImage("test-first").build();
+        Photo photo2 = Photo.builder().pathToImage("test-second").build();
         Glasses expected = Glasses.builder()
                 .name("TEST")
                 .collection("TEST")
@@ -122,8 +122,8 @@ class JdbcGlassesDaoITest {
     @Test
     @DisplayName("Update glasses by id")
     void testUpdateById() {
-        Photo photo = Photo.builder().address("test-first").build();
-        Photo photo2 = Photo.builder().address("test-second").build();
+        Photo photo = Photo.builder().pathToImage("test-first").build();
+        Photo photo2 = Photo.builder().pathToImage("test-second").build();
         Glasses expected = Glasses.builder().id(2L)
                 .name("TEST")
                 .collection("TEST")
@@ -162,8 +162,8 @@ class JdbcGlassesDaoITest {
 
 
     private Glasses getGlasses() {
-        Photo photo = Photo.builder().address("test-first").build();
-        Photo photo2 = Photo.builder().address("test-second").build();
+        Photo photo = Photo.builder().pathToImage("test-first").build();
+        Photo photo2 = Photo.builder().pathToImage("test-second").build();
 
         return Glasses.builder()
                 .name("TEST")

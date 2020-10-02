@@ -41,7 +41,7 @@
                 <div class="form-group" th:each="photo : ${glasses.getPhotos()}">
                     <label>
                         Photo <input type="text" class="form-control" name="photo" placeholder="Add photo"
-                                     th:value="${photo.address}">
+                                     th:value="${photo.pathToImage}">
                     </label>
                     <label class="text-inline">
                         <input type="hidden" class="form-control" name="photoId" placeholder="Add photo"

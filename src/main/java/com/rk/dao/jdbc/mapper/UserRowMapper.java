@@ -18,6 +18,7 @@ public class UserRowMapper {
                     .name(resultSet.getString("name"))
                     .email(resultSet.getString("email"))
                     .password(resultSet.getString("password"))
+                    .sole(resultSet.getString("sole"))
                     .role(UserRole.valueOf(resultSet.getString("role")))
                     .build();
         } catch (SQLException e) {

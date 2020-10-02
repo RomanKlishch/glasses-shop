@@ -44,6 +44,9 @@ public class PropertyReader {
                 properties.load(inputStream);
             }
         }
+        properties.put("jdbc.url",System.getenv("JDBC_DATABASE_URL"));
+        properties.put("jdbc.user",System.getenv("JDBC_DATABASE_USERNAME"));
+        properties.put("jdbc.password",System.getenv("JDBC_DATABASE_PASSWORD"));
         return properties;
     }
 

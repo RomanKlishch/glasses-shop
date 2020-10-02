@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>13</maven.compiler.source>
         <maven.compiler.target>13</maven.compiler.target>
-        <version.servlet>4.0.1</version.servlet>
+        <servlet.version>4.0.1</servlet.version>
         <lombok.version>1.18.12</lombok.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
         <jetty.version>9.4.30.v20200611</jetty.version>
@@ -160,7 +160,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>${version.servlet}</version>
+            <version>${servlet.version}</version>
             <scope>provided</scope>
         </dependency>
 

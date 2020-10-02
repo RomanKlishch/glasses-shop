@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,5 +30,11 @@ class UserServiceImplTest {
                 .password("test-ADMIN").role(UserRole.ADMIN).build();
         userService.save(userActual);
         verify(userDao, atLeast(1)).save(userActual);
+    }
+
+    @Test
+    void findByLogin() {
+        userService.findByLogin("test-ADMIN");
+        verify(userDao, atLeast(1)).findByLogin("test-ADMIN");
     }
 }

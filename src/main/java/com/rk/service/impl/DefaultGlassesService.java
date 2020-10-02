@@ -13,7 +13,7 @@ public class DefaultGlassesService implements GlassesService {
     private GlassesDao glassesDao;
 
     public DefaultGlassesService() {
-        glassesDao = ServiceLocator.getBean(GlassesDao.class);
+        glassesDao = ServiceLocator.getBean("GlassesDao");
     }
 
     @Override

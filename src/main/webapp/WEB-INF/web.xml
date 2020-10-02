@@ -4,95 +4,94 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-
+    <!--LISTENER-->
     <listener>
         <listener-class>com.rk.web.listener.ThymeLeafInitializerListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>com.rk.web.listener.UserTokensMapInitializer</listener-class>
+    </listener>
 
+    <!--ADMIN-->
     <servlet>
         <servlet-name>AddGlassesServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.AddGlassesServlet</servlet-class>
+        <servlet-class>com.rk.web.servlet.admin.AddGlassesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddGlassesServlet</servlet-name>
         <url-pattern>/addGlasses</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ContactServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.ContactServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ContactServlet</servlet-name>
-        <url-pattern>/contacts</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ArticleServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.ArticleServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ArticleServlet</servlet-name>
-        <url-pattern>/articles</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>CategoryServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.CategoryServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CategoryServlet</servlet-name>
-        <url-pattern>/sun</url-pattern>
-        <url-pattern>/optical</url-pattern>
-    </servlet-mapping>
-
     <servlet>
         <servlet-name>EditGlassesServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.EditGlassesServlet</servlet-class>
+        <servlet-class>com.rk.web.servlet.admin.EditGlassesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EditGlassesServlet</servlet-name>
         <url-pattern>/edit</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <servlet-name>HomeServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.HomeServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>HomeServlet</servlet-name>
-        <url-pattern>/home</url-pattern>
-        <url-pattern></url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>CatalogGlassesServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.CatalogGlassesServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CatalogGlassesServlet</servlet-name>
-        <url-pattern>/catalog</url-pattern>
-        <url-pattern>/search</url-pattern>
-    </servlet-mapping>
-
     <servlet>
         <servlet-name>DeleteServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.DeleteServlet</servlet-class>
+        <servlet-class>com.rk.web.servlet.admin.DeleteGlassesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DeleteServlet</servlet-name>
         <url-pattern>/delete</url-pattern>
     </servlet-mapping>
 
+    <!--USER-->
+    <servlet>
+        <servlet-name>ContactServlet</servlet-name>
+        <servlet-class>com.rk.web.servlet.user.ContactServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactServlet</servlet-name>
+        <url-pattern>/contacts</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ArticleServlet</servlet-name>
+        <servlet-class>com.rk.web.servlet.user.ArticleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ArticleServlet</servlet-name>
+        <url-pattern>/articles</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CategoryServlet</servlet-name>
+        <servlet-class>com.rk.web.servlet.user.CategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CategoryServlet</servlet-name>
+        <url-pattern>/sun</url-pattern>
+        <url-pattern>/optical</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>com.rk.web.servlet.user.HomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+        <url-pattern></url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CatalogGlassesServlet</servlet-name>
+        <servlet-class>com.rk.web.servlet.user.CatalogGlassesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CatalogGlassesServlet</servlet-name>
+        <url-pattern>/catalog</url-pattern>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>GlassesServlet</servlet-name>
-        <servlet-class>com.rk.web.servlet.GlassesServlet</servlet-class>
+        <servlet-class>com.rk.web.servlet.user.GlassesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GlassesServlet</servlet-name>
         <url-pattern>/glasses/*</url-pattern>
     </servlet-mapping>
 
+    <!--GUEST-->
     <servlet>
         <servlet-name>Registration</servlet-name>
         <servlet-class>com.rk.web.servlet.RegistrationServlet</servlet-class>
@@ -101,7 +100,6 @@
         <servlet-name>Registration</servlet-name>
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>com.rk.web.servlet.LoginServlet</servlet-class>
@@ -114,5 +112,39 @@
     <error-page>
         <location>/error.html</location>
     </error-page>
+
+    <!--FILTER-->
+    <filter>
+        <filter-name>UserRoleFilter</filter-name>
+        <filter-class>com.rk.web.filter.UserRoleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserRoleFilter</filter-name>
+        <url-pattern>/</url-pattern>
+        <url-pattern>/home</url-pattern>
+        <url-pattern>/glasses/*</url-pattern>
+        <url-pattern>/catalog</url-pattern>
+        <url-pattern>/search</url-pattern>
+        <url-pattern>/sun</url-pattern>
+        <url-pattern>/optical</url-pattern>
+        <url-pattern>/contacts</url-pattern>
+        <url-pattern>/articles</url-pattern>
+        <url-pattern>/edit</url-pattern>
+        <url-pattern>/addGlasses</url-pattern>
+        <url-pattern>/delete</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AdminRoleFilter</filter-name>
+        <filter-class>com.rk.web.filter.AdminRoleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminRoleFilter</filter-name>
+        <url-pattern>/edit</url-pattern>
+        <url-pattern>/addGlasses</url-pattern>
+        <url-pattern>/delete</url-pattern>
+    </filter-mapping>
+
+
 
 </web-app>

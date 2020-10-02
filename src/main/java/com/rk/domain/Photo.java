@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Photo {
     private long id;
-    private String address;
+    private String pathToImage;
 
 }

@@ -13,7 +13,7 @@ public class PhotoRowMapper {
         Photo photo = new Photo();
         try {
             photo.setId(resultSet.getLong("photo_id"));
-            photo.setAddress(resultSet.getString("address"));
+            photo.setPathToImage(resultSet.getString("path_to_image"));
             return photo;
         } catch (SQLException e) {
             log.error("Can not find field of photo in ResultSet", e);
