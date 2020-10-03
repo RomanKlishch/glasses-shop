@@ -4,24 +4,18 @@ import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
 import com.rk.security.SecurityService;
-import com.rk.security.entity.Session;
-import com.rk.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -60,16 +54,16 @@ class LoginServletTest {
         when(request.getParameter("password")).thenReturn("admin");
         when(service.login("admin", "admin")).thenReturn(userAdmin);
         when(request.getServletContext()).thenReturn(servletContext);
-        when(servletContext.getAttribute("userTokens")).thenReturn(anyMap());
+        when(servletContext.getAttribute("sessionTokens")).thenReturn(anyMap());
 
         servlet.doPost(request, response);
 
         verify(service, times(1)).login("admin", "admin");
         verify(request, times(1)).getParameter("login");
         verify(request, times(1)).getParameter("password");
-        verify(servletContext, times(1)).getAttribute("userTokens");
-        verify(response,times(1)).addCookie(any());
-        verify(response,times(1)).sendRedirect("");
+        verify(servletContext, times(1)).getAttribute("sessionTokens");
+        verify(response, times(1)).addCookie(any());
+        verify(response, times(1)).sendRedirect("");
     }
 
     @Test

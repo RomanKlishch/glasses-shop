@@ -4,6 +4,7 @@ import com.rk.ServiceLocator;
 import com.rk.dao.UserDao;
 import com.rk.domain.User;
 import com.rk.security.SecurityService;
+import com.rk.security.entity.Session;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;

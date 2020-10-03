@@ -35,7 +35,7 @@ class UserRoleFilterTest {
     private PrintWriter printWriter;
     @Mock
     private ServletContext servletContext;
-    @Spy
+
     private Map<String, Session> sessionMap;
     private Cookie cookieAdmin;
     private Session session;

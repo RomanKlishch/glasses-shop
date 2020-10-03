@@ -90,6 +90,14 @@
         <servlet-name>GlassesServlet</servlet-name>
         <url-pattern>/glasses/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.rk.web.servlet.user.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
 
     <!--GUEST-->
     <servlet>
