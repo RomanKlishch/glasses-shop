@@ -61,8 +61,8 @@ public class LoginServlet extends HttpServlet {
                 .token(sessionToken)
                 .expireDate(LocalDateTime.now())
                 .build();
-        Map<String,Session> userTokens = (Map<String, Session>) request.getServletContext().getAttribute("userTokens");
-        userTokens.put(sessionToken, session);
+        Map<String,Session> sessionTokens = (Map<String, Session>) request.getServletContext().getAttribute("sessionTokens");
+        sessionTokens.put(sessionToken, session);
         Cookie cookie = new Cookie("user-token", sessionToken);
         cookie.setMaxAge(7200);
         return cookie;

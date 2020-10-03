@@ -9,7 +9,7 @@
         <listener-class>com.rk.web.listener.ThymeLeafInitializerListener</listener-class>
     </listener>
     <listener>
-        <listener-class>com.rk.web.listener.UserTokensMapInitializer</listener-class>
+        <listener-class>com.rk.web.listener.SessionTokensMapInitializer</listener-class>
     </listener>
 
     <!--ADMIN-->

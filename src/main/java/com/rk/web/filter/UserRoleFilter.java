@@ -22,8 +22,8 @@ public class UserRoleFilter implements Filter {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("user-token")) {
-                    Map<String, Session> userTokens = (Map<String, Session>) request.getServletContext().getAttribute("userTokens");
-                    Session session = userTokens.get(cookie.getValue());
+                    Map<String, Session> sessionTokens = (Map<String, Session>) request.getServletContext().getAttribute("sessionTokens");
+                    Session session = sessionTokens.get(cookie.getValue());
                     if (session != null) {
                         request.setAttribute("session", session);
                         chain.doFilter(httpRequest, httpResponse);
