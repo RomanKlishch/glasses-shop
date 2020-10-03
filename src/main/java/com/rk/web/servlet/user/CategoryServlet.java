@@ -2,7 +2,6 @@ package com.rk.web.servlet.user;
 
 import com.rk.ServiceLocator;
 import com.rk.domain.Glasses;
-import com.rk.domain.User;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 import lombok.SneakyThrows;
@@ -18,11 +17,9 @@ import static com.rk.constants.WebConstants.CONTENT_TYPE;
 
 public class CategoryServlet extends HttpServlet {
     private GlassesService glassesService;
-    private Map<String, User> userTokens;
 
     public CategoryServlet() {
         this.glassesService = ServiceLocator.getBean("GlassesService");
-        this.userTokens = ServiceLocator.getBean("UserTokens");
     }
 
     @SneakyThrows

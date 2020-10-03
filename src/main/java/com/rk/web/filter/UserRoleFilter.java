@@ -37,16 +37,13 @@ public class UserRoleFilter implements Filter {
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             dispatcher.forward(httpRequest, httpResponse);
         }
-
     }
 
     @Override
     public void init(FilterConfig filterConfig) {
-
     }
 
     @Override
     public void destroy() {
-
     }
 }

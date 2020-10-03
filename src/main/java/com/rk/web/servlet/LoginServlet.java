@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        User user = securityService.login(login,password);
+        User user = securityService.login(login, password);
         if (user != null) {
             Cookie cookie = createSession(request, user);
             response.addCookie(cookie);
@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
                 .token(sessionToken)
                 .expireDate(LocalDateTime.now())
                 .build();
-        Map<String,Session> sessionTokens = (Map<String, Session>) request.getServletContext().getAttribute("sessionTokens");
+        Map<String, Session> sessionTokens = (Map<String, Session>) request.getServletContext().getAttribute("sessionTokens");
         sessionTokens.put(sessionToken, session);
         Cookie cookie = new Cookie("user-token", sessionToken);
         cookie.setMaxAge(7200);

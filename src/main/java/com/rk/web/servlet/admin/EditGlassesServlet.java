@@ -44,7 +44,7 @@ public class EditGlassesServlet extends HttpServlet {
         List<Photo> photoList = new ArrayList<>();
         String[] photoIds = request.getParameterValues("photoId");
         String[] urlPhotos = request.getParameterValues("photo");
-        if (photoIds!=null && urlPhotos!=null){
+        if (photoIds != null && urlPhotos != null) {
             for (int i = 0; i < photoIds.length; i++) {
                 if (!photoIds[i].isEmpty() && !urlPhotos[i].isEmpty()) {
                     photoList.add(Photo.builder()

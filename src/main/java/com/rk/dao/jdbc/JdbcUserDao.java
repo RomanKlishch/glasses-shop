@@ -4,6 +4,7 @@ import com.rk.dao.UserDao;
 import com.rk.dao.exception.JdbcException;
 import com.rk.dao.jdbc.mapper.UserRowMapper;
 import com.rk.domain.User;
+import com.rk.domain.UserRole;
 import com.rk.util.PropertyReader;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +71,8 @@ public class JdbcUserDao implements UserDao {
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getSole());
-            statement.setString(5, user.getRole().getNameOfUserRole());
+            UserRole saveRole = user.getRole() == null ? UserRole.USER : user.getRole();
+            statement.setString(5, saveRole.getNameOfUserRole());
             statement.execute();
 
         } catch (SQLException e) {

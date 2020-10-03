@@ -44,9 +44,9 @@ public class PropertyReader {
                 properties.load(inputStream);
             }
         }
-        properties.put("jdbc.url",System.getenv("JDBC_DATABASE_URL"));
-        properties.put("jdbc.user",System.getenv("JDBC_DATABASE_USERNAME"));
-        properties.put("jdbc.password",System.getenv("JDBC_DATABASE_PASSWORD"));
+        properties.put("jdbc.url", System.getenv("JDBC_DATABASE_URL"));
+        properties.put("jdbc.user", System.getenv("JDBC_DATABASE_USERNAME"));
+        properties.put("jdbc.password", System.getenv("JDBC_DATABASE_PASSWORD"));
         return properties;
     }
 
@@ -57,7 +57,7 @@ public class PropertyReader {
                 "src/main/resources/properties/sqlQueries.properties",
                 "src/test/resources/properties/test.properties"};
         for (String path : paths) {
-            if (!new File(path).exists()){
+            if (!new File(path).exists()) {
                 log.error("path  does not exist - {}", path);
                 throw new IllegalArgumentException("No properties on path - ".concat(path));
             }

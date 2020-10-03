@@ -5,11 +5,11 @@ import com.rk.dao.UserDao;
 import com.rk.dao.jdbc.JdbcGlassesDao;
 import com.rk.dao.jdbc.JdbcUserDao;
 import com.rk.domain.User;
-import com.rk.service.GlassesService;
 import com.rk.security.SecurityService;
+import com.rk.security.impl.DefaultSecurityService;
+import com.rk.service.GlassesService;
 import com.rk.service.UserService;
 import com.rk.service.impl.DefaultGlassesService;
-import com.rk.security.impl.DefaultSecurityService;
 import com.rk.service.impl.UserServiceImpl;
 import com.rk.util.PropertyReader;
 import org.postgresql.ds.PGSimpleDataSource;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ServiceLocator{
+public class ServiceLocator {
 
     private static final Map<String, Object> CONTAINER = new HashMap<>();
 
@@ -38,7 +38,7 @@ public class ServiceLocator{
         register("UserDao", userDao);
 
         SecurityService securityService = new DefaultSecurityService();
-        register("SecurityService",securityService);
+        register("SecurityService", securityService);
 
         GlassesService glassesService = new DefaultGlassesService();
         register("GlassesService", glassesService);
@@ -60,18 +60,11 @@ public class ServiceLocator{
 }
 
 //TODO:
-// 1)У Filter реально нет параметра order или я не смог его найти?
+// 1) У Filter реально нет параметра order или я не смог его найти?
 // 2) Как обрабатывать исключения в фильтрах и сервлеьах, что с ними делать?
-
-
-
+// 3) Как реализовать доступ к роли пользователя с любой "page".html страницы?
+// 4) Branch - Map in config JdbcBatchUpdateException: Нарушение ссылочной целостности: "CONSTRAINT_8C: PUBLIC.PHOTOS FOREIGN KEY(GLASSES_ID) REFERENCES PUBLIC.GLASSES(GLASSES_ID) (4))
 
 
 //TODO: Если-да-кабы будет свободное время:
 // Представим ситуацию в уже готовый рабочий небольшой проект нужно добавить локализацию, как измениться БД
-//
-//
-// Exception in thread "JettyShutdownThread" java.lang.AbstractMethodError:
-// Receiver class com.rk.web.listener.ThymeLeafInitializerListener does not
-// define or inherit an implementation of the resolved method 'abstract void
-// contextDestroyed(javax.servlet.ServletContextEvent)' of interface javax.servlet.ServletContextListener.

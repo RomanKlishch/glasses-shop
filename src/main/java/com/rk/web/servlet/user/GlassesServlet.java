@@ -2,14 +2,11 @@ package com.rk.web.servlet.user;
 
 import com.rk.ServiceLocator;
 import com.rk.domain.Glasses;
-import com.rk.domain.User;
 import com.rk.security.entity.Session;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 import lombok.SneakyThrows;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

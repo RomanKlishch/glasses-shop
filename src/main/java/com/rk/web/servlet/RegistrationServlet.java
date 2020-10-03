@@ -2,7 +2,6 @@ package com.rk.web.servlet;
 
 import com.rk.ServiceLocator;
 import com.rk.domain.User;
-import com.rk.domain.UserRole;
 import com.rk.service.UserService;
 import com.rk.web.templator.PageGenerator;
 

@@ -1,14 +1,11 @@
 package com.rk.web.servlet.user;
 
 import com.rk.ServiceLocator;
-import com.rk.domain.User;
 import com.rk.dto.CatalogAndMessage;
 import com.rk.service.GlassesService;
 import com.rk.web.templator.PageGenerator;
 import lombok.SneakyThrows;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,11 +16,9 @@ import static com.rk.constants.WebConstants.CONTENT_TYPE;
 
 public class CatalogGlassesServlet extends HttpServlet {
     private GlassesService glassesService;
-    private Map<String, User> userTokens;
 
     public CatalogGlassesServlet() {
         this.glassesService = ServiceLocator.getBean("GlassesService");
-        this.userTokens = ServiceLocator.getBean("UserTokens");
     }
 
     @SneakyThrows

@@ -31,12 +31,10 @@ public class AdminRoleFilter implements Filter {
     }
 
     @Override
-    public void init(FilterConfig filterConfig){
-
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override
     public void destroy() {
-
     }
 }

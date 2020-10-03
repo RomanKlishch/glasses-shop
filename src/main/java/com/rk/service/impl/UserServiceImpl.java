@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         String sole = UUID.randomUUID().toString();
-        String password = securityService.hash(user.getPassword(),sole);
+        String password = securityService.hash(sole, user.getPassword());
         user.setSole(sole);
         user.setPassword(password);
         userDao.save(user);
