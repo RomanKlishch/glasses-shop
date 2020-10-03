@@ -32,7 +32,7 @@ public class RegistrationServlet extends HttpServlet {
                 .name(request.getParameter("name"))
                 .email(request.getParameter("email"))
                 .password(request.getParameter("password"))
-                .role(UserRole.USER).build();
+                .build();
         userService.save(user);
         response.sendRedirect("/login");
     }

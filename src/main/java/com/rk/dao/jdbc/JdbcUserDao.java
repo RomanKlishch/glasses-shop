@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +44,8 @@ public class JdbcUserDao implements UserDao {
     public List<User> findAll() {
         String query = propertyReader.getProperty("find.all.user");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             List<User> userList = new ArrayList<>();
             while (resultSet.next()) {

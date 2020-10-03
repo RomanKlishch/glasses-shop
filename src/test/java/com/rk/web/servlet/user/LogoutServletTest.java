@@ -1,8 +1,5 @@
 package com.rk.web.servlet.user;
 
-import com.rk.domain.LongId;
-import com.rk.domain.User;
-import com.rk.domain.UserRole;
 import com.rk.security.entity.Session;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +14,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,12 +37,10 @@ class LogoutServletTest {
 
     public LogoutServletTest() {
         String token = UUID.randomUUID().toString();
-
-        session =Session.builder().token(token).build();
+        session = Session.builder().token(token).build();
         cookieAdmin = new Cookie("user-token", token);
-        sessionTokens.put(token,session);
+        sessionTokens.put(token, session);
     }
-
 
     @Test
     @DisplayName("Test method doGet")
