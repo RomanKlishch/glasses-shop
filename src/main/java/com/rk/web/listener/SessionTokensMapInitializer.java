@@ -12,8 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SessionTokensMapInitializer implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        Map<String, Session> SessionTokens = new ConcurrentHashMap<>();
-        event.getServletContext().setAttribute("sessionTokens", SessionTokens);
+        Map<String, Session> sessionTokens = new ConcurrentHashMap<>();
+        event.getServletContext().setAttribute("sessionTokens", sessionTokens);
         log.debug("Created sessionTokens Map");
     }
 

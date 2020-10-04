@@ -10,19 +10,20 @@
         </div>
 
         <div class="col-5 details-glasses text-left">
-            <div class="head-name">
-                <h1 th:text="${glasses.name}">$</h1>
-                <h4 th:text="${glasses.collection}">$</h4>
-                <h3>$<span th:text="${glasses.price}"></span></h3>
-            </div>
-            <div>
-                <form method="GET" action="#">
+            <form method="POST" action="/addToCart">
+                <div class="head-name">
+                    <h1 th:text="${glasses.name}">$</h1>
+                    <h4 th:text="${glasses.collection}">$</h4>
+                    <h3>$<span th:text="${glasses.price}"></span></h3>
+                </div>
+                <div>
                     <button type="s" class="btn btn-secondary btn-lg btn-block button-add-cart">
                         <input type="hidden" name="id" th:value="${glasses.id}">
                         ADD TO CART
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
+
             <div class="row" th:if="${role}==ADMIN">
                 <div class="col-6">
                     <form method="GET" action="/edit">

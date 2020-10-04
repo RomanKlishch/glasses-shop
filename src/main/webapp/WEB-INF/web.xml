@@ -98,6 +98,14 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AddtoCart</servlet-name>
+        <servlet-class>com.rk.web.servlet.user.AddToCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddtoCart</servlet-name>
+        <url-pattern>/addToCart</url-pattern>
+    </servlet-mapping>
 
     <!--GUEST-->
     <servlet>
@@ -140,6 +148,8 @@
         <url-pattern>/edit</url-pattern>
         <url-pattern>/addGlasses</url-pattern>
         <url-pattern>/delete</url-pattern>
+        <url-pattern>/logout</url-pattern>
+        <url-pattern>/addToCart</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -152,7 +162,4 @@
         <url-pattern>/addGlasses</url-pattern>
         <url-pattern>/delete</url-pattern>
     </filter-mapping>
-
-
-
 </web-app>
