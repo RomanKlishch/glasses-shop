@@ -15,6 +15,6 @@ public class Order {
     private String status;
     private LocalDateTime orderTime;
     @EqualsAndHashCode.Exclude
-    private Map<Glasses,Integer> glassesMap;
+    private Map<Glasses, Integer> glassesMap;
 
 }

@@ -1,4 +1,4 @@
-package com.rk.dao.exception;
+package com.rk.dao.jdbc.exception;
 
 public class JdbcException extends RuntimeException{
     public JdbcException(String message, Throwable cause) {

@@ -1,7 +1,7 @@
 package com.rk.dao.jdbc;
 
 import com.rk.dao.GlassesDao;
-import com.rk.dao.exception.JdbcException;
+import com.rk.dao.jdbc.exception.JdbcException;
 import com.rk.dao.jdbc.mapper.GlassesRowMapper;
 import com.rk.dao.jdbc.mapper.PhotoRowMapper;
 import com.rk.domain.Glasses;

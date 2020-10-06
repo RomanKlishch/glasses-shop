@@ -1,6 +1,6 @@
 package com.rk.dao.jdbc.mapper;
 
-import com.rk.dao.exception.JdbcException;
+import com.rk.dao.jdbc.exception.JdbcException;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
 import lombok.SneakyThrows;

@@ -56,7 +56,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     private Cookie registrationSessionAndCookie(HttpServletRequest request, User user) {
-        int lifeTime = Integer.valueOf(propertyReader.getProperty("life.time"));
+        int lifeTime = Integer.parseInt(propertyReader.getProperty("life.time"));
         Session session = securityService.createSession(lifeTime);
         session.setUser(user);
         Map<String, Session> sessionTokens = (Map<String, Session>) request.getServletContext().getAttribute("sessionTokens");
