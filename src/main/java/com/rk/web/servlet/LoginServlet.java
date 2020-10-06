@@ -2,8 +2,9 @@ package com.rk.web.servlet;
 
 import com.rk.ServiceLocator;
 import com.rk.domain.User;
-import com.rk.security.SecurityService;
 import com.rk.security.entity.Session;
+import com.rk.security.impl.DefaultSecurityService;
+import com.rk.util.PropertyReader;
 import com.rk.web.templator.PageGenerator;
 import lombok.SneakyThrows;
 
@@ -12,25 +13,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import static com.rk.constants.WebConstants.CONTENT_TYPE;
 
 public class LoginServlet extends HttpServlet {
-    private SecurityService securityService;
+    private DefaultSecurityService securityService;
+    private PropertyReader propertyReader;
 
     public LoginServlet() {
         this.securityService = ServiceLocator.getBean("SecurityService");
+        this.propertyReader = ServiceLocator.getBean("PropertyReader");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Map<String, Object> pageVariables = new HashMap<>();
         pageVariables.put("message", request.getAttribute("message"));
-        response.setContentType("text/html;charset=utf-8");
+        response.setContentType(CONTENT_TYPE);
         PageGenerator.instance().process("login", pageVariables, response.getWriter());
     }
 
@@ -42,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 
         User user = securityService.login(login, password);
         if (user != null) {
-            Cookie cookie = createSession(request, user);
+            Cookie cookie = registrationSession(request, user);
             response.addCookie(cookie);
             response.sendRedirect("");
         } else {
@@ -54,17 +55,14 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    private Cookie createSession(HttpServletRequest request, User user) {
-        String sessionToken = UUID.randomUUID().toString();
-        Session session = Session.builder()
-                .user(user)
-                .token(sessionToken)
-                .expireDate(LocalDateTime.now())
-                .build();
+    private Cookie registrationSession(HttpServletRequest request, User user) {
+        int lifeTime = Integer.valueOf(propertyReader.getProperty("life.time"));
+        Session session = securityService.createSession(lifeTime);
+        session.setUser(user);
         Map<String, Session> sessionTokens = (Map<String, Session>) request.getServletContext().getAttribute("sessionTokens");
-        sessionTokens.put(sessionToken, session);
-        Cookie cookie = new Cookie("user-token", sessionToken);
-        cookie.setMaxAge(7200);
+        sessionTokens.put(session.getToken(), session);
+        Cookie cookie = new Cookie("user-token", session.getToken());
+        cookie.setMaxAge(lifeTime);
         return cookie;
     }
 }

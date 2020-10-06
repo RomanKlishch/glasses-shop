@@ -4,11 +4,14 @@ import com.rk.ServiceLocator;
 import com.rk.dao.UserDao;
 import com.rk.domain.User;
 import com.rk.security.SecurityService;
+import com.rk.security.entity.Session;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Slf4j
 public class DefaultSecurityService implements SecurityService {
@@ -46,5 +49,14 @@ public class DefaultSecurityService implements SecurityService {
             }
         }
         return null;
+    }
+
+    @Override
+    public Session createSession(int lifeTime) {
+        String sessionToken = UUID.randomUUID().toString();
+        return Session.builder()
+                .token(sessionToken)
+                .expireDate(LocalDateTime.now().plusSeconds(lifeTime))
+                .build();
     }
 }

@@ -26,6 +26,7 @@ public class ServiceLocator {
         PropertyReader propertyReader = new PropertyReader("properties/application.properties", "properties/sqlQueries.properties");
         register("PropertyReader", propertyReader);
 
+        System.out.println("ServisLocator");
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setURL(propertyReader.getProperty("jdbc.url"));
         dataSource.setUser(propertyReader.getProperty("jdbc.user"));
@@ -48,6 +49,7 @@ public class ServiceLocator {
 
         Map<String, User> userTokens = new ConcurrentHashMap<>();
         register("UserTokens", userTokens);
+        System.out.println("ServisLocator");
     }
 
     public static <T> void register(String nameBean, T bean) {
@@ -61,10 +63,8 @@ public class ServiceLocator {
 
 //TODO:
 // 1) У Filter реально нет параметра order или я не смог его найти?
-// 2) Как обрабатывать исключения в фильтрах и сервлеьах, что с ними делать?
 // 3) Как реализовать доступ к роли пользователя с любой "page".html страницы?
 
 
 //TODO: Если-да-кабы будет свободное время:
 // 1) Представим ситуацию в уже готовый рабочий небольшой проект нужно добавить локализацию, как измениться БД
-// 2) Jetty-Runner - deprecate - нужно заменить//

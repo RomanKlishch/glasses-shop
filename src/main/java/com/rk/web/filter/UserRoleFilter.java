@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class UserRoleFilter implements Filter {
@@ -24,11 +25,18 @@ public class UserRoleFilter implements Filter {
                 if (cookie.getName().equals("user-token")) {
                     Map<String, Session> sessionTokens = (Map<String, Session>) request.getServletContext().getAttribute("sessionTokens");
                     Session session = sessionTokens.get(cookie.getValue());
+
                     if (session != null) {
-                        request.setAttribute("session", session);
-                        chain.doFilter(httpRequest, httpResponse);
-                        return;
+                        if (session.getExpireDate().isAfter(LocalDateTime.now())) {
+                            request.setAttribute("session", session);
+                            chain.doFilter(httpRequest, httpResponse);
+                            return;
+                        } else {
+                            sessionTokens.remove(cookie.getValue());
+                            break;
+                        }
                     }
+
                 }
             }
 

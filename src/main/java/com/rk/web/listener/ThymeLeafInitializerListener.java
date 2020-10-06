@@ -15,9 +15,4 @@ public class ThymeLeafInitializerListener implements ServletContextListener {
         PageGenerator.instance().configureTemplate(servletContext);
         log.debug("Initialized generator of page");
     }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-
-    }
 }
