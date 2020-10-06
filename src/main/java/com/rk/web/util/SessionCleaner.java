@@ -2,6 +2,7 @@ package com.rk.web.util;
 
 import com.rk.security.entity.Session;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class SessionCleaner implements Runnable {
@@ -15,7 +16,7 @@ public class SessionCleaner implements Runnable {
     public void run() {
        for (String key : sessionMap.keySet()) {
             Session session = sessionMap.get(key);
-            if (session.getExpireDate().isAfter(session.getExpireDate())) {
+            if (session.getExpireDate().isAfter(LocalDateTime.now())) {
                 sessionMap.remove(key);
             }
         }

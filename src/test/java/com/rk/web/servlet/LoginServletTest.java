@@ -4,6 +4,7 @@ import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
 import com.rk.security.SecurityService;
+import com.rk.security.entity.Session;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,11 +50,13 @@ class LoginServletTest {
     @Test
     @DisplayName("Test method doPost with parameter")
     void doPost_login() throws IOException {
+        Session session = new Session();
         User userAdmin = User.builder().id(new LongId<>(1L)).email("admin").name("admin").password("admin").role(UserRole.ADMIN).build();
         when(request.getParameter("login")).thenReturn("admin");
         when(request.getParameter("password")).thenReturn("admin");
         when(service.login("admin", "admin")).thenReturn(userAdmin);
         when(request.getServletContext()).thenReturn(servletContext);
+        when(service.createSession(anyInt())).thenReturn(session);
         when(servletContext.getAttribute("sessionTokens")).thenReturn(anyMap());
 
         servlet.doPost(request, response);

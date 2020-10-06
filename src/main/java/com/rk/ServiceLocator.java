@@ -26,7 +26,6 @@ public class ServiceLocator {
         PropertyReader propertyReader = new PropertyReader("properties/application.properties", "properties/sqlQueries.properties");
         register("PropertyReader", propertyReader);
 
-        System.out.println("ServisLocator");
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setURL(propertyReader.getProperty("jdbc.url"));
         dataSource.setUser(propertyReader.getProperty("jdbc.user"));
@@ -49,7 +48,6 @@ public class ServiceLocator {
 
         Map<String, User> userTokens = new ConcurrentHashMap<>();
         register("UserTokens", userTokens);
-        System.out.println("ServisLocator");
     }
 
     public static <T> void register(String nameBean, T bean) {

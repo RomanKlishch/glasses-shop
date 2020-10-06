@@ -2,8 +2,8 @@ package com.rk.web.servlet;
 
 import com.rk.ServiceLocator;
 import com.rk.domain.User;
+import com.rk.security.SecurityService;
 import com.rk.security.entity.Session;
-import com.rk.security.impl.DefaultSecurityService;
 import com.rk.util.PropertyReader;
 import com.rk.web.templator.PageGenerator;
 import lombok.SneakyThrows;
@@ -19,7 +19,7 @@ import java.util.Map;
 import static com.rk.constants.WebConstants.CONTENT_TYPE;
 
 public class LoginServlet extends HttpServlet {
-    private DefaultSecurityService securityService;
+    private SecurityService securityService;
     private PropertyReader propertyReader;
 
     public LoginServlet() {
@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 
         User user = securityService.login(login, password);
         if (user != null) {
-            Cookie cookie = registrationSession(request, user);
+            Cookie cookie = registrationSessionAndCookie(request, user);
             response.addCookie(cookie);
             response.sendRedirect("");
         } else {
@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    private Cookie registrationSession(HttpServletRequest request, User user) {
+    private Cookie registrationSessionAndCookie(HttpServletRequest request, User user) {
         int lifeTime = Integer.valueOf(propertyReader.getProperty("life.time"));
         Session session = securityService.createSession(lifeTime);
         session.setUser(user);
