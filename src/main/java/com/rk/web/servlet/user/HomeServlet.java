@@ -23,7 +23,6 @@ public class HomeServlet extends HttpServlet {
         this.glassesService = ServiceLocator.getBean("GlassesService");
     }
 
-
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {

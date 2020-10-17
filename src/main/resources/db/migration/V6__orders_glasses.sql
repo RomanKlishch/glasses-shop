@@ -1,5 +1,6 @@
-CREATE TABLE ORDER_GLASSES
+CREATE TABLE ORDERS_GLASSES
 (
+    order_glasses_id BIGSERIAL PRIMARY KEY ,
     order_id   BIGINT not null,
     glasses_id BIGINT not null,
     count      SMALLINT not null,

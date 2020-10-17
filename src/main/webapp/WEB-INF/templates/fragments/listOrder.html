@@ -1,0 +1,35 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="list(order)">
+    <div class="container-fluid list-order">
+        <div class="row justify-content-around">
+            <div class="col-3 ml-2 mr-2">
+                <div th:if="${order != null}">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Vendor code</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="key : ${order.getGlassesMap().keySet()}">
+                            <td><span th:text="${key.getId()}"></span></td>
+                            <td><span th:text="${key.getName()}"></span></td>
+                            <td><span th:text="${key.getPrice()}"></span></td>
+                            <td><span th:text="${order.getGlassesMap().get(key)}"></span></td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<!--<tr th:each="book : ${books}">-->
+<!--    <td><span th:text="${book.title}"> Title </span></td>-->
+<!--    <td><span th:text="${book.author}"> Author </span></td>-->
+<!--</tr>-->

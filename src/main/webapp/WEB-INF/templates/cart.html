@@ -1,10 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!doctype html >
+<html lang="ru-UA" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{/fragments/header.html :: head(title='Order')}"></div>
 
-</body>
-</html>
+
+<div class="container-fluid list-order">
+    <div class="row justify-content-around">
+        <div class="col-3 ml-2 mr-2">
+            <div th:if="${orderFromSession != null}">
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Vendor code</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <div th:if="!${#maps.isEmpty(orderFromSession.getGlassesMap())}">
+                        <tr th:each="key : ${orderFromSession.getGlassesMap().keySet()}">
+                            <td><span th:text="${key.getId()}"></span></td>
+                            <td><span th:text="${key.getName()}"></span></td>
+                            <td><span th:text="${key.getPrice()}"></span></td>
+                            <td><span th:text="${order.getGlassesMap().get(key)}"></span></td>
+                        </tr>
+                    </div>
+
+
+                    <a href="/saveOrder" th:text="Pay"></a>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{/fragments/listOrder.html :: list(order = ${oldOrders})}"></div>
+
+<div th:replace="~{/fragments/footer.html :: foot}"></div>

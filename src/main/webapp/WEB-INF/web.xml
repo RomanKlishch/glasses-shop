@@ -104,7 +104,15 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AddtoCart</servlet-name>
-        <url-pattern>/addToCart</url-pattern>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SaveOrder</servlet-name>
+        <servlet-class>com.rk.web.servlet.user.SaveOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SaveOrder</servlet-name>
+        <url-pattern>/saveOrder</url-pattern>
     </servlet-mapping>
 
     <!--GUEST-->
@@ -149,7 +157,8 @@
         <url-pattern>/addGlasses</url-pattern>
         <url-pattern>/delete</url-pattern>
         <url-pattern>/logout</url-pattern>
-        <url-pattern>/addToCart</url-pattern>
+        <url-pattern>/cart</url-pattern>
+        <url-pattern>/saveOrder</url-pattern>
     </filter-mapping>
 
     <filter>

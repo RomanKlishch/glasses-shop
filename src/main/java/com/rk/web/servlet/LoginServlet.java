@@ -8,10 +8,7 @@ import com.rk.util.PropertyReader;
 import com.rk.web.templator.PageGenerator;
 import lombok.SneakyThrows;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +37,10 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        HttpSession httpSession = request.getSession();
+        httpSession.setAttribute("new","ffffffffffffffffffffff");
+        httpSession.setMaxInactiveInterval(1800);
+        request.getSession();
 
         User user = securityService.login(login, password);
         if (user != null) {

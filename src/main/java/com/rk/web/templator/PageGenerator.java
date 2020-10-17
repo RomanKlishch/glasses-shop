@@ -3,11 +3,14 @@ package com.rk.web.templator;
 import com.rk.util.PropertyReader;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.Writer;
 import java.util.Map;
 
@@ -44,6 +47,11 @@ public class PageGenerator {
 
     public void process(String template, Writer writer) {
         Context context = new Context();
+        templateEngine.process(template, context, writer);
+    }
+
+    public void process(String template, Writer writer, HttpServletRequest request, HttpServletResponse response) {
+        WebContext context = new WebContext(request,response,request.getServletContext(),request.getLocale());
         templateEngine.process(template, context, writer);
     }
 

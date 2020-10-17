@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Indie+Flower);
 a:hover {
     color: #3b4a9a;
 }
@@ -208,6 +209,47 @@ a:hover {
 .button-add-cart:hover {
     background: #000;
     color: #fff;
+}
+/* login.html */
+.login-content{
+    background-color: gray;
+    border: 20px solid #3b4a9a;
+}
+.login-content .form-control{
+    margin-bottom: 20px;
+}
+
+.login-fields{
+    display:flex;
+    justify-content: center;
+}
+.login-fields input{
+    size: ledger;
+}
+
+.login-fields span{
+    color: magenta;
+    font-family: 'Indie Flower', cursive;
+    font-size: 35px;
+}
+
+.login-field1 label{
+    margin-right: 23px;
+}
+
+.login-buttom{
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.login-buttom .btn-primary{
+    border-radius: 25px;
+}
+
+.login-message{
+    display: flex;
+    justify-content: center;
 }
 
 /* error.html */

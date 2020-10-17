@@ -3,38 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/nanoreset/nanoreset.min.css">
+    <link rel="stylesheet" href="/myapp/static/css/style.css">
 </head>
 <body>
-<div class="container">
-    <div class="message">
-        <div class="row text-center">
-            <div class="col">
-                <h4><p th:text="${message}"></p></h4>
+<div class="login-page">
+    <div class="container-fluid">
+        <div class="login-message">
+            <div class="row text-center">
+                <div class="col">
+                    <h4><p th:text="${message}"></p></h4>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-4"></div>
-        <div class="col-4">
+    <div class="login-content">
+        <div class="login-fields">
             <form action="/login" method="POST">
-                <div class="form-group">
-                    <label for="login">Login</label>
-                    <input required type="text" class="form-control" name="login" aria-describedby="loginHelp"
+                <div class="form-group login-field1">
+                    <label for="login"><span>Login</span></label>
+                    <input required type="text" class="form-control" name="login"
                            placeholder="Enter name" id="login">
-                    <small id="loginlHelp" class="form-text text-muted">Enter email</small>
                 </div>
-                <div class="form-group">
-                    <label for="repeatPassword">Password</label>
+                <div class="form-group login-field2">
+                    <label for="password"><span>Password</span></label>
                     <input required type="password" class="form-control" name="password"
-                           aria-describedby="repeatPassword"
-                           placeholder="Enter password" id="repeat">
-                    <small id="repeatPassword" class="form-text text-muted">Enter password</small>
+                           placeholder="Enter password" id="password">
                 </div>
-
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="login-buttom">
+                    <button type="submit" class="btn btn-primary"><span>Log in</span></button>
+                    <a href="/registration" class="btn btn-primary"><span>Sign up</span></a>
+                </div>
             </form>
         </div>
-        <div class="col-4"><a href="/registration">Registration</a></div>
     </div>
 </div>
 </body>

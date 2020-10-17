@@ -22,10 +22,10 @@ public class UserRoleFilter implements Filter {
         Cookie[] cookies = httpRequest.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
+
                 if (cookie.getName().equals("user-token")) {
                     Map<String, Session> sessionTokens = (Map<String, Session>) request.getServletContext().getAttribute("sessionTokens");
                     Session session = sessionTokens.get(cookie.getValue());
-
                     if (session != null) {
                         if (session.getExpireDate().isAfter(LocalDateTime.now())) {
                             request.setAttribute("session", session);
