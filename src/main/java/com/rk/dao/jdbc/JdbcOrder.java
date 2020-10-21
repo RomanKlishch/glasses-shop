@@ -104,18 +104,21 @@ public class JdbcOrder implements OrderDao {
 
     private List<Order> mapRowOrderAndGlasses(ResultSet resultSet) throws SQLException {
         Map<Long, Order> orderMap = new HashMap<>();
+        Order order = null;
         while (resultSet.next()) {
             long id = resultSet.getLong("order_id");
-            Order order = orderMap.putIfAbsent(id, ORDER_ROW_MAPPER.mapRow(resultSet));
+            if (!orderMap.containsKey(id)) {
+                order = ORDER_ROW_MAPPER.mapRow(resultSet);
+                orderMap.put(id, order);
+            }
             Glasses glasses = Glasses.builder()
                     .id(resultSet.getLong("glasses_id"))
                     .name(resultSet.getString("name"))
                     .collection(resultSet.getString("collection"))
                     .price(resultSet.getDouble("price")).build();
             int count = resultSet.getInt("count");
-            if (order != null) {
-                order.getGlassesMap().put(glasses, count);
-            }
+            order.getGlassesMap().put(glasses, count);
+
         }
         return new ArrayList<>(orderMap.values());
     }

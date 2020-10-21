@@ -22,21 +22,35 @@
         </div>
     </div>
     <div class="login-content">
+        <div><h1>LOGIN</h1></div>
         <div class="login-fields">
             <form action="/login" method="POST">
-                <div class="form-group login-field1">
-                    <label for="login"><span>Login</span></label>
-                    <input required type="text" class="form-control" name="login"
-                           placeholder="Enter name" id="login">
+                <div><h2>Please enter your login and password:</h2></div>
+                <div class="row justify-content-around">
+                    <div class="col-4">
+                        <div class="form-group login-field1">
+                            <input required type="text" class="form-control" name="login"
+                                   placeholder="Enter name" id="login">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group login-field2">
-                    <label for="password"><span>Password</span></label>
-                    <input required type="password" class="form-control" name="password"
-                           placeholder="Enter password" id="password">
+
+                <div class="row justify-content-around">
+                    <div class="col-4">
+                        <div class="form-group login-field2">
+                            <input required type="password" class="form-control" name="password"
+                                   placeholder="Enter password" id="password">
+                        </div>
+                    </div>
                 </div>
+
                 <div class="login-buttom">
-                    <button type="submit" class="btn btn-primary"><span>Log in</span></button>
-                    <a href="/registration" class="btn btn-primary"><span>Sign up</span></a>
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block"><span>Log in</span></button>
+                    </div>
+                    <div class="col-4">
+                        <a href="/registration" class="btn btn-secondary btn-lg btn-block"><span>Sign up</span></a>
+                    </div>
                 </div>
             </form>
         </div>

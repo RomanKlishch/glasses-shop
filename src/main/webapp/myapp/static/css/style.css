@@ -211,45 +211,42 @@ a:hover {
     color: #fff;
 }
 /* login.html */
-.login-content{
-    background-color: gray;
-    border: 20px solid #3b4a9a;
-}
-.login-content .form-control{
-    margin-bottom: 20px;
-}
+ .login-content h1{
+     margin-top: 150px;
+     margin-bottom: 75px;
+     text-align:  center;
+     font-size: 100px;
+     color: #000;
 
-.login-fields{
-    display:flex;
-    justify-content: center;
-}
-.login-fields input{
-    size: ledger;
-}
+ }
 
-.login-fields span{
-    color: magenta;
-    font-family: 'Indie Flower', cursive;
-    font-size: 35px;
-}
+ .login-content h2{
+     text-align: -webkit-center;
+     font-size: 20px;
+     color: #afabab;
+     margin-bottom: 25px;
+ }
 
-.login-field1 label{
-    margin-right: 23px;
-}
+ .login-content input{
+     font-size: 30px;
+     margin-bottom: 30px;
+ }
+ .login-buttom{
+     text-align: -webkit-center;
+ }
+ .login-buttom span{
+     font-size: 20px;
 
-.login-buttom{
-    display: flex;
-    justify-content: space-around;
+ }
+ .login-buttom .btn{
+     border-radius: 0;
+     background: #000;
+     color: #fff;
+     margin-bottom: 20px;
+ }
 
-}
-
-.login-buttom .btn-primary{
-    border-radius: 25px;
-}
-
-.login-message{
-    display: flex;
-    justify-content: center;
+.list-old-order{
+    margin-bottom: 50px;
 }
 
 /* error.html */

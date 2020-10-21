@@ -15,7 +15,7 @@ public class OrderRowMapper {
     public Order mapRow(ResultSet resultSet) {
         try {
             return Order.builder()
-                    .id(resultSet.getLong("orde_id"))
+                    .id(resultSet.getLong("order_id"))
                     .user(User.builder().id((new LongId<>(resultSet.getLong("user_id")))).build())
                     .status(resultSet.getString("status"))
                     .glassesMap(new HashMap<>()).build();

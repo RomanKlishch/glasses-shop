@@ -100,7 +100,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>AddtoCart</servlet-name>
-        <servlet-class>com.rk.web.servlet.user.AddToCartServlet</servlet-class>
+        <servlet-class>com.rk.web.servlet.cart.SetUpCartServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddtoCart</servlet-name>
@@ -108,11 +108,19 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>SaveOrder</servlet-name>
-        <servlet-class>com.rk.web.servlet.user.SaveOrderServlet</servlet-class>
+        <servlet-class>com.rk.web.servlet.cart.SaveOrderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SaveOrder</servlet-name>
         <url-pattern>/saveOrder</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CancelOrder</servlet-name>
+        <servlet-class>com.rk.web.servlet.cart.CancelOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CancelOrder</servlet-name>
+        <url-pattern>/cancelOrder</url-pattern>
     </servlet-mapping>
 
     <!--GUEST-->
@@ -159,6 +167,7 @@
         <url-pattern>/logout</url-pattern>
         <url-pattern>/cart</url-pattern>
         <url-pattern>/saveOrder</url-pattern>
+        <url-pattern>/cancelOrder</url-pattern>
     </filter-mapping>
 
     <filter>

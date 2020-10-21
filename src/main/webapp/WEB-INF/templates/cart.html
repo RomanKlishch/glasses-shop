@@ -2,42 +2,67 @@
 <html lang="ru-UA" xmlns:th="http://www.thymeleaf.org">
 <div th:replace="~{/fragments/header.html :: head(title='Order')}"></div>
 
-
-<div class="container-fluid list-order">
-    <div class="row justify-content-around">
-        <div class="col-3 ml-2 mr-2">
-            <div th:if="${orderFromSession != null}">
-
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Vendor code</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Count</th>
+<div class="container list-new-order">
+    <div th:if="${orderFromSession != null}">
+        <h1>New order</h1>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col-3">Vendor code</th>
+                <th scope="col-3">Name</th>
+                <th scope="col-3">Price</th>
+                <th scope="col-3">Count</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div th:with="mapOfGlasses=${orderFromSession.getGlassesMap()}">
+                <div th:if="${mapOfGlasses != null}">
+                    <tr th:each="glasses : ${mapOfGlasses.keySet()}">
+                        <td><span th:text="${glasses.id}"></span></td>
+                        <td><span th:text="${glasses.name}"></span></td>
+                        <td><span th:text="${glasses.price}"></span></td>
+                        <td><span th:text="${mapOfGlasses.get(glasses)}"></span></td>
                     </tr>
-                    </thead>
-                    <tbody>
-
-                    <div th:if="!${#maps.isEmpty(orderFromSession.getGlassesMap())}">
-                        <tr th:each="key : ${orderFromSession.getGlassesMap().keySet()}">
-                            <td><span th:text="${key.getId()}"></span></td>
-                            <td><span th:text="${key.getName()}"></span></td>
-                            <td><span th:text="${key.getPrice()}"></span></td>
-                            <td><span th:text="${order.getGlassesMap().get(key)}"></span></td>
-                        </tr>
-                    </div>
-
-
-                    <a href="/saveOrder" th:text="Pay"></a>
-                    </tbody>
-                </table>
-
+                </div>
             </div>
+            </tbody>
+        </table>
+        <div class="SaveDeleteButtoms text-center" th:if="${orderFromSession.getGlassesMap() != null}">
+            <a href="/saveOrder" class="btn btn-dark"><span>Payof order</span></a>
+            <a href="/cancelOrder" class="btn btn-dark"><span>Cancel order</span></a>
         </div>
     </div>
 </div>
 
-<div th:replace="~{/fragments/listOrder.html :: list(order = ${oldOrders})}"></div>
+<div class="container list-old-order">
+    <div th:if="${ordersFromBD != null}">
+        <h1>Old orders</h1>
+        <div th:each="order : ${ordersFromBD}">
+            <table class="table table-dark">
+                <thead>
+                <tr>
+                    <th scope="col-3">Vendor code</th>
+                    <th scope="col-3">Name</th>
+                    <th scope="col-3">Price</th>
+                    <th scope="col-3">Count</th>
+                </tr>
+                </thead>
+                <tbody>
+                <div th:with="mapOfGlasses=${order.getGlassesMap()}">
+                    <div th:if="${mapOfGlasses != null}">
+                        <tr th:each="glasses : ${mapOfGlasses.keySet()}">
+                            <td><span th:text="${glasses.id}"></span></td>
+                            <td><span th:text="${glasses.name}"></span></td>
+                            <td><span th:text="${glasses.price}"></span></td>
+                            <td><span th:text="${mapOfGlasses.get(glasses)}"></span></td>
+                        </tr>
+                    </div>
+                </div>
+        </div>
+
+        </tbody>
+        </table>
+    </div>
+</div>
 
 <div th:replace="~{/fragments/footer.html :: foot}"></div>

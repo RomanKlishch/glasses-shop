@@ -1,4 +1,4 @@
-package com.rk.web.servlet.user;
+package com.rk.web.servlet.cart;
 
 import com.rk.ServiceLocator;
 import com.rk.domain.Order;
@@ -23,8 +23,8 @@ public class SaveOrderServlet extends HttpServlet {
         Order order = session.getOrder();
         if (order != null) {
             orderService.save(order);
-           session.setOrder(null);
+            session.setOrder(null);
         }
-        response.sendRedirect("");
+        response.sendRedirect("/cart");
     }
 }
