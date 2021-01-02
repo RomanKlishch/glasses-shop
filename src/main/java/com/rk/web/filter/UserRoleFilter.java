@@ -1,6 +1,9 @@
 package com.rk.web.filter;
 
 import com.rk.security.entity.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
@@ -10,10 +13,15 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+@Component("UserRoleFilter")
 public class UserRoleFilter implements Filter {
 
     private HttpServletRequest httpRequest;
     private HttpServletResponse httpResponse;
+
+    @Autowired
+    @Qualifier("sessionTokens")
+    Map<String, Session> sessionTokens;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -24,7 +32,6 @@ public class UserRoleFilter implements Filter {
             for (Cookie cookie : cookies) {
 
                 if (cookie.getName().equals("user-token")) {
-                    Map<String, Session> sessionTokens = (Map<String, Session>) request.getServletContext().getAttribute("sessionTokens");
                     Session session = sessionTokens.get(cookie.getValue());
                     if (session != null) {
                         if (session.getExpireDate().isAfter(LocalDateTime.now())) {

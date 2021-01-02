@@ -1,6 +1,5 @@
 package com.rk.service.impl;
 
-import com.rk.ServiceLocator;
 import com.rk.dao.OrderDao;
 import com.rk.domain.Order;
 import com.rk.service.OrderService;
@@ -10,8 +9,8 @@ import java.util.List;
 public class DefaultOrderService implements OrderService {
     OrderDao orderDao;
 
-    public DefaultOrderService() {
-        orderDao = ServiceLocator.getBean("OrderDao");
+    public DefaultOrderService(OrderDao orderDao) {
+        this.orderDao = orderDao;
     }
 
     @Override

@@ -1,13 +1,9 @@
 package com.rk.web.servlet.user;
 
-import com.rk.security.entity.Session;
-
-import javax.servlet.http.*;
-import java.io.IOException;
-import java.util.Map;
+import javax.servlet.http.HttpServlet;
 
 public class LogoutServlet extends HttpServlet {
-    @Override
+/*    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
@@ -19,5 +15,5 @@ public class LogoutServlet extends HttpServlet {
             }
         }
         response.sendRedirect("/login");
-    }
+    }*/
 }

@@ -5,7 +5,6 @@ import com.rk.dao.jdbc.exception.JdbcException;
 import com.rk.dao.jdbc.mapper.UserRowMapper;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
-import com.rk.util.PropertyReader;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,19 +17,24 @@ import java.util.List;
 @NoArgsConstructor
 public class JdbcUserDao implements UserDao {
     private static final UserRowMapper userRowMapper = new UserRowMapper();
-    private DataSource dataSource;
-    private PropertyReader propertyReader;
 
-    public JdbcUserDao(DataSource dataSource, PropertyReader propertyReader) {
+    private String findByIdUser = "SELECT user_id, name, email, password, sole, role FROM users where user_id=?;";
+    private String findAllUser = "SELECT user_id, name, email, password, sole, role FROM users;";
+    private String saveUser = "INSERT INTO users (name, email, password, sole, role) VALUES (?, ?, ?, ?, ?);";
+    private String updateUser = "UPDATE users SET name=?, email=?, password=?, role=? WHERE user_id=?;";
+    private String deleteUser = "DELETE FROM users WHERE user_id=?;";
+    private String findByLogin = "SELECT user_id, name, email, password, sole, role FROM users WHERE email =?;";
+
+    private DataSource dataSource;
+
+    public JdbcUserDao(DataSource dataSource) {
         this.dataSource = dataSource;
-        this.propertyReader = propertyReader;
     }
 
     @Override
     public User findById(long id) {
-        String query = propertyReader.getProperty("find.by.id.user");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(findByIdUser)) {
             statement.setLong(1, id);
 
             return getUser(statement);
@@ -43,10 +47,9 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        String query = propertyReader.getProperty("find.all.user");
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+             ResultSet resultSet = statement.executeQuery(findAllUser)) {
 
             List<User> userList = new ArrayList<>();
             while (resultSet.next()) {
@@ -63,9 +66,8 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void save(User user) {
-        String query = propertyReader.getProperty("save.user");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(saveUser)) {
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
@@ -83,9 +85,8 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void update(User user) {
-        String query = propertyReader.getProperty("update.user");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(updateUser)) {
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
@@ -102,9 +103,8 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public void delete(long id) {
-        String query = propertyReader.getProperty("delete.user");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(deleteUser)) {
 
             statement.setLong(1, id);
             statement.execute();
@@ -117,9 +117,8 @@ public class JdbcUserDao implements UserDao {
 
     @Override
     public User findByLogin(String login) {
-        String query = propertyReader.getProperty("find.by.login");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(findByLogin)) {
 
             statement.setString(1, login);
             return getUser(statement);

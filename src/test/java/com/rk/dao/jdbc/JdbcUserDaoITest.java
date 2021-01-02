@@ -3,7 +3,6 @@ package com.rk.dao.jdbc;
 import com.rk.domain.LongId;
 import com.rk.domain.User;
 import com.rk.domain.UserRole;
-import com.rk.util.PropertyReader;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.h2.jdbcx.JdbcDataSource;
@@ -18,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class JdbcUserDaoITest {
     private final Flyway flyway;
     private final JdbcUserDao jdbcUserDao;
-    private PropertyReader propertyReader = new PropertyReader();
 
     public JdbcUserDaoITest() {
         JdbcDataSource jdbcDataSource = new JdbcDataSource();
@@ -27,7 +25,7 @@ class JdbcUserDaoITest {
         configuration.locations("db/migration/users");
         configuration.dataSource(jdbcDataSource);
         flyway = new Flyway(configuration);
-        jdbcUserDao = new JdbcUserDao(jdbcDataSource, propertyReader);
+        jdbcUserDao = new JdbcUserDao(jdbcDataSource);
     }
 
     @BeforeEach

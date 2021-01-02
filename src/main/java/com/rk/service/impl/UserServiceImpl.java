@@ -1,6 +1,5 @@
 package com.rk.service.impl;
 
-import com.rk.ServiceLocator;
 import com.rk.dao.UserDao;
 import com.rk.domain.User;
 import com.rk.security.SecurityService;
@@ -12,9 +11,9 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     private SecurityService securityService;
 
-    public UserServiceImpl() {
-        this.userDao = ServiceLocator.getBean("UserDao");
-        this.securityService = ServiceLocator.getBean("SecurityService");
+    public UserServiceImpl(UserDao userDao, SecurityService securityService) {
+        this.userDao = userDao;
+        this.securityService = securityService;
     }
 
     @Override

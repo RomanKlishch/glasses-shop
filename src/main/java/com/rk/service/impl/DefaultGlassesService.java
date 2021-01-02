@@ -1,6 +1,5 @@
 package com.rk.service.impl;
 
-import com.rk.ServiceLocator;
 import com.rk.dao.GlassesDao;
 import com.rk.domain.Glasses;
 import com.rk.dto.CatalogAndMessage;
@@ -12,8 +11,8 @@ import java.util.List;
 public class DefaultGlassesService implements GlassesService {
     private GlassesDao glassesDao;
 
-    public DefaultGlassesService() {
-        glassesDao = ServiceLocator.getBean("GlassesDao");
+    public DefaultGlassesService(GlassesDao glassesDao) {
+        this.glassesDao = glassesDao;
     }
 
     @Override

@@ -1,24 +1,12 @@
 package com.rk.web.servlet.admin;
 
-import com.rk.ServiceLocator;
-import com.rk.domain.Glasses;
-import com.rk.domain.Photo;
 import com.rk.service.GlassesService;
-import com.rk.web.templator.PageGenerator;
-import lombok.SneakyThrows;
 
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.rk.constants.WebConstants.CONTENT_TYPE;
 
 public class AddGlassesServlet extends HttpServlet {
     private GlassesService glassesService;
-
+/*
     public AddGlassesServlet() {
         this.glassesService = ServiceLocator.getBean("GlassesService");
     }
@@ -57,5 +45,5 @@ public class AddGlassesServlet extends HttpServlet {
                 .concat(glasses.getCategory())
                 .concat("/")
                 .concat(String.valueOf(glasses.getId())));
-    }
+    }*/
 }

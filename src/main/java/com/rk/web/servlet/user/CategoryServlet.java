@@ -1,24 +1,13 @@
 package com.rk.web.servlet.user;
 
-import com.rk.ServiceLocator;
-import com.rk.domain.Glasses;
 import com.rk.service.GlassesService;
-import com.rk.web.templator.PageGenerator;
-import lombok.SneakyThrows;
 
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.rk.constants.WebConstants.CONTENT_TYPE;
 
 public class CategoryServlet extends HttpServlet {
     private GlassesService glassesService;
 
-    public CategoryServlet() {
+/*    public CategoryServlet() {
         this.glassesService = ServiceLocator.getBean("GlassesService");
     }
 
@@ -34,5 +23,5 @@ public class CategoryServlet extends HttpServlet {
 
         response.setContentType(CONTENT_TYPE);
         PageGenerator.instance().process("category", pageVariables, response.getWriter());
-    }
+    }*/
 }

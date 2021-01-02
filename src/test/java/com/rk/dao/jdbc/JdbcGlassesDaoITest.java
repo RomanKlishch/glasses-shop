@@ -2,7 +2,6 @@ package com.rk.dao.jdbc;
 
 import com.rk.domain.Glasses;
 import com.rk.domain.Photo;
-import com.rk.util.PropertyReader;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.h2.jdbcx.JdbcDataSource;
@@ -21,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class JdbcGlassesDaoITest {
     private final Flyway flyway;
     private final JdbcGlassesDao jdbcGlassesDao;
-    private PropertyReader propertyReader = new PropertyReader();
 
     public JdbcGlassesDaoITest() {
         JdbcDataSource jdbcDataSource = new JdbcDataSource();
@@ -30,7 +28,7 @@ class JdbcGlassesDaoITest {
         configuration.locations("db/migration/glasses");
         configuration.dataSource(jdbcDataSource);
         flyway = new Flyway(configuration);
-        jdbcGlassesDao = new JdbcGlassesDao(jdbcDataSource, propertyReader);
+        jdbcGlassesDao = new JdbcGlassesDao(jdbcDataSource);
     }
 
     @BeforeEach

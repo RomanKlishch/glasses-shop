@@ -6,9 +6,10 @@ import com.rk.dao.jdbc.mapper.GlassesRowMapper;
 import com.rk.dao.jdbc.mapper.PhotoRowMapper;
 import com.rk.domain.Glasses;
 import com.rk.domain.Photo;
-import com.rk.util.PropertyReader;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -19,23 +20,34 @@ import java.util.Map;
 
 @Slf4j
 @NoArgsConstructor
+@AllArgsConstructor
+@PropertySource({"classpath:properties/sqlQueries.properties"})
 public class JdbcGlassesDao implements GlassesDao {
     private static final GlassesRowMapper GLASSES_ROW_MAPPER = new GlassesRowMapper();
     private static final PhotoRowMapper PHOTO_ROW_MAPPER = new PhotoRowMapper();
-    private DataSource dataSource;
-    private PropertyReader propertyReader;
+    private String findAll = "SELECT glasses.glasses_id, name, collection, category, details, price, photo_id, path_to_image FROM glasses LEFT JOIN photos ON glasses.glasses_id=photos.glasses_id;";
+    private String findRandomGlasses = "SELECT glasses.glasses_id, name, collection, category, details, price, photo_id, path_to_image FROM (SELECT glasses.glasses_id, name, collection, category, details, price FROM glasses ORDER BY RANDOM() LIMIT ?) AS glasses LEFT JOIN photos ON glasses.glasses_id=photos.glasses_id";
+    private String findByName = "SELECT glasses.glasses_id, name, collection, category, details, price, photo_id, path_to_image FROM glasses LEFT JOIN photos ON glasses.glasses_id=photos.glasses_id WHERE name ILIKE '%'||?||'%' OR collection ILIKE '%'||?||'%';";
+    private String findByiId = "SELECT glasses.glasses_id, name, collection, category, details, price, photo_id, path_to_image FROM glasses LEFT JOIN photos ON glasses.glasses_id=photos.glasses_id WHERE glasses.glasses_id = ?;";
+    private String saveGlasses = "INSERT INTO glasses (name, collection, category, details, price) VALUES (?, ?, ?, ?, ?);";
+    private String updateGlasses = "UPDATE glasses SET name=?, collection=?, category=?, details=?, price=? WHERE glasses_id=?;";
+    private String deleteGlasses = "DELETE FROM glasses WHERE glasses_id=?;";
+    private String findByCategory = "SELECT glasses.glasses_id, name, collection, category, details, price, photo_id, path_to_image FROM glasses LEFT JOIN photos ON glasses.glasses_id=photos.glasses_id WHERE category ILIKE (?);";
+    private String savePhoto = "INSERT INTO photos (glasses_id, path_to_image) VALUES (?, ?);";
+    private String updatePhoto = "UPDATE photos SET path_to_image=? WHERE photo_id=?;";
+    private String deletePhoto = "DELETE FROM photos WHERE glasses_id=?;";
 
-    public JdbcGlassesDao(DataSource dataSource, PropertyReader propertyReader) {
+    private DataSource dataSource;
+
+    public JdbcGlassesDao(DataSource dataSource) {
         this.dataSource = dataSource;
-        this.propertyReader = propertyReader;
     }
 
     @Override
     public List<Glasses> findAll() {
-        String query = propertyReader.getProperty("find.all");
         try (Connection connection = dataSource.getConnection();
              Statement statementGlasses = connection.createStatement();
-             ResultSet resultSet = statementGlasses.executeQuery(query)) {
+             ResultSet resultSet = statementGlasses.executeQuery(findAll)) {
             return mapRowGlassesAndPhoto(resultSet);
         } catch (SQLException e) {
             log.error("Can not find all Glasses - ", e);
@@ -45,9 +57,8 @@ public class JdbcGlassesDao implements GlassesDao {
 
     @Override
     public List<Glasses> findListOfRandom(int limit) {
-        String query = propertyReader.getProperty("find.random.glasses");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statementGlasses = connection.prepareStatement(query)) {
+             PreparedStatement statementGlasses = connection.prepareStatement(findRandomGlasses)) {
             statementGlasses.setInt(1, limit);
             try (ResultSet resultSet = statementGlasses.executeQuery()) {
                 return mapRowGlassesAndPhoto(resultSet);
@@ -60,9 +71,8 @@ public class JdbcGlassesDao implements GlassesDao {
 
     @Override
     public List<Glasses> findAllByName(String name) {
-        String query = propertyReader.getProperty("find.by.name");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statementGlasses = connection.prepareStatement(query)) {
+             PreparedStatement statementGlasses = connection.prepareStatement(findByName)) {
             statementGlasses.setString(1, name);
             statementGlasses.setString(2, name);
             try (ResultSet resultSet = statementGlasses.executeQuery()) {
@@ -76,9 +86,8 @@ public class JdbcGlassesDao implements GlassesDao {
 
     @Override
     public Glasses findById(long id) {
-        String query = propertyReader.getProperty("find.by.id");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(findByiId)) {
             statement.setLong(1, id);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -100,10 +109,8 @@ public class JdbcGlassesDao implements GlassesDao {
 
     @Override
     public void saveGlasses(Glasses glasses) {
-        String query = propertyReader.getProperty("save.glasses");
-
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(saveGlasses, PreparedStatement.RETURN_GENERATED_KEYS)) {
             connection.setAutoCommit(false);
             statement.setString(1, glasses.getName());
             statement.setString(2, glasses.getCollection());
@@ -128,9 +135,8 @@ public class JdbcGlassesDao implements GlassesDao {
 
     @Override
     public void updateById(Glasses glasses) {
-        String query = propertyReader.getProperty("update.glasses");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(updateGlasses)) {
             connection.setAutoCommit(false);
             statement.setLong(6, glasses.getId());
             statement.setString(1, glasses.getName());
@@ -150,11 +156,9 @@ public class JdbcGlassesDao implements GlassesDao {
 
     @Override
     public void deleteById(long id) {
-        String query = propertyReader.getProperty("delete.glasses");
-
         try (Connection connection = dataSource.getConnection()) {
             connection.setAutoCommit(false);
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
+            try (PreparedStatement statement = connection.prepareStatement(deleteGlasses)) {
                 deletePhotoByGlassesId(connection, id);
                 statement.setLong(1, id);
                 statement.execute();
@@ -172,9 +176,8 @@ public class JdbcGlassesDao implements GlassesDao {
 
     @Override
     public List<Glasses> findByCategory(String category) {
-        String query = propertyReader.getProperty("find.by.category");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statementGlasses = connection.prepareStatement(query)) {
+             PreparedStatement statementGlasses = connection.prepareStatement(findByCategory)) {
             statementGlasses.setString(1, category);
             try (ResultSet resultSet = statementGlasses.executeQuery()) {
                 return mapRowGlassesAndPhoto(resultSet);
@@ -186,8 +189,7 @@ public class JdbcGlassesDao implements GlassesDao {
     }
 
     void savePhoto(Connection connection, List<Photo> photos, long id) {
-        String query = propertyReader.getProperty("save.photo");
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(savePhoto)) {
             for (Photo photo : photos) {
                 statement.setLong(1, id);
                 statement.setString(2, photo.getPathToImage());
@@ -201,9 +203,8 @@ public class JdbcGlassesDao implements GlassesDao {
     }
 
     void updatePhoto(List<Photo> photos) {
-        String query = propertyReader.getProperty("update.photo");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(updatePhoto)) {
             for (Photo photo : photos) {
                 statement.setString(1, photo.getPathToImage());
                 statement.setLong(2, photo.getId());
@@ -217,8 +218,7 @@ public class JdbcGlassesDao implements GlassesDao {
     }
 
     void deletePhotoByGlassesId(Connection connection, long id) {
-        String query = propertyReader.getProperty("delete.photo");
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(deletePhoto)) {
             statement.setLong(1, id);
             statement.execute();
         } catch (SQLException e) {

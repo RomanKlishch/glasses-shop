@@ -5,7 +5,7 @@ import com.rk.dao.jdbc.exception.JdbcException;
 import com.rk.dao.jdbc.mapper.OrderRowMapper;
 import com.rk.domain.Glasses;
 import com.rk.domain.Order;
-import com.rk.util.PropertyReader;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,22 +18,25 @@ import java.util.Map;
 
 @Slf4j
 @NoArgsConstructor
+@AllArgsConstructor
 public class JdbcOrder implements OrderDao {
     private static final OrderRowMapper ORDER_ROW_MAPPER = new OrderRowMapper();
-    private DataSource dataSource;
-    private PropertyReader propertyReader;
+    private String findAllOrders = "SELECT orders.order_id, user_id, status, orders_glasses.count, glasses.glasses_id, glasses.name,glasses.collection,glasses.price FROM orders LEFT JOIN orders_glasses ON orders.order_id=orders_glasses.order_id LEFT JOIN glasses ON orders_glasses.glasses_id=glasses.glasses_id";
+    private String findAllOrdersByUserId = "SELECT orders.order_id, user_id, status, orders_glasses.count, glasses.glasses_id, glasses.name,glasses.collection,glasses.price FROM orders LEFT JOIN orders_glasses ON orders.order_id=orders_glasses.order_id LEFT JOIN glasses ON orders_glasses.glasses_id=glasses.glasses_id WHERE user_id=?";
+    private String saveOrder = "INSERT INTO orders (user_id, status) VALUES (?, ?);";
+    private String saveGlassesOrder = "INSERT INTO orders_glasses (order_id, glasses_id, count) VALUES (?, ?, ?);";
 
-    public JdbcOrder(DataSource dataSource, PropertyReader propertyReader) {
+    private DataSource dataSource;
+
+    public JdbcOrder(DataSource dataSource) {
         this.dataSource = dataSource;
-        this.propertyReader = propertyReader;
     }
 
     @Override
     public List<Order> findAll() {
-        String query = propertyReader.getProperty("find.all.orders");
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+             ResultSet resultSet = statement.executeQuery(findAllOrders)) {
             return mapRowOrderAndGlasses(resultSet);
         } catch (SQLException e) {
             log.error("Can not find all orders - {}", e);
@@ -43,9 +46,8 @@ public class JdbcOrder implements OrderDao {
 
     @Override
     public List<Order> findByUserId(long id) {
-        String query = propertyReader.getProperty("find.all.orders.by.user.id");
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(findAllOrdersByUserId)) {
             preparedStatement.setLong(1, id);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -60,10 +62,8 @@ public class JdbcOrder implements OrderDao {
 
     @Override
     public void save(Order order) {
-        String query = propertyReader.getProperty("save.order");
-
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement statement = connection.prepareStatement(saveOrder, PreparedStatement.RETURN_GENERATED_KEYS)) {
             connection.setAutoCommit(false);
             statement.setLong(1, order.getUser().getId().getId());
             statement.setString(2, order.getStatus());
@@ -84,10 +84,8 @@ public class JdbcOrder implements OrderDao {
     }
 
     private void saveGlassesOrder(Connection connection, Order order) {
-        String query = propertyReader.getProperty("save.glasses.order");
         long orderId = order.getId();
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(saveGlassesOrder)) {
             Map<Glasses, Integer> glassesMap = order.getGlassesMap();
             for (Glasses glasses : glassesMap.keySet()) {
                 statement.setLong(1, orderId);

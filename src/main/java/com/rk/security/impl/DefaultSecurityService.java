@@ -1,6 +1,5 @@
 package com.rk.security.impl;
 
-import com.rk.ServiceLocator;
 import com.rk.dao.UserDao;
 import com.rk.domain.User;
 import com.rk.security.SecurityService;
@@ -17,8 +16,8 @@ import java.util.UUID;
 public class DefaultSecurityService implements SecurityService {
     private UserDao userDao;
 
-    public DefaultSecurityService() {
-        this.userDao = ServiceLocator.getBean("UserDao");
+    public DefaultSecurityService(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override

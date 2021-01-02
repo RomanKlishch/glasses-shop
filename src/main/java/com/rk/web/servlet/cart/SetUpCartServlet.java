@@ -1,28 +1,15 @@
 package com.rk.web.servlet.cart;
 
-import com.rk.ServiceLocator;
-import com.rk.domain.Glasses;
-import com.rk.domain.Order;
-import com.rk.security.entity.Session;
 import com.rk.service.GlassesService;
 import com.rk.service.OrderService;
-import com.rk.web.templator.PageGenerator;
 
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.rk.constants.WebConstants.CONTENT_TYPE;
 
 public class SetUpCartServlet extends HttpServlet {
     private GlassesService glassesService;
     private OrderService orderService;
 
-    public SetUpCartServlet() {
+/*    public SetUpCartServlet() {
         this.glassesService = ServiceLocator.getBean("GlassesService");
         this.orderService = ServiceLocator.getBean("OrderService");
     }
@@ -66,5 +53,5 @@ public class SetUpCartServlet extends HttpServlet {
             }
         }
         response.sendRedirect("");
-    }
+    }*/
 }

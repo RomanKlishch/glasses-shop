@@ -1,25 +1,9 @@
 package com.rk.web.servlet;
 
-import com.rk.ServiceLocator;
-import com.rk.domain.User;
-import com.rk.security.SecurityService;
-import com.rk.security.entity.Session;
-import com.rk.util.PropertyReader;
-import com.rk.web.templator.PageGenerator;
-import lombok.SneakyThrows;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.rk.constants.WebConstants.CONTENT_TYPE;
 
 public class LoginServlet extends HttpServlet {
-    private SecurityService securityService;
+/*    private SecurityService securityService;
     private PropertyReader propertyReader;
 
     public LoginServlet() {
@@ -64,5 +48,5 @@ public class LoginServlet extends HttpServlet {
         Cookie cookie = new Cookie("user-token", session.getToken());
         cookie.setMaxAge(lifeTime);
         return cookie;
-    }
+    }*/
 }

@@ -2,12 +2,14 @@ package com.rk.web.filter;
 
 import com.rk.domain.UserRole;
 import com.rk.security.entity.Session;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Component("AdminRoleFilter")
 public class AdminRoleFilter implements Filter {
 
     private HttpServletRequest httpRequest;

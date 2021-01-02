@@ -1,18 +1,12 @@
 package com.rk.web.servlet.cart;
 
-import com.rk.ServiceLocator;
-import com.rk.domain.Order;
-import com.rk.security.entity.Session;
 import com.rk.service.OrderService;
 
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class SaveOrderServlet extends HttpServlet {
     private OrderService orderService;
-
+/*
     public SaveOrderServlet() {
         this.orderService = ServiceLocator.getBean("OrderService");
     }
@@ -26,5 +20,5 @@ public class SaveOrderServlet extends HttpServlet {
             session.setOrder(null);
         }
         response.sendRedirect("/cart");
-    }
+    }*/
 }
