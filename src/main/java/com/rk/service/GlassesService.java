@@ -4,7 +4,6 @@ import com.rk.domain.Glasses;
 import com.rk.dto.CatalogAndMessage;
 import com.rk.dto.FeaturesAndSpecialGlasses;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface GlassesService {
@@ -13,7 +12,9 @@ public interface GlassesService {
 
     FeaturesAndSpecialGlasses getListsFeaturesAndSpecialGlasses(int limitFeature, int limitSpecial);
 
-    CatalogAndMessage getCatalogAndMessage(String catalog);
+    CatalogAndMessage searchGlasses(String catalog);
+
+    CatalogAndMessage getCatalog();
 
     List<Glasses> getCategoryList(String category);
 

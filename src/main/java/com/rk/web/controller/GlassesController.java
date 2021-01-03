@@ -39,7 +39,7 @@ public class GlassesController {
         return "index";
     }
 
-    @GetMapping(path = "glasses/{id}")
+    @GetMapping(path = "glasses/{category}/{id}")
     public String getGlasses(@PathVariable long id, Model model, HttpServletRequest request) {
         Session session = (Session) request.getAttribute("session");
         Glasses glasses = glassesService.findById(id);
@@ -58,7 +58,7 @@ public class GlassesController {
         return "articles";
     }
 
-    @GetMapping(path = "/glasses/{category}")
+    @GetMapping(path = "/{category}")
     public String getCategory(@PathVariable String category, Model model) {
         List<Glasses> categoryList = glassesService.getCategoryList(category);
         model.addAttribute("categoryList", categoryList);
@@ -67,11 +67,20 @@ public class GlassesController {
     }
 
     @GetMapping(path = "/search")
-    public String catalogOfGlasses(@RequestParam String searchName, Model model) {
-        CatalogAndMessage catalogAndMessage = glassesService.getCatalogAndMessage(searchName);
+    public String searchGlasses(@RequestParam String searchName, Model model) {
+        CatalogAndMessage catalogAndMessage = glassesService.searchGlasses(searchName);
         model.addAttribute("catalogList", catalogAndMessage.getCatalog());
         model.addAttribute("information", catalogAndMessage.getMessage());
         return "catalog";
     }
+
+    @GetMapping(path = "/catalog")
+    public String catalogOfGlasses(Model model) {
+        CatalogAndMessage catalogAndMessage = glassesService.getCatalog();
+        model.addAttribute("catalogList", catalogAndMessage.getCatalog());
+        model.addAttribute("information", catalogAndMessage.getMessage());
+        return "catalog";
+    }
+
 
 }

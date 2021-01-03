@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <web-app>
-<!--    &lt;!&ndash;FILTER&ndash;&gt;
+    <!--FILTER-->
     <filter>
         <filter-name>UserRoleFilter</filter-name>
         <filter-class>com.rk.web.filter.UserRoleFilter</filter-class>
@@ -34,5 +34,5 @@
         <url-pattern>/edit</url-pattern>
         <url-pattern>/addGlasses</url-pattern>
         <url-pattern>/delete</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
 </web-app>

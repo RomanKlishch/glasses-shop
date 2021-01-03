@@ -6,6 +6,7 @@ import com.rk.service.GlassesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,19 +48,19 @@ public class AdminAreaController {
                 .details(details).price(price).photos(photoList).build();
 
         glassesService.save(glasses);
-
-       return "/glasses/"
-               .concat(glasses.getCategory())
-               .concat("/")
-               .concat(String.valueOf(glasses.getId()));
+        return "redirect:/";
     }
 
-    @GetMapping(path = "/editGlasses")
-    public String getEditGlasses() {
-        return "admin/addGlasses";
+    @GetMapping(path = "/edit")
+    public String getEditGlasses(@RequestParam long id, Model model) {
+        Glasses glasses = glassesService.findById(id);
+
+        model.addAttribute("glasses", glasses);
+        model.addAttribute("photos", glasses.getPhotos());
+        return "admin/editGlasses";
     }
 
-    @PostMapping(path = "/editGlasses")
+    @PostMapping(path = "/edit")
     public String editGlasses(@RequestParam String[] photo,
                               @RequestParam String[] photoId,
                               @RequestParam long glassesId,
@@ -83,10 +84,7 @@ public class AdminAreaController {
 
         glassesService.update(glasses);
 
-        return "/glasses/"
-                .concat(glasses.getCategory())
-                .concat("/")
-                .concat(String.valueOf(glasses.getId()));
+        return "redirect:/";
     }
 
     @GetMapping(path = "/delete")

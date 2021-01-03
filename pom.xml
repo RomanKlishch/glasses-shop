@@ -11,8 +11,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<!--        <maven.compiler.source>13</maven.compiler.source>-->
-<!--        <maven.compiler.target>13</maven.compiler.target>-->
         <servlet.version>4.0.1</servlet.version>
         <lombok.version>1.18.12</lombok.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
@@ -140,10 +138,11 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>${flyway.version}</version>
                 <configuration>
-                    <url>${flyway.url}</url>
-                    <user>${flyway.user}</user>
-                    <password>${flyway.password}</password>
+                    <configFiles>
+                        <configFile>src/main/resources/properties/dev.application.properties</configFile>
+                    </configFiles>
                     <schemas>public</schemas>
+                    <baselineOnMigrate>true</baselineOnMigrate>
                 </configuration>
             </plugin>
             <plugin>
@@ -224,12 +223,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.stefanbirkner</groupId>
-            <artifactId>system-lambda</artifactId>
-            <version>${stefanbirkner.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
