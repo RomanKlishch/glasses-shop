@@ -20,7 +20,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 @PropertySource("classpath:properties/application.properties")
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${resolver.prefix}///")
+    @Value("${resolver.prefix}")
     private String prefix;
     @Value("${resolver.suffix}")
     private String suffix;
@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("/myapp/static/");
+        registry.addResourceHandler("/myapp/static/**").addResourceLocations("/myapp/static");
     }
 
     @Bean

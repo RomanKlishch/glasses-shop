@@ -24,8 +24,7 @@ public class UserRoleFilter implements Filter {
     Map<String, Session> sessionTokens;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        httpRequest = (HttpServletRequest) request;
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException { httpRequest = (HttpServletRequest) request;
         httpResponse = (HttpServletResponse) response;
         Cookie[] cookies = httpRequest.getCookies();
         if (cookies != null) {
@@ -35,7 +34,7 @@ public class UserRoleFilter implements Filter {
                     Session session = sessionTokens.get(cookie.getValue());
                     if (session != null) {
                         if (session.getExpireDate().isAfter(LocalDateTime.now())) {
-                            request.setAttribute("session", session);
+                            httpRequest.setAttribute("session", session);
                             chain.doFilter(httpRequest, httpResponse);
                             return;
                         } else {
@@ -46,16 +45,16 @@ public class UserRoleFilter implements Filter {
 
                 }
             }
-
-            RequestDispatcher dispatcher = httpRequest.getRequestDispatcher("/login");
-            request.setAttribute("message", "You must be logged in to access this resource");
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            dispatcher.forward(httpRequest, httpResponse);
         }
+        httpRequest.setAttribute("message", "You must be logged in to access this resource");
+        httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        httpResponse.sendRedirect("/login");
+
     }
 
     @Override
     public void init(FilterConfig filterConfig) {
+
     }
 
     @Override
